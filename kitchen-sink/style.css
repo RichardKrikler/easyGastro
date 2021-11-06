@@ -4,13 +4,21 @@
     font-family: Poppins, serif;
 }
 
+body {
+    color: #212529;
+}
+
 /* General Styling */
 button,
 input,
 select {
     border-radius: 6px !important;
-    box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;
+    /*box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;*/
     border: none;
+}
+
+button {
+    box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;
 }
 
 .c-red {
@@ -40,6 +48,32 @@ select {
 /* Icons */
 .icon {
     font-size: 23pt;
+    position: relative;
+}
+
+.icon.cloud-icon div {
+    font-size: 19px;
+    font-weight: bold;
+    color: #212529;
+    top: 0;
+    transform: translateX(24px);
+    position: absolute;
+}
+
+.icon.order-icon div {
+    font-size: 13pt;
+    text-align: center;
+    background-color: white;
+    color: #212529;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+    transform: translateX(-5px) translateY(-10px);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 /* Header Element */
@@ -74,20 +108,20 @@ select {
     font-size: 17pt;
 }
 
-.login button[type=submit] {
-    background-color: #000000;
-}
-
-/* Table-Kitchen Element */
-.table-kitchen {
+/* Table-Kitchen, Table-Waiter Element */
+.table-kitchen,
+.table-waiter {
     border-radius: 6px;
     box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;
+}
+
+.table-waiter.active {
+    box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.7) !important;
 }
 
 /* Modal */
 .modal-content  {
     border-radius: 16px;
-    border: none;
     box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;
     transform: translateY(-200px);
 }

@@ -21,7 +21,15 @@
 
 <!-- Header Element -->
 <div class="header text-center">
-    <h1 class="text-white fw-normal py-2 fs-3 mb-0">Anmeldeseite</h1>
+    <h1 class="text-white fw-normal py-3 fs-3 mb-0">Anmeldeseite</h1>
+</div>
+
+<div class="header text-center d-flex justify-content-between">
+    <span class="icon pay-icon material-icons-outlined d-flex flex-column justify-content-center mx-2 px-2 text-white">payments</span>
+    <h1 class="text-white fw-normal py-3 fs-3 mb-0">Anmeldeseite</h1>
+    <span class="icon order-icon material-icons-outlined d-flex flex-column justify-content-center mx-2 px-2 text-white">assignment
+            <div>5</div>
+    </span>
 </div>
 
 <!-- Admin-Nav Element -->
@@ -41,11 +49,14 @@
     <!-- Icons -->
     <div>
         <span class="fs-5">Icons: </span>
-        <span class="icon material-icons-outlined">payments</span>
-        <span class="icon material-icons-outlined">cloud_upload</span>
-        <span class="icon material-icons-outlined">close</span>
-        <span class="icon material-icons-outlined c-red">close</span>
-        <span class="icon material-icons-outlined">assignment</span>
+        <span class="icon pay-icon material-icons-outlined">payments</span>
+        <span class="icon cloud-icon material-icons-outlined">cloud_upload</span>
+        <span class="icon cloud-icon material-icons-outlined">cloud_upload
+            <div>*</div>
+        </span>
+        <span class="icon close-icon material-icons-outlined">close</span>
+        <span class="icon close-icon material-icons-outlined c-red">close</span>
+        <span class="icon order-icon material-icons-outlined">assignment</span>
         <span class="icon material-icons-outlined">keyboard_arrow_right</span>
     </div>
 
@@ -68,7 +79,8 @@
                 <input type="password" class="form-control shadow-sm" id="loginPasswordInput">
             </div>
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-dark shadow-sm fs-3 mt-4 px-4 py-2 fw-normal">Anmelden</button>
+                <button type="submit" class="btn btn-dark shadow-sm fs-3 mt-4 px-4 py-2 fw-normal bg-black">Anmelden
+                </button>
             </div>
         </form>
     </div>
@@ -98,7 +110,7 @@
     <!-- Modal -->
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content border-0">
                 <div class="modal-header d-flex justify-content-center border-bottom-0">
                     <h3 class="modal-title">Titel</h3>
                 </div>
@@ -165,31 +177,55 @@
             <th scope="col" class="fw-normal fs-5 text-center">Name</th>
             <th scope="col" class="fw-normal fs-5 text-center">Passwort</th>
             <th scope="col" class="fw-normal fs-5 text-center">Typ</th>
+            <th scope="col" class="fw-normal fs-5 text-center"></th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <th scope="row" class="fw-normal">1</th>
+            <th scope="row" class="fw-normal text-center">1</th>
             <td>Mark</td>
             <td>Otto</td>
             <td>@mdo</td>
         </tr>
         <tr>
-            <th scope="row" class="fw-normal">2</th>
+            <th scope="row" class="fw-normal text-center">2</th>
             <td>Jacob</td>
             <td>Thornton</td>
             <td>@fat</td>
         </tr>
         <tr>
-            <th scope="row" class="fw-normal">3</th>
+            <th scope="row" class="fw-normal text-center">3</th>
             <td>Larry the Bird</td>
             <td>@twitter</td>
             <td class="col-4">
                 <input type="text" id="textInput1" class="form-control d-inline-block text-center">
             </td>
+            <td style="width: min-content">
+                <span class="icon material-icons-outlined">cloud_upload</span>
+                <span class="icon material-icons-outlined">close</span>
+            </td>
         </tr>
         </tbody>
     </table>
+
+    <!-- Table-Waiter Element -->
+    <div class="container">
+        <div class="table-waiter bg-red d-inline-block m-2 col-3 active">
+            <p class="fs-5 mb-0 px-3 py-2">Tisch 1</p>
+        </div>
+        <div class="table-waiter bg-green d-inline-block m-2 col-3">
+            <p class="fs-5 mb-0 px-3 py-2">Tisch 2</p>
+        </div>
+        <div class="table-waiter bg-green d-inline-block m-2 col-3">
+            <p class="fs-5 mb-0 px-3 py-2">Tisch 3</p>
+        </div>
+        <div class="table-waiter bg-green d-inline-block m-2 col-3">
+            <p class="fs-5 mb-0 px-3 py-2">Tisch 4</p>
+        </div>
+        <div class="table-waiter bg-red d-inline-block m-2 col-3">
+            <p class="fs-5 mb-0 px-3 py-2">Tisch 5</p>
+        </div>
+    </div>
 </main>
 
 
