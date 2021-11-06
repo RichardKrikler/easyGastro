@@ -6,10 +6,15 @@
 
 /* General Styling */
 button,
-input {
+input,
+select {
     border-radius: 6px !important;
     box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;
     border: none;
+}
+
+.c-red {
+    color: #F85959;
 }
 
 .bg-red {
@@ -46,6 +51,11 @@ input {
     letter-spacing: 5px;
 }
 
+/* Admin-Nav Element */
+.admin-nav {
+    border-bottom: 1px solid #6A6A6A;
+}
+
 /* Copyright-Notice Element */
 .copyright-notice {
     right: 0;
@@ -80,4 +90,13 @@ input {
     border: none;
     box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;
     transform: translateY(-200px);
+}
+
+/* Table Element */
+table th:not(:first-child) {
+    border-left: 1px solid;
+}
+
+table tr {
+    vertical-align: middle;
 }
