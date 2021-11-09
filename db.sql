@@ -35,21 +35,21 @@ CREATE TABLE Tischgruppe
 CREATE TABLE Tisch
 (
     pk_tischnr_id     INTEGER NOT NULL PRIMARY KEY,
-    bezeichnung       VARCHAR(255),
+    tischcode       VARCHAR(255),
     fk_pk_tischgrp_id INTEGER NOT NULL
 );
 
 CREATE TABLE Bestellung
 (
     pk_bestellung_id INTEGER   NOT NULL,
-    pk_timestamp_von TIMESTAMP NOT NULL,
-    timestamp_bis    TIMESTAMP,
+    pk_timestamp_von DATETIME NOT NULL,
+    timestamp_bis    DATETIME,
     status           VARCHAR(255),
     fk_pk_tischnr_id INTEGER,
     CONSTRAINT PRIMARY KEY (pk_bestellung_id, pk_timestamp_von)
 );
 
-CREATE TABLE Speisen
+CREATE TABLE Speise
 (
     pk_speise_id       INTEGER NOT NULL PRIMARY KEY,
     bezeichnung        VARCHAR(255),
@@ -63,14 +63,14 @@ CREATE TABLE Speisegruppe
     bezeichnung     VARCHAR(255)
 );
 
-CREATE TABLE Getraenke
+CREATE TABLE Getraenk
 (
     pk_getraenk_id       INTEGER NOT NULL PRIMARY KEY,
     bezeichnung          VARCHAR(255),
     fk_pk_getraenkgrp_id INTEGER NOT NULL
 );
 
-CREATE TABLE Getaenkegruppe
+CREATE TABLE Getraenkegruppe
 (
     pk_getraenkgrp_id INTEGER NOT NULL PRIMARY KEY,
     bezeichnung       VARCHAR(255)
@@ -82,24 +82,25 @@ CREATE TABLE Menge
     wert        DOUBLE
 );
 
-CREATE TABLE getraenke_menge
+CREATE TABLE Getraenk_Menge
 (
-    pk_fk_pk_getraenk_id INTEGER NOT NULL,
-    pk_fk_pk_menge_id    INTEGER NOT NULL,
-    preis                DOUBLE
+    pk_getraenkmg_id     INTEGER NOT NULL PRIMARY KEY ,
+    preis                DOUBLE,
+    fk_pk_getraenk_id INTEGER NOT NULL,
+    fk_pk_menge_id    INTEGER NOT NULL
 );
 
-CREATE TABLE bestellung_getraenke
+CREATE TABLE bestellung_getraenkmenge
 (
     pk_fk_pk_bestellung_id INTEGER NOT NULL,
-    pk_fk_pk_getraenke_id  INTEGER NOT NULL,
+    pk_fk_pk_getraenkmg_id  INTEGER NOT NULL,
     anzahl                 INTEGER
 );
 
-CREATE TABLE bestellung_speisen
+CREATE TABLE bestellung_speise
 (
     pk_fk_pk_bestellung_id INTEGER NOT NULL,
-    pk_fk_pk_speisen       INTEGER NOT NULL,
+    pk_fk_pk_speise       INTEGER NOT NULL,
     anzahl                 INTEGER
 );
 
@@ -119,20 +120,20 @@ ALTER TABLE Tisch
 ALTER TABLE Bestellung
     ADD CONSTRAINT FOREIGN KEY (fk_pk_tischnr_id) REFERENCES Tisch (pk_tischnr_id);
 
-ALTER TABLE Getraenke
-    ADD CONSTRAINT FOREIGN KEY (fk_pk_getraenkgrp_id) REFERENCES Getaenkegruppe (pk_getraenkgrp_id) ON DELETE CASCADE;
+ALTER TABLE Getraenk
+    ADD CONSTRAINT FOREIGN KEY (fk_pk_getraenkgrp_id) REFERENCES Getraenkegruppe (pk_getraenkgrp_id) ON DELETE CASCADE;
 
-ALTER TABLE Speisen
+ALTER TABLE Speise
     ADD CONSTRAINT FOREIGN KEY (fk_pk_speisegrp_id) REFERENCES Speisegruppe (pk_speisegrp_id) ON DELETE CASCADE;
 
-ALTER TABLE bestellung_getraenke
+ALTER TABLE bestellung_getraenkmenge
     ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_bestellung_id) REFERENCES Bestellung (pk_bestellung_id),
-    ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_getraenke_id) REFERENCES Getraenke (pk_getraenk_id);
+    ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_getraenkmg_id) REFERENCES Getraenk_Menge (pk_getraenkmg_id);
 
-ALTER TABLE bestellung_speisen
+ALTER TABLE bestellung_speise
     ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_bestellung_id) REFERENCES Bestellung (pk_bestellung_id),
-    ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_speisen) REFERENCES Speisen (pk_speise_id);
+    ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_speise) REFERENCES Speise (pk_speise_id);
 
-ALTER TABLE getraenke_menge
-    ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_getraenk_id) REFERENCES Getraenke (pk_getraenk_id),
-    ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_menge_id) REFERENCES Menge (pk_menge_id);
+ALTER TABLE Getraenk_Menge
+    ADD CONSTRAINT FOREIGN KEY (fk_pk_getraenk_id) REFERENCES Getraenk (pk_getraenk_id),
+    ADD CONSTRAINT FOREIGN KEY (fk_pk_menge_id) REFERENCES Menge (pk_menge_id);
