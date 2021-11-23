@@ -4,33 +4,35 @@ require_once 'DB.php';
 
 class PN_SubscriptionsDB
 {
-    static function getSubscriptions(): array
+    static function getSubscriptions()
     {
         $DB = DB::getDB();
-        $subscriptions[] = [];
+        $subscriptionsJSON = '{}';
         try {
-            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey FROM PN_Subscriptions');
+            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding FROM PN_Subscriptions');
             if ($stmt->execute()) {
-                while ($row = $stmt->fetch()) {
-                    $subscriptions[] = [$row['endpoint'], $row['publicKey'], $row['authToken']];
-                }
+                $subscriptionsJSON = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//                while ($row = $stmt->fetch()) {
+//                    $subscriptions[] = [$row['endpoint'], $row['publicKey'], $row['authToken']];
+//                }
             }
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $subscriptions;
+            return $subscriptionsJSON;
         } catch (PDOException  $e) {
             print('Error: ' . $e);
             exit();
         }
     }
 
-    static function saveSubscription($endpoint, $publicKey, $authToken)
+    static function saveSubscription($endpoint, $publicKey, $authToken, $contentEncoding)
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare('INSERT INTO PN_Subscriptions (endpoint, publicKey, authToken) VALUE (:endpoint, :publicKey, :authToken)');
+            $stmt = $DB->prepare('INSERT INTO PN_Subscriptions (endpoint, publicKey, authToken, contentEncoding) VALUE (:endpoint, :publicKey, :authToken, :contentEncoding)');
             $stmt->bindParam(":endpoint", $endpoint);
             $stmt->bindParam(":publicKey", $publicKey);
             $stmt->bindParam(":authToken", $authToken);
+            $stmt->bindParam(":contentEncoding", $contentEncoding);
             $stmt->execute();
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException  $e) {

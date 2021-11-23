@@ -16,7 +16,7 @@ $PN_SubscriptionsDB = new PN_SubscriptionsDB();
 
 switch ($method) {
     case 'POST':
-        PN_SubscriptionsDB::saveSubscription($subscription->endpoint, $subscription->publicKey, $subscription->authToken);
+        PN_SubscriptionsDB::saveSubscription($subscription->endpoint, $subscription->publicKey, $subscription->authToken, $subscription->contentEncoding);
         break;
     case 'PUT':
         // update the key and token of subscription corresponding to the endpoint

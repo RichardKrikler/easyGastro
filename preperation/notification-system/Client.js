@@ -216,34 +216,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }),
         }).then(() => subscription)
     }
-
-    /**
-     * START send_push_notification
-     * this part handles the button that calls the endpoint that triggers a notification
-     * in the real world, you wouldn't need this, because notifications are typically sent from backend logic
-     */
-
-    const sendPushButton = document.querySelector('#send-push-button');
-    if (!sendPushButton) {
-        return
-    }
-
-    sendPushButton.addEventListener('click', () =>
-        navigator.serviceWorker.ready
-            .then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
-            .then(subscription => {
-                if (!subscription) {
-                    alert('Please enable push notifications')
-                    return
-                }
-
-                const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
-                const jsonSubscription = subscription.toJSON();
-                console.log(JSON.stringify(subscription));
-                fetch('send_push_notification.php', {
-                    method: 'POST',
-                    body: JSON.stringify(Object.assign(jsonSubscription, {contentEncoding})),
-                })
-            })
-    )
 })

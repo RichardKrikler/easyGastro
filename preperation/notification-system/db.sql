@@ -4,13 +4,18 @@ USE EGS;
 
 CREATE TABLE PN_Subscriptions
 (
-    endpoint  VARCHAR(255) NOT NULL PRIMARY KEY,
-    publicKey VARCHAR(88)  NOT NULL,
-    authToken VARCHAR(24)  NOT NULL
+    endpoint        VARCHAR(255) NOT NULL PRIMARY KEY,
+    publicKey       VARCHAR(88)  NOT NULL,
+    authToken       VARCHAR(24)  NOT NULL,
+    contentEncoding VARCHAR(100) NOT NULL
 );
 
 
 INSERT INTO PN_Subscriptions (endpoint, publicKey, authToken) VALUE ('1', '2', '2');
-DELETE FROM PN_Subscriptions WHERE endpoint = '';
-UPDATE PN_Subscriptions SET publicKey = '';
-UPDATE PN_Subscriptions SET authToken = '';
+DELETE
+FROM PN_Subscriptions
+WHERE endpoint = '';
+UPDATE PN_Subscriptions
+SET publicKey = '';
+UPDATE PN_Subscriptions
+SET authToken = '';
