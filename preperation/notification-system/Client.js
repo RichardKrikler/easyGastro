@@ -1,123 +1,123 @@
 document.addEventListener('DOMContentLoaded', () => {
     const applicationServerKey =
-        'BJvFyEJTb975woE0mQf6jCA7bJEdbAZ3nuT7Ex_I1KjWrDBKYwrfmH7dcMjseRBRoNfVZrgBb_rzTFLwvTyggHQ';
-    let isPushEnabled = false;
+        'BJvFyEJTb975woE0mQf6jCA7bJEdbAZ3nuT7Ex_I1KjWrDBKYwrfmH7dcMjseRBRoNfVZrgBb_rzTFLwvTyggHQ'
+    let isPushEnabled = false
 
-    const pushButton = document.querySelector('#push-subscription-button');
+    const pushButton = document.querySelector('#push-subscription-button')
     if (!pushButton) {
-        return;
+        return
     }
 
     pushButton.addEventListener('click', function () {
         if (isPushEnabled) {
-            push_unsubscribe();
+            push_unsubscribe()
         } else {
-            push_subscribe();
+            push_subscribe()
         }
-    });
+    })
 
     if (!('serviceWorker' in navigator)) {
-        console.warn('Service workers are not supported by this browser');
-        changePushButtonState('incompatible');
-        return;
+        console.warn('Service workers are not supported by this browser')
+        changePushButtonState('incompatible')
+        return
     }
 
     if (!('PushManager' in window)) {
-        console.warn('Push notifications are not supported by this browser');
-        changePushButtonState('incompatible');
-        return;
+        console.warn('Push notifications are not supported by this browser')
+        changePushButtonState('incompatible')
+        return
     }
 
     if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
-        console.warn('Notifications are not supported by this browser');
-        changePushButtonState('incompatible');
-        return;
+        console.warn('Notifications are not supported by this browser')
+        changePushButtonState('incompatible')
+        return
     }
 
     // Check the current Notification permission.
     // If its denied, the button should appears as such, until the user changes the permission manually
     if (Notification.permission === 'denied') {
-        console.warn('Notifications are denied by the user');
-        changePushButtonState('incompatible');
-        return;
+        console.warn('Notifications are denied by the user')
+        changePushButtonState('incompatible')
+        return
     }
 
     navigator.serviceWorker.register('PNServiceWorker.js').then(
         () => {
-            console.log('[SW] Service worker has been registered');
-            push_updateSubscription();
+            console.log('[SW] Service worker has been registered')
+            push_updateSubscription()
         },
         e => {
-            console.error('[SW] Service worker registration failed', e);
-            changePushButtonState('incompatible');
+            console.error('[SW] Service worker registration failed', e)
+            changePushButtonState('incompatible')
         }
-    );
+    )
 
     function changePushButtonState(state) {
         switch (state) {
             case 'enabled':
-                pushButton.disabled = false;
-                pushButton.textContent = 'Disable Push notifications';
-                isPushEnabled = true;
-                break;
+                pushButton.disabled = false
+                pushButton.textContent = 'Disable Push notifications'
+                isPushEnabled = true
+                break
             case 'disabled':
-                pushButton.disabled = false;
-                pushButton.textContent = 'Enable Push notifications';
-                isPushEnabled = false;
-                break;
+                pushButton.disabled = false
+                pushButton.textContent = 'Enable Push notifications'
+                isPushEnabled = false
+                break
             case 'computing':
-                pushButton.disabled = true;
-                pushButton.textContent = 'Loading...';
-                break;
+                pushButton.disabled = true
+                pushButton.textContent = 'Loading...'
+                break
             case 'incompatible':
-                pushButton.disabled = true;
-                pushButton.textContent = 'Push notifications are not compatible with this browser';
-                break;
+                pushButton.disabled = true
+                pushButton.textContent = 'Push notifications are not compatible with this browser'
+                break
             default:
-                console.error('Unhandled push button state', state);
-                break;
+                console.error('Unhandled push button state', state)
+                break
         }
     }
 
     function urlBase64ToUint8Array(base64String) {
-        const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
+        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/')
 
-        const rawData = window.atob(base64);
-        const outputArray = new Uint8Array(rawData.length);
+        const rawData = window.atob(base64)
+        const outputArray = new Uint8Array(rawData.length)
 
         for (let i = 0; i < rawData.length; ++i) {
-            outputArray[i] = rawData.charCodeAt(i);
+            outputArray[i] = rawData.charCodeAt(i)
         }
-        return outputArray;
+        return outputArray
     }
 
     function checkNotificationPermission() {
         return new Promise((resolve, reject) => {
             if (Notification.permission === 'denied') {
-                return reject(new Error('Push messages are blocked.'));
+                return reject(new Error('Push messages are blocked.'))
             }
 
             if (Notification.permission === 'granted') {
-                return resolve();
+                return resolve()
             }
 
             if (Notification.permission === 'default') {
                 return Notification.requestPermission().then(result => {
                     if (result !== 'granted') {
-                        reject(new Error('Bad permission result'));
+                        reject(new Error('Bad permission result'))
                     } else {
-                        resolve();
+                        resolve()
                     }
-                });
+                })
             }
 
-            return reject(new Error('Unknown permission'));
-        });
+            return reject(new Error('Unknown permission'))
+        })
     }
 
     function push_subscribe() {
-        changePushButtonState('computing');
+        changePushButtonState('computing')
 
         return checkNotificationPermission()
             .then(() => navigator.serviceWorker.ready)
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(subscription => {
                 // Subscription was successful
                 // create subscription on your server
-                return push_sendSubscriptionToServer(subscription, 'POST');
+                return push_sendSubscriptionToServer(subscription, 'POST')
             })
             .then(subscription => subscription && changePushButtonState('enabled')) // update your UI
             .catch(e => {
@@ -139,22 +139,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     // means we failed to subscribe and the user will need
                     // to manually change the notification permission to
                     // subscribe to push messages
-                    console.warn('Notifications are denied by the user.');
-                    changePushButtonState('incompatible');
+                    console.warn('Notifications are denied by the user.')
+                    changePushButtonState('incompatible')
                 } else {
                     // A problem occurred with the subscription; common reasons
                     // include network errors or the user skipped the permission
-                    console.error('Impossible to subscribe to push notifications', e);
-                    changePushButtonState('disabled');
+                    console.error('Impossible to subscribe to push notifications', e)
+                    changePushButtonState('disabled')
                 }
-            });
+            })
     }
 
     function push_updateSubscription() {
         navigator.serviceWorker.ready
             .then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
             .then(subscription => {
-                changePushButtonState('disabled');
+                changePushButtonState('disabled')
 
                 if (!subscription) {
                     // We aren't subscribed to push, so set UI to allow the user to enable push
@@ -167,11 +167,11 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(subscription => subscription && changePushButtonState('enabled')) // Set your UI to show they have subscribed for push messages
             .catch(e => {
                 console.error('Error when updating the subscription', e)
-            });
+            })
     }
 
     function push_unsubscribe() {
-        changePushButtonState('computing');
+        changePushButtonState('computing')
 
         // To unsubscribe from push messaging, you need to get the subscription object
         navigator.serviceWorker.ready
@@ -182,12 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // No subscription object, so set the state
                     // to allow the user to subscribe to push
                     changePushButtonState('disabled')
-                    return;
+                    return
                 }
 
                 // We have a subscription, unsubscribe
                 // Remove push subscription from server
-                return push_sendSubscriptionToServer(subscription, 'DELETE');
+                return push_sendSubscriptionToServer(subscription, 'DELETE')
             })
             .then(subscription => subscription.unsubscribe())
             .then(() => changePushButtonState('disabled'))
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // inform the user that you have done so
                 console.error('Error when unsubscribing the user', e)
                 changePushButtonState('disabled')
-            });
+            })
     }
 
     function push_sendSubscriptionToServer(subscription, method) {

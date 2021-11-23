@@ -9,13 +9,3 @@ CREATE TABLE PN_Subscriptions
     authToken       VARCHAR(24)  NOT NULL,
     contentEncoding VARCHAR(100) NOT NULL
 );
-
-
-INSERT INTO PN_Subscriptions (endpoint, publicKey, authToken) VALUE ('1', '2', '2');
-DELETE
-FROM PN_Subscriptions
-WHERE endpoint = '';
-UPDATE PN_Subscriptions
-SET publicKey = '';
-UPDATE PN_Subscriptions
-SET authToken = '';

@@ -9,13 +9,6 @@ services:
     ports:
       - 3306:3306
 
-  #  php-apache:
-  #   image: php-apache_pn
-  #   ports:
-  #     - 80:80
-  #   volumes:
-  #     - ./:/var/www/html/
-
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     links:

@@ -6,10 +6,10 @@ use Minishlink\WebPush\WebPush;
 
 class PN_Send
 {
-    private $webPush;
+    private WebPush $webPush;
 
     /**
-     * @param $webPush
+     * @throws ErrorException
      */
     public function __construct()
     {
@@ -24,10 +24,17 @@ class PN_Send
         $this->webPush = new WebPush($auth);
     }
 
-    public function sendPN($subscriptions, string $message)
+    /**
+     * @throws ErrorException
+     */
+    public function send($subscriptions, string $message)
     {
         foreach ($subscriptions as $subscription) {
             $notifications[] = Subscription::create($subscription);
+        }
+
+        if (!isset($notifications)) {
+            return;
         }
 
         foreach ($notifications as $notification) {
@@ -37,11 +44,7 @@ class PN_Send
             );
         }
 
-
-        /**
-         * Check sent results
-         * @var MessageSentReport $report
-         */
+        // Check sent results
         foreach ($this->webPush->flush() as $report) {
             $endpoint = $report->getRequest()->getUri()->__toString();
 

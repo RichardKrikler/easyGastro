@@ -7,14 +7,11 @@ class PN_SubscriptionsDB
     static function getSubscriptions()
     {
         $DB = DB::getDB();
-        $subscriptionsJSON = '{}';
+        $subscriptionsJSON = '';
         try {
             $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding FROM PN_Subscriptions');
             if ($stmt->execute()) {
                 $subscriptionsJSON = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//                while ($row = $stmt->fetch()) {
-//                    $subscriptions[] = [$row['endpoint'], $row['publicKey'], $row['authToken']];
-//                }
             }
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $subscriptionsJSON;
