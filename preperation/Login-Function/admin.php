@@ -16,36 +16,20 @@
           rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" type="image/x-icon" href="resources/EGS_Logo_outlined_black_v1.png">
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script src="javascript.js" defer></script>
 </head>
 <body class="d-flex flex-column vh-100">
 <div class="header text-center">
 
     <?php
-        require_once 'LoginFunctions.php';
-        $database = LoginFunctions::connectDatabase("localhost","egs","root","");
+        require_once 'Pages.php';
+        require_once 'DB.php';
+        require_once 'DatabaseSelects.php';
+
         session_start();
 
-        $stmt = $database->prepare("SELECT * FROM user WHERE name = :user AND passwort = :password AND typ = :typ");
-        $stmt->bindParam(':user',$_SESSION['username']['name']);
-        $stmt->bindParam(':password', $_SESSION['username']['password']);
-        $stmt->bindParam(':typ',$_SESSION['username']['typ']);
-        $stmt->execute();
-        $row = $stmt->fetch();
+        $row = DatabaseSelects::getDataOfUser();
 
-        if(isset($row) && $row['typ'] !== 'Admin'){
-            LoginFunctions::changePage($row['typ']);
-        }
-
-        if(!$row){
-            header("Location: index.php");
-        }
-
-        if(isset($_POST['logout'])){
-            header('Location: destroySession.php');
-        }
+        Pages::checkPage('Admin', $row);
     ?>
 
     <!-- Header Element -->
@@ -53,7 +37,9 @@
         <p class="invisible"></p>
         <h1 class="text-white fw-normal py-3 fs-3 mb-0">Adminseite</h1>
         <form method="post">
-            <button type="submit" name="logout">Logout</button>
+            <button type="submit" name="logout" style="background-color: #6A6A6A" class="shadow-none mx-1 px-1 my-3">
+                <span class="material-icons-outlined" style="color: white">logout</span>
+            </button>
         </form>
     </div>
 

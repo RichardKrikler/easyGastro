@@ -42,20 +42,19 @@
     </div>
 
     <?php
-    require_once 'LoginFunctions.php';
+    require_once 'Pages.php';
+    require_once 'DB.php';
+    require_once 'DatabaseSelects.php';
 
-    $database = LoginFunctions::connectDatabase("localhost","egs","root","");
     session_start();
 
     if(isset($_SESSION['username'])){
         $usertyp = $_SESSION['username'];
-        LoginFunctions::changePage($usertyp['typ']);
+        Pages::changePage($usertyp['typ']);
     }
 
     if(isset($_POST['submit'])){
-        $stmt = $database->prepare("SELECT * FROM user WHERE name = :user");
-        $stmt->bindParam(':user',$_POST['username']);
-        $stmt->execute();
+        $stmt = DatabaseSelects::getUserForLogin();
         $count = $stmt->rowCount();
         if($count == 1){
             $row = $stmt->fetch();
@@ -64,9 +63,10 @@
                     'name' => $_POST['username'],
                     'password' => $row['passwort'],
                     'typ' => $row['typ'],
+                    'timeout' => (time()+86400), //86400 seconds = 1 day
                 ];
                 $_SESSION['username'] = $user;
-                LoginFunctions::changePage($row['typ']);
+                Pages::changePage($row['typ']);
             } else {?>
 
                 <div class="bg-white d-flex justify-content-center w-100">
