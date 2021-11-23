@@ -65,15 +65,15 @@ CREATE TABLE Speisegruppe
 
 CREATE TABLE Getraenk
 (
-    pk_getraenk_id       INTEGER NOT NULL PRIMARY KEY,
-    bezeichnung          VARCHAR(255),
-    fk_pk_getraenkgrp_id INTEGER NOT NULL
+    pk_getraenk_id        INTEGER NOT NULL PRIMARY KEY,
+    bezeichnung           VARCHAR(255),
+    fk_pk_getraenkegrp_id INTEGER NOT NULL
 );
 
 CREATE TABLE Getraenkegruppe
 (
-    pk_getraenkgrp_id INTEGER NOT NULL PRIMARY KEY,
-    bezeichnung       VARCHAR(255)
+    pk_getraenkegrp_id INTEGER NOT NULL PRIMARY KEY,
+    bezeichnung        VARCHAR(255)
 );
 
 CREATE TABLE Menge
@@ -121,7 +121,7 @@ ALTER TABLE Bestellung
     ADD CONSTRAINT FOREIGN KEY (fk_pk_tischnr_id) REFERENCES Tisch (pk_tischnr_id);
 
 ALTER TABLE Getraenk
-    ADD CONSTRAINT FOREIGN KEY (fk_pk_getraenkgrp_id) REFERENCES Getraenkegruppe (pk_getraenkgrp_id) ON DELETE CASCADE;
+    ADD CONSTRAINT FOREIGN KEY (fk_pk_getraenkegrp_id) REFERENCES Getraenkegruppe (pk_getraenkegrp_id) ON DELETE CASCADE;
 
 ALTER TABLE Speise
     ADD CONSTRAINT FOREIGN KEY (fk_pk_speisegrp_id) REFERENCES Speisegruppe (pk_speisegrp_id) ON DELETE CASCADE;
