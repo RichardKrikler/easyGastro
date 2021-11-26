@@ -19,12 +19,10 @@ switch ($method) {
         PN_SubscriptionsDB::saveSubscription($subscription->endpoint, $subscription->publicKey, $subscription->authToken, $subscription->contentEncoding);
         break;
     case 'PUT':
-        // update the key and token of subscription corresponding to the endpoint
         $PN_SubscriptionsDB::updateSubscriptionPublicKey($subscription->endpoint, $subscription->publicKey);
         $PN_SubscriptionsDB::updateSubscriptionAuthToken($subscription->endpoint, $subscription->authToken);
         break;
     case 'DELETE':
-        // delete the subscription corresponding to the endpoint
         PN_SubscriptionsDB::deleteSubscription($subscription->endpoint);
         break;
     default:

@@ -16,20 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    if (!('serviceWorker' in navigator)) {
-        console.warn('Service workers are not supported by this browser')
-        changePushButtonState('incompatible')
-        return
-    }
-
-    if (!('PushManager' in window)) {
-        console.warn('Push notifications are not supported by this browser')
-        changePushButtonState('incompatible')
-        return
-    }
-
-    if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
-        console.warn('Notifications are not supported by this browser')
+    if (!('serviceWorker' in navigator) ||
+        !('PushManager' in window) ||
+        !('showNotification' in ServiceWorkerRegistration.prototype)) {
+        console.warn('Push Notifications incompatible with browser');
         changePushButtonState('incompatible')
         return
     }
@@ -117,8 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function push_subscribe() {
-        changePushButtonState('computing')
-
         return checkNotificationPermission()
             .then(() => navigator.serviceWorker.ready)
             .then(serviceWorkerRegistration =>
@@ -135,15 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(subscription => subscription && changePushButtonState('enabled')) // update your UI
             .catch(e => {
                 if (Notification.permission === 'denied') {
-                    // The user denied the notification permission which
-                    // means we failed to subscribe and the user will need
-                    // to manually change the notification permission to
-                    // subscribe to push messages
+                    // User denied -> permission has to be manually changed
                     console.warn('Notifications are denied by the user.')
                     changePushButtonState('incompatible')
                 } else {
-                    // A problem occurred with the subscription; common reasons
-                    // include network errors or the user skipped the permission
+                    // Subscription was not possible
                     console.error('Impossible to subscribe to push notifications', e)
                     changePushButtonState('disabled')
                 }
@@ -171,31 +155,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function push_unsubscribe() {
-        changePushButtonState('computing')
-
-        // To unsubscribe from push messaging, you need to get the subscription object
         navigator.serviceWorker.ready
             .then(serviceWorkerRegistration => serviceWorkerRegistration.pushManager.getSubscription())
             .then(subscription => {
-                // Check that we have a subscription to unsubscribe
+                // check availability of subscription to unsubscribe
                 if (!subscription) {
-                    // No subscription object, so set the state
-                    // to allow the user to subscribe to push
+                    // no subscription available -> disabled
                     changePushButtonState('disabled')
                     return
                 }
 
-                // We have a subscription, unsubscribe
-                // Remove push subscription from server
+                // subscription available -> unsubscribe & remove from server
                 return push_sendSubscriptionToServer(subscription, 'DELETE')
             })
             .then(subscription => subscription.unsubscribe())
             .then(() => changePushButtonState('disabled'))
             .catch(e => {
-                // We failed to unsubscribe, this can lead to
-                // an unusual state, so  it may be best to remove
-                // the users data from your data store and
-                // inform the user that you have done so
+                // failed to unsubscribe
                 console.error('Error when unsubscribing the user', e)
                 changePushButtonState('disabled')
             })
