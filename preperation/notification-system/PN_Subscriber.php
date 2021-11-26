@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
-require_once 'db/PN_SubscriptionDB.php';
+require_once 'db/DB_PN_Subscription.php';
 
 $subscription = json_decode(file_get_contents('php://input'));
 

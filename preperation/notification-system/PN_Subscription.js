@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return
     }
 
-    navigator.serviceWorker.register('PNServiceWorker.js').then(
+    navigator.serviceWorker.register('PN_ServiceWorker.js').then(
         () => {
             console.log('[SW] Service worker has been registered')
             push_updateSubscription()
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const token = subscription.getKey('auth')
         const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0]
 
-        return fetch('push_subscription.php', {
+        return fetch('PN_Subscriber.php', {
             method,
             body: JSON.stringify({
                 endpoint: subscription.endpoint,

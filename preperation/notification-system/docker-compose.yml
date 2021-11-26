@@ -7,7 +7,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: egspw
     ports:
-      - 3306:3306
+      - "3306:3306"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -17,4 +17,4 @@ services:
       PMA_HOST: db
       PMA_PORT: 3306
     ports:
-      - 82:80
+      - "82:80"
