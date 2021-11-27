@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../../db.php';
+require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../db.php';
 
 class PN_SubscriptionsDB
 {
