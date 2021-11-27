@@ -3,27 +3,31 @@ version: '3.8'
 
 services:
   php-apache:
-    build: php-apache.dockerfile
+    build: .
     volumes:
       - ./:/var/www/html/
-
-  nginx:
-    # https://github.com/Valian/docker-nginx-auto-ssl
-    image: valian/docker-nginx-auto-ssl
-    restart: on-failure
     ports:
-      - 80:80
-      - 443:443
-    environment:
-      ALLOWED_DOMAINS: 'easygastro.com'
-      SITES: 'easygastro.com=php-apache:80'
+      - "80:80"
+
+  #  nginx:
+  #    # https://github.com/Valian/docker-nginx-auto-ssl
+  #    image: valian/docker-nginx-auto-ssl
+  #    restart: on-failure
+  #    ports:
+  #      - "80:80"
+  #      - "443:443"
+  #    environment:
+  #      ALLOWED_DOMAINS: 'easygastro.com'
+  #      SITES: 'easygastro.com=php-apache:80'
 
   mysql:
     image: mysql:latest
     ports:
       - "81:3306"
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
     environment:
-      MYSQL_ROOT_PASSWORD: EGSPW
+      MYSQL_ROOT_PASSWORD: egspw
       MYSQL_DATABASE: EGS
 
   phpmyadmin:
