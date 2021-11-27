@@ -16,14 +16,14 @@ $PN_SubscriptionsDB = new PN_SubscriptionsDB();
 
 switch ($method) {
     case 'POST':
-        PN_SubscriptionsDB::saveSubscription($subscription->endpoint, $subscription->publicKey, $subscription->authToken, $subscription->contentEncoding);
+        $PN_SubscriptionsDB::saveSubscription($subscription->endpoint, $subscription->publicKey, $subscription->authToken, $subscription->contentEncoding, $subscription->fk_pk_user_id);
         break;
     case 'PUT':
         $PN_SubscriptionsDB::updateSubscriptionPublicKey($subscription->endpoint, $subscription->publicKey);
         $PN_SubscriptionsDB::updateSubscriptionAuthToken($subscription->endpoint, $subscription->authToken);
         break;
     case 'DELETE':
-        PN_SubscriptionsDB::deleteSubscription($subscription->endpoint);
+        $PN_SubscriptionsDB::deleteSubscription($subscription->endpoint);
         break;
     default:
         echo "Error: method not handled";

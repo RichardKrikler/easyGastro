@@ -2,8 +2,6 @@
 
 namespace easyGastro;
 
-use Pages;
-
 require_once 'SiteTemplate.php';
 require_once 'Pages.php';
 require_once 'db.php';

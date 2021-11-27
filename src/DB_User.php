@@ -28,13 +28,17 @@ class DB_User
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare("SELECT * FROM User WHERE name = :user AND passwort = :password AND typ = :typ");
-            $stmt->bindParam(':user', $_SESSION['username']['name']);
-            $stmt->bindParam(':password', $_SESSION['username']['password']);
-            $stmt->bindParam(':typ', $_SESSION['username']['typ']);
+            $stmt = $DB->prepare("SELECT pk_user_id, name, passwort, typ FROM User WHERE name = :name AND passwort = :password AND typ = :typ");
+            $stmt->bindParam(':name', $_SESSION['user']['name']);
+            $stmt->bindParam(':password', $_SESSION['user']['password']);
+            $stmt->bindParam(':typ', $_SESSION['user']['typ']);
             $stmt->execute();
+
+            if ($stmt->execute()) {
+                return $stmt->fetch();
+            }
+
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $stmt->fetch();
         } catch (PDOException  $e) {
             print('Error: ' . $e);
             exit();

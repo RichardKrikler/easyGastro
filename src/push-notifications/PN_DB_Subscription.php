@@ -21,7 +21,7 @@ class PN_SubscriptionsDB
         }
     }
 
-    static function saveSubscription($endpoint, $publicKey, $authToken, $contentEncoding)
+    static function saveSubscription($endpoint, $publicKey, $authToken, $contentEncoding, $userId)
     {
         $DB = DB::getDB();
         try {

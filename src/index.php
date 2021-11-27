@@ -2,19 +2,15 @@
 
 namespace easyGastro;
 
-use Pages;
-
 require_once 'SiteTemplate.php';
-
 require_once 'Pages.php';
 require_once 'db.php';
 require_once 'DB_User.php';
 
 session_start();
 
-if (isset($_SESSION['username'])) {
-    $usertyp = $_SESSION['username'];
-    Pages::changePage($usertyp['typ']);
+if (isset($_SESSION['user'])) {
+    Pages::changePage($_SESSION['user']['typ']);
 }
 
 if (isset($_POST['submit'])) {
@@ -24,12 +20,13 @@ if (isset($_POST['submit'])) {
         $row = $stmt->fetch();
         if (password_verify($_POST['password'], $row['passwort'])) {
             $user = [
+                'id' => $row['pk_user_id'],
                 'name' => $_POST['username'],
                 'password' => $row['passwort'],
                 'typ' => $row['typ'],
                 'timeout' => (time() + 86400), //86400 seconds = 1 day
             ];
-            $_SESSION['username'] = $user;
+            $_SESSION['user'] = $user;
             Pages::changePage($row['typ']);
         } else {
             print(<<<LOGIN_FAILED

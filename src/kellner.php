@@ -2,8 +2,6 @@
 
 namespace easyGastro;
 
-use Pages;
-
 require_once 'SiteTemplate.php';
 require_once 'Pages.php';
 require_once 'db.php';
@@ -29,7 +27,8 @@ $nav = <<<NAV
 NAV;
 
 $body = <<<BODY
-<script src="push-notifications/PN_Subscription.js"></script>
+<script defer>const userId = "{$_SESSION['user']['id']}"</script>
+<script src="push-notifications/PN_Subscription.js" defer></script>
 <button id="push-subscription-button">Push notifications !</button>
 BODY;
 

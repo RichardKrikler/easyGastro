@@ -15,7 +15,7 @@ class Pages
                 header("Location: kellner.php");
                 break;
             case "Küchenmitarbeiter":
-                header("Location: kuechenmitarbeiter.php");
+                header("Location: kueche.php");
                 break;
             default:
                 break;

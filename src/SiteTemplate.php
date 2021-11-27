@@ -6,6 +6,11 @@ class SiteTemplate
 {
     static function render(string $title, string $nav, string $content): string
     {
+        $usernameFooter = '';
+        if (isset($_SESSION['user'])) {
+            $usernameFooter = $_SESSION['user']['name'];
+        }
+
         return <<<TEMPLATE
 <!DOCTYPE html>
 <html lang="de">
@@ -31,13 +36,18 @@ class SiteTemplate
 <main class="flex-grow-1">
 {$content}
 </main>
-<!-- Footer -->
-<div class="bg-white d-flex justify-content-end w-100 fixed-bottom">
-    <!-- Copyright Notice Element -->
-    <div class="copyright-notice px-3 py-2">
-        <p class="fs-4 mb-0">© easyGastro</p>
+    <!-- Footer -->
+    <div class="bg-white d-flex justify-content-between w-100 fixed-bottom">
+        <!-- Username Element -->
+        <div class="username px-3 py-2">
+            <p class="fs-4 mb-0">{$usernameFooter}</p>
+        </div>
+
+        <!-- Copyright Notice Element -->
+        <div class="copyright-notice px-3 py-2">
+            <p class="fs-4 mb-0">© easyGastro</p>
+        </div>
     </div>
-</div>
 </body>
 </html>
 TEMPLATE;
