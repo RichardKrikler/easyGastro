@@ -1,4 +1,9 @@
 <?php
+namespace easyGastro;
+
+use PDO;
+use PDOException;
+
 require __DIR__ . '/vendor/autoload.php';
 
 class DB

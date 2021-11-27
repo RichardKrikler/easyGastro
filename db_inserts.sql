@@ -1,7 +1,8 @@
+# PW: 1234abcd
 INSERT INTO User(pk_user_id, name, passwort, typ)
-VALUES (1, 'Benedikt', '1234abc', 'Admin'),
-       (2, 'Julian', '1234abc', 'Kellner'),
-       (3, 'Richard', '1234abc', 'Küchenmitarbeiter');
+VALUES (1, 'Benedikt', '$2y$10$mC069U2NWIRxcBYoEV.IqOPPpx8JnMAuvS4wlHl2l2D9AmBmZnMT2', 'Admin'),
+       (2, 'Julian', '$2y$10$mC069U2NWIRxcBYoEV.IqOPPpx8JnMAuvS4wlHl2l2D9AmBmZnMT2', 'Kellner'),
+       (3, 'Richard', '$2y$10$mC069U2NWIRxcBYoEV.IqOPPpx8JnMAuvS4wlHl2l2D9AmBmZnMT2', 'Küchenmitarbeiter');
 
 INSERT INTO Tischgruppe(pk_tischgrp_id, bezeichnung)
 VALUES (1, 'Alle');
@@ -117,7 +118,7 @@ VALUES (1, 0.15, 1, 2),
        (13, 2.00, 9, 1),
        (14, 1.90, 10, 1);
 
-INSERT INTO Bestellung_GetraenkMenge(pk_fk_pk_bestellung_id, pk_fk_pk_getraenkmg_id, anzahl)
+INSERT INTO bestellung_getraenkmenge(pk_fk_pk_bestellung_id, pk_fk_pk_getraenkmg_id, anzahl)
 VALUES (1, 1, 1),
        (1, 4, 1),
        (2, 12, 1),

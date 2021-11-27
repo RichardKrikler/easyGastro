@@ -26,6 +26,7 @@ services:
       - "81:3306"
     volumes:
       - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./db_inserts.sql:/docker-entrypoint-initdb.d/db_inserts.sql
     environment:
       MYSQL_ROOT_PASSWORD: egspw
       MYSQL_DATABASE: EGS
