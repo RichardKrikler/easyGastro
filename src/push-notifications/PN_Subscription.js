@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return
     }
 
-    navigator.serviceWorker.register('PN_ServiceWorker.js').then(
+    navigator.serviceWorker.register('/push-notifications/PN_ServiceWorker.js').then(
         () => {
             console.log('[SW] Service worker has been registered')
             push_updateSubscription()

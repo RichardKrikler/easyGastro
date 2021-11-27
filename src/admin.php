@@ -32,4 +32,4 @@ $body = <<<BODY
 
 BODY;
 
-print(SiteTemplate::render('EGS-Login', $nav, $body));
+print(SiteTemplate::render('Admin - EGS', $nav, $body));
