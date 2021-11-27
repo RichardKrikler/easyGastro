@@ -1,0 +1,6 @@
+{
+    "require": {
+        "minishlink/web-push": "^6.0",
+        "endroid/qr-code": "^4.4"
+    }
+}
