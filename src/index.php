@@ -76,4 +76,4 @@ $body = <<<BODY
 BODY;
 
 
-print(SiteTemplate::render('EGS-Login', $nav, $body, true));
+print(SiteTemplate::render('EGS-Login', $nav, $body));

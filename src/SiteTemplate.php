@@ -4,7 +4,7 @@ namespace easyGastro;
 
 class SiteTemplate
 {
-    static function render(string $title, string $nav, string $content, bool $footer): string
+    static function render(string $title, string $nav, string $content): string
     {
         return <<<TEMPLATE
 <!DOCTYPE html>
@@ -32,7 +32,7 @@ class SiteTemplate
 {$content}
 </main>
 <!-- Footer -->
-<div class="bg-white d-flex justify-content-end w-100 fixed-bottom" hidden="{$footer}">
+<div class="bg-white d-flex justify-content-end w-100 fixed-bottom">
     <!-- Copyright Notice Element -->
     <div class="copyright-notice px-3 py-2">
         <p class="fs-4 mb-0">© easyGastro</p>
