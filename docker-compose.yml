@@ -1,27 +1,41 @@
+# docker-compose.yml
 version: '3.8'
 
 services:
-  db:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_ROOT_PASSWORD: EGS
-    ports:
-      - 3306:3306
-
   php-apache:
-    image: php_mysql-pdo
-    ports:
-      - 80:80
+    build: .
     volumes:
       - ./:/var/www/html/
+    ports:
+      - "80:80"
+
+  #  nginx:
+  #    # https://github.com/Valian/docker-nginx-auto-ssl
+  #    image: valian/docker-nginx-auto-ssl
+  #    restart: on-failure
+  #    ports:
+  #      - "80:80"
+  #      - "443:443"
+  #    environment:
+  #      ALLOWED_DOMAINS: 'easygastro.com'
+  #      SITES: 'easygastro.com=php-apache:80'
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - "81:3306"
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: egspw
+      MYSQL_DATABASE: EGS
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     links:
-      - db
+      - mysql
     environment:
-      PMA_HOST: db
+      PMA_HOST: mysql
       PMA_PORT: 3306
     ports:
-      - 81:80
+      - "82:80"

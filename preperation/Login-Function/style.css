@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: Poppins, serif;
+}
+
+body {
+    color: #212529;
+}
+
+/* General Styling */
+button,
+input,
+select {
+    border-radius: 6px !important;
+    /*box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;*/
+    border: none;
+}
+
+button {
+    box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;
+}
+
+.c-red {
+    color: #F85959;
+}
+
+.bg-red {
+    background-color: #F85959;
+}
+
+.bg-yellow {
+    background-color: #FFFF4D;
+}
+
+.bg-orange {
+    background-color: #ff8344;
+}
+
+.bg-green {
+    background-color: #9CFA7A;
+}
+
+.bg-blue {
+    background-color: #59c8ff;
+}
+
+/* Icons */
+.icon {
+    font-size: 23pt;
+    position: relative;
+}
+
+.icon.cloud-icon div {
+    font-size: 19px;
+    font-weight: bold;
+    color: #212529;
+    top: 0;
+    transform: translateX(24px);
+    position: absolute;
+}
+
+.icon.order-icon div {
+    font-size: 13pt;
+    text-align: center;
+    background-color: white;
+    color: #212529;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+    transform: translateX(-5px) translateY(-10px);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* Header Element */
+.header {
+    background-color: #6A6A6A;
+}
+
+.header h1 {
+    letter-spacing: 5px;
+}
+
+/* Admin-Nav Element */
+.admin-nav {
+    border-bottom: 1px solid #6A6A6A;
+}
+
+/* Copyright-Notice Element */
+.copyright-notice {
+    right: 0;
+}
+
+/* Login Element */
+.login {
+    background-color: #FFA200;
+    border-radius: 16px;
+    box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16);
+}
+
+.login input[type=text],
+.login input[type=password] {
+    background-color: #D3D3D3;
+    font-size: 17pt;
+}
+
+/* Table-Kitchen, Table-Waiter Element */
+.table-kitchen,
+.table-waiter {
+    border-radius: 6px;
+    box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;
+}
+
+.table-waiter.active {
+    box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Modal */
+.modal-content  {
+    border-radius: 16px;
+    box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;
+    transform: translateY(-200px);
+}
+
+/* Table Element */
+table th:not(:first-child) {
+    border-left: 1px solid;
+}
+
+table tr {
+    vertical-align: middle;
+}

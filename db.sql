@@ -35,13 +35,13 @@ CREATE TABLE Tischgruppe
 CREATE TABLE Tisch
 (
     pk_tischnr_id     INTEGER NOT NULL PRIMARY KEY,
-    tischcode       VARCHAR(255),
+    tischcode         VARCHAR(255),
     fk_pk_tischgrp_id INTEGER NOT NULL
 );
 
 CREATE TABLE Bestellung
 (
-    pk_bestellung_id INTEGER   NOT NULL,
+    pk_bestellung_id INTEGER  NOT NULL,
     pk_timestamp_von DATETIME NOT NULL,
     timestamp_bis    DATETIME,
     status           VARCHAR(255),
@@ -84,8 +84,8 @@ CREATE TABLE Menge
 
 CREATE TABLE Getraenk_Menge
 (
-    pk_getraenkmg_id     INTEGER NOT NULL PRIMARY KEY ,
-    preis                DOUBLE,
+    pk_getraenkmg_id  INTEGER NOT NULL PRIMARY KEY,
+    preis             DOUBLE,
     fk_pk_getraenk_id INTEGER NOT NULL,
     fk_pk_menge_id    INTEGER NOT NULL
 );
@@ -93,16 +93,27 @@ CREATE TABLE Getraenk_Menge
 CREATE TABLE bestellung_getraenkmenge
 (
     pk_fk_pk_bestellung_id INTEGER NOT NULL,
-    pk_fk_pk_getraenkmg_id  INTEGER NOT NULL,
+    pk_fk_pk_getraenkmg_id INTEGER NOT NULL,
     anzahl                 INTEGER
 );
 
 CREATE TABLE bestellung_speise
 (
     pk_fk_pk_bestellung_id INTEGER NOT NULL,
-    pk_fk_pk_speise       INTEGER NOT NULL,
+    pk_fk_pk_speise        INTEGER NOT NULL,
     anzahl                 INTEGER
 );
+
+CREATE TABLE PN_Subscriptions
+(
+    endpoint        VARCHAR(255) NOT NULL PRIMARY KEY,
+    publicKey       VARCHAR(88)  NOT NULL,
+    authToken       VARCHAR(24)  NOT NULL,
+    contentEncoding VARCHAR(100) NOT NULL,
+    fk_pk_user_id   INTEGER      NOT NULL
+);
+
+# -----
 
 ALTER TABLE Kellner
     ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_user_id) REFERENCES User (pk_user_id) ON DELETE CASCADE,
@@ -137,3 +148,6 @@ ALTER TABLE bestellung_speise
 ALTER TABLE Getraenk_Menge
     ADD CONSTRAINT FOREIGN KEY (fk_pk_getraenk_id) REFERENCES Getraenk (pk_getraenk_id),
     ADD CONSTRAINT FOREIGN KEY (fk_pk_menge_id) REFERENCES Menge (pk_menge_id);
+
+ALTER TABLE PN_Subscriptions
+    ADD CONSTRAINT FOREIGN KEY (fk_pk_user_id) REFERENCES User (pk_user_id);
