@@ -3,7 +3,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 class DB
 {
-    // name of the service from docker-compose.yml -> "db"
+    // name of the service from docker-compose.yml -> "mysql"
     private static string $SERVER = 'mysql';
     private static string $DBNAME = 'EGS';
     private static string $USERNAME = 'root';

@@ -9,7 +9,7 @@ class PN_SubscriptionsDB
         $DB = DB::getDB();
         $subscriptionsJSON = '';
         try {
-            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding FROM PN_Subscriptions');
+            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding, fk_pk_user_id FROM PN_Subscriptions');
             if ($stmt->execute()) {
                 $subscriptionsJSON = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -25,11 +25,12 @@ class PN_SubscriptionsDB
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare('INSERT INTO PN_Subscriptions (endpoint, publicKey, authToken, contentEncoding) VALUE (:endpoint, :publicKey, :authToken, :contentEncoding)');
+            $stmt = $DB->prepare('INSERT INTO PN_Subscriptions (endpoint, publicKey, authToken, contentEncoding, fk_pk_user_id) VALUE (:endpoint, :publicKey, :authToken, :contentEncoding, :userId)');
             $stmt->bindParam(":endpoint", $endpoint);
             $stmt->bindParam(":publicKey", $publicKey);
             $stmt->bindParam(":authToken", $authToken);
             $stmt->bindParam(":contentEncoding", $contentEncoding);
+            $stmt->bindParam(":userId", $userId);
             $stmt->execute();
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException  $e) {
