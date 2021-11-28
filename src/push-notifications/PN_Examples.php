@@ -1,4 +1,10 @@
 <?php
+
+namespace easyGastro\push_notifications;
+
+use ErrorException;
+use PN_Send;
+
 require __DIR__ . '/../vendor/autoload.php';
 require_once 'PN_DB_Subscription.php';
 require_once 'PN_Send.php';

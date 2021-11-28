@@ -27,9 +27,8 @@ $nav = <<<NAV
 NAV;
 
 $body = <<<BODY
+<button id="push-subscription-button">Push notifications!</button>
 <script defer>const userId = "{$_SESSION['user']['id']}"</script>
-<script src="push-notifications/PN_Subscription.js" defer></script>
-<button id="push-subscription-button">Push notifications !</button>
 BODY;
 
 print(SiteTemplate::render('Kellner - EGS', $nav, $body));

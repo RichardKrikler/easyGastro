@@ -182,8 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const token = subscription.getKey('auth')
         const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0]
 
-        console.log(userId)
-
         return fetch('/push-notifications/PN_Subscriber.php', {
             method,
             body: JSON.stringify({
@@ -191,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
                 authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
                 contentEncoding,
-                userId: userId
             }),
         }).then(() => subscription)
     }

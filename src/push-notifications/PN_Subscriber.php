@@ -1,4 +1,9 @@
 <?php
+
+namespace easyGastro\push_notifications;
+
+use PN_SubscriptionsDB;
+
 require __DIR__ . '/../vendor/autoload.php';
 require_once 'PN_DB_Subscription.php';
 

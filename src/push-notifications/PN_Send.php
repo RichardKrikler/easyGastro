@@ -1,4 +1,6 @@
 <?php
+namespace easyGastro\push_notifications;
+
 require __DIR__ . '/../vendor/autoload.php';
 
 use Minishlink\WebPush\Subscription;

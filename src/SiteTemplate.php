@@ -29,7 +29,8 @@ class SiteTemplate
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/push-notifications/PN_Subscription.js" defer></script>
 </head>
 <body class="d-flex flex-column vh-100">
 {$nav}

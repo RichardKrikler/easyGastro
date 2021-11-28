@@ -6,9 +6,9 @@ self.addEventListener('push', function (event) {
     const sendNotification = body => {
         return self.registration.showNotification('EGS', {
             body,
-            icon: '/src/logo.png',
-            image: '/src/logo.png',
-            badge: '/src/logo.png'
+            icon: '/resources/EGS_Logo_outlined_black_v1.png',
+            image: '/resources/EGS_Logo_outlined_black_v1.png',
+            badge: '/resources/EGS_Logo_outlined_black_v1.png'
         });
     };
 
