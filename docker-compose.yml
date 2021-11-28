@@ -5,20 +5,19 @@ services:
     build: .
     volumes:
       - ./src/:/var/www/html/
-#    ports:
-#      - "80:80"
-
-
-  nginx:
-    # https://github.com/Valian/docker-nginx-auto-ssl
-    image: valian/docker-nginx-auto-ssl
-    restart: on-failure
     ports:
       - "80:80"
-      - "443:443"
-    environment:
-      ALLOWED_DOMAINS: 'easygastro.com'
-      SITES: 'easygastro.com=php-apache:80'
+
+#  nginx:
+#    # https://github.com/Valian/docker-nginx-auto-ssl
+#    image: valian/docker-nginx-auto-ssl
+#    restart: on-failure
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#    environment:
+#      ALLOWED_DOMAINS: 'easygastro.com'
+#      SITES: 'easygastro.com=php-apache:80'
 
   mysql:
     image: mysql:latest
