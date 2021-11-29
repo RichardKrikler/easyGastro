@@ -126,12 +126,13 @@ class PN_DB_Subscription
         }
     }
 
-    static function getSubscriptionsOfTableGroup()
+    static function getSubscriptionsOfTableGroup(int $tableGroup)
     {
         $DB = DB::getDB();
         $subscriptionsJSON = '';
         try {
-            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding FROM PN_Subscriptions');
+            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding FROM PN_Subscriptions INNER JOIN User ON pk_user_id = fk_pk_user_id INNER JOIN Kellner ON pk_user_id = pk_fk_pk_user_id WHERE fk_pk_tischgrp_id = :tableGroup');
+            $stmt->bindParam(":tableGroup", $tableGroup, PDO::PARAM_INT);
             if ($stmt->execute()) {
                 $subscriptionsJSON = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }

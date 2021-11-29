@@ -27,6 +27,11 @@ switch ($_GET['type']) {
             $subscriptions = $PN_DB_Subscription->getSubscriptionsOfUserType($_GET['typ']);
         }
         break;
+    case 'tableGroup':
+        if (isset($_GET['group'])) {
+            $subscriptions = $PN_DB_Subscription->getSubscriptionsOfTableGroup($_GET['group']);
+        }
+        break;
     default:
         print('type not available');
         return;
