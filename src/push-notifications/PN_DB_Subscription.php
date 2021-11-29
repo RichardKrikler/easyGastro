@@ -16,7 +16,7 @@ class PN_DB_Subscription
         $DB = DB::getDB();
         $subscriptionsJSON = '';
         try {
-            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding, fk_pk_user_id FROM PN_Subscriptions');
+            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding FROM PN_Subscriptions');
             if ($stmt->execute()) {
                 $subscriptionsJSON = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -84,6 +84,41 @@ class PN_DB_Subscription
             $stmt->bindParam(":authToken", $authToken);
             $stmt->execute();
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function getSubscriptionOfUser($userId)
+    {
+        $DB = DB::getDB();
+        $subscriptionsJSON = '';
+        try {
+            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding FROM PN_Subscriptions WHERE fk_pk_user_id = :userId');
+            $stmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+            if ($stmt->execute()) {
+                $subscriptionsJSON = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $subscriptionsJSON;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function getSubscriptionsOfTableGroup()
+    {
+        $DB = DB::getDB();
+        $subscriptionsJSON = '';
+        try {
+            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding FROM PN_Subscriptions');
+            if ($stmt->execute()) {
+                $subscriptionsJSON = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $subscriptionsJSON;
         } catch (PDOException  $e) {
             print('Error: ' . $e);
             exit();
