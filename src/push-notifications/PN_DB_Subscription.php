@@ -28,7 +28,7 @@ class PN_DB_Subscription
         }
     }
 
-    static function saveSubscription($endpoint, $publicKey, $authToken, $contentEncoding, $userId)
+    static function saveSubscription(string $endpoint, string $publicKey, string $authToken, string $contentEncoding, int $userId)
     {
         $DB = DB::getDB();
         try {
@@ -46,7 +46,7 @@ class PN_DB_Subscription
         }
     }
 
-    static function deleteSubscription($endpoint)
+    static function deleteSubscription(string $endpoint)
     {
         $DB = DB::getDB();
         try {
@@ -60,7 +60,7 @@ class PN_DB_Subscription
         }
     }
 
-    static function updateSubscriptionPublicKey($endpoint, $publicKey)
+    static function updateSubscriptionPublicKey(string $endpoint, string $publicKey)
     {
         $DB = DB::getDB();
         try {
@@ -75,7 +75,7 @@ class PN_DB_Subscription
         }
     }
 
-    static function updateSubscriptionAuthToken($endpoint, $authToken)
+    static function updateSubscriptionAuthToken(string $endpoint, string $authToken)
     {
         $DB = DB::getDB();
         try {
@@ -90,13 +90,31 @@ class PN_DB_Subscription
         }
     }
 
-    static function getSubscriptionOfUser($userId)
+    static function getSubscriptionOfUser(int $userId)
     {
         $DB = DB::getDB();
         $subscriptionsJSON = '';
         try {
             $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding FROM PN_Subscriptions WHERE fk_pk_user_id = :userId');
             $stmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+            if ($stmt->execute()) {
+                $subscriptionsJSON = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $subscriptionsJSON;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function getSubscriptionsOfUserType(string $userType)
+    {
+        $DB = DB::getDB();
+        $subscriptionsJSON = '';
+        try {
+            $stmt = $DB->prepare('SELECT endpoint, authToken, publicKey, contentEncoding FROM PN_Subscriptions INNER JOIN User ON pk_user_id = fk_pk_user_id WHERE typ = :userType');
+            $stmt->bindParam(":userType", $userType);
             if ($stmt->execute()) {
                 $subscriptionsJSON = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }

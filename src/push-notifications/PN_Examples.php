@@ -2,8 +2,6 @@
 
 namespace easyGastro\push_notifications;
 
-use ErrorException;
-
 require __DIR__ . '/../vendor/autoload.php';
 require_once 'PN_DB_Subscription.php';
 require_once 'PN_Send.php';
@@ -24,15 +22,17 @@ switch ($_GET['type']) {
             $subscriptions = $PN_DB_Subscription->getSubscriptionOfUser($_GET['id']);
         }
         break;
+    case 'userType':
+        if (isset($_GET['typ'])) {
+            $subscriptions = $PN_DB_Subscription->getSubscriptionsOfUserType($_GET['typ']);
+        }
+        break;
     default:
+        print('type not available');
         return;
 }
 
 
 $PN_Send = new PN_Send();
 
-try {
-    $PN_Send->send($subscriptions, 'Hallo');
-} catch (ErrorException $e) {
-    print_r($e);
-}
+$PN_Send->send($subscriptions, 'Hallo');
