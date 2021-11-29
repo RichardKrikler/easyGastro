@@ -11,25 +11,24 @@ if (!isset($_GET['type'])) {
     return;
 }
 
-$PN_DB_Subscription = new PN_DB_Subscription();
 
 switch ($_GET['type']) {
     case 'all':
-        $subscriptions = $PN_DB_Subscription->getSubscriptions();
+        $subscriptions = PN_DB_Subscription::getSubscriptions();
         break;
     case 'userId':
         if (isset($_GET['id'])) {
-            $subscriptions = $PN_DB_Subscription->getSubscriptionOfUser($_GET['id']);
+            $subscriptions = PN_DB_Subscription::getSubscriptionOfUser($_GET['id']);
         }
         break;
     case 'userType':
         if (isset($_GET['typ'])) {
-            $subscriptions = $PN_DB_Subscription->getSubscriptionsOfUserType($_GET['typ']);
+            $subscriptions = PN_DB_Subscription::getSubscriptionsOfUserType($_GET['typ']);
         }
         break;
     case 'tableGroup':
         if (isset($_GET['group'])) {
-            $subscriptions = $PN_DB_Subscription->getSubscriptionsOfTableGroup($_GET['group']);
+            $subscriptions = PN_DB_Subscription::getSubscriptionsOfTableGroup($_GET['group']);
         }
         break;
     default:
@@ -41,3 +40,6 @@ switch ($_GET['type']) {
 $PN_Send = new PN_Send();
 
 $PN_Send->send($subscriptions, 'Hallo');
+
+// in one line:
+// (new PN_Send())->send((new PN_DB_Subscription())->getSubscriptions(), 'Hallo');

@@ -15,18 +15,16 @@ if (!isset($subscription->endpoint)) {
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-$PN_SubscriptionsDB = new PN_DB_Subscription();
-
 switch ($method) {
     case 'POST':
-        $PN_SubscriptionsDB::saveSubscription($subscription->endpoint, $subscription->publicKey, $subscription->authToken, $subscription->contentEncoding, $subscription->userId);
+        PN_DB_Subscription::saveSubscription($subscription->endpoint, $subscription->publicKey, $subscription->authToken, $subscription->contentEncoding, $subscription->userId);
         break;
     case 'PUT':
-        $PN_SubscriptionsDB::updateSubscriptionPublicKey($subscription->endpoint, $subscription->publicKey);
-        $PN_SubscriptionsDB::updateSubscriptionAuthToken($subscription->endpoint, $subscription->authToken);
+        PN_DB_Subscription::updateSubscriptionPublicKey($subscription->endpoint, $subscription->publicKey);
+        PN_DB_Subscription::updateSubscriptionAuthToken($subscription->endpoint, $subscription->authToken);
         break;
     case 'DELETE':
-        $PN_SubscriptionsDB::deleteSubscription($subscription->endpoint);
+        PN_DB_Subscription::deleteSubscription($subscription->endpoint);
         break;
     default:
         echo "Error: method not handled";

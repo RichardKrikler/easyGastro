@@ -9,7 +9,7 @@ require_once "db.php";
 
 class DB_User
 {
-    public static function getUserForLogin()
+    static function getUserForLogin()
     {
         $DB = DB::getDB();
         try {
@@ -24,7 +24,7 @@ class DB_User
         }
     }
 
-    public static function getDataOfUser()
+    static function getDataOfUser()
     {
         $DB = DB::getDB();
         try {

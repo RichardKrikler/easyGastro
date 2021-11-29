@@ -27,7 +27,8 @@ $nav = <<<NAV
 NAV;
 
 $body = <<<BODY
-<button id="push-subscription-button">Push notifications!</button>
+<br>
+<button id="push-subscription-button" class="btn btn-primary">Push notifications!</button>
 <script defer>const userId = "{$_SESSION['user']['id']}"</script>
 BODY;
 
