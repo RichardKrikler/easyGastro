@@ -2,8 +2,6 @@
 
 namespace easyGastro\push_notifications;
 
-use PN_SubscriptionsDB;
-
 require __DIR__ . '/../vendor/autoload.php';
 require_once 'PN_DB_Subscription.php';
 
@@ -17,11 +15,11 @@ if (!isset($subscription->endpoint)) {
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-$PN_SubscriptionsDB = new PN_SubscriptionsDB();
+$PN_SubscriptionsDB = new PN_DB_Subscription();
 
 switch ($method) {
     case 'POST':
-        $PN_SubscriptionsDB::saveSubscription($subscription->endpoint, $subscription->publicKey, $subscription->authToken, $subscription->contentEncoding, $subscription->fk_pk_user_id);
+        $PN_SubscriptionsDB::saveSubscription($subscription->endpoint, $subscription->publicKey, $subscription->authToken, $subscription->contentEncoding, $subscription->userId);
         break;
     case 'PUT':
         $PN_SubscriptionsDB::updateSubscriptionPublicKey($subscription->endpoint, $subscription->publicKey);

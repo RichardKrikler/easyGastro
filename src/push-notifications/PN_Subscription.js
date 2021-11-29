@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return
     }
 
-    navigator.serviceWorker.register('/push-notifications/PN_ServiceWorker.js').then(
+    navigator.serviceWorker.register('/PN_ServiceWorker.js').then(
         () => {
             console.log('[SW] Service worker has been registered')
             push_updateSubscription()
@@ -189,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
                 authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
                 contentEncoding,
+                userId: userId
             }),
         }).then(() => subscription)
     }

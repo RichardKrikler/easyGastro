@@ -2,10 +2,14 @@
 
 namespace easyGastro\push_notifications;
 
+use easyGastro\DB;
+use PDO;
+use PDOException;
+
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../db.php';
 
-class PN_SubscriptionsDB
+class PN_DB_Subscription
 {
     static function getSubscriptions()
     {
