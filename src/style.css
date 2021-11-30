@@ -45,6 +45,10 @@ button {
     background-color: #59c8ff;
 }
 
+.bg-unset {
+    background-color: unset;
+}
+
 /* Icons */
 .icon {
     font-size: 23pt;

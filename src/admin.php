@@ -18,9 +18,9 @@ $nav = <<<NAV
 <div class="header d-flex justify-content-between">
     <p class="invisible"></p>
     <h1 class="text-white fw-normal py-3 fs-3 mb-0">Adminseite</h1>
-    <form method="post">
-        <button type="submit" name="logout" id="logoutBt" style="background-color: #6A6A6A" class="shadow-none mx-1 px-1 my-3">
-            <span class="material-icons-outlined" style="color: white">logout</span>
+    <form method="post" class="d-flex flex-column justify-content-center">
+        <button type="submit" name="logout" id="logoutBt" class="shadow-none bg-unset">
+            <span class="icon material-icons-outlined mx-2 px-2 text-white">logout</span>
         </button>
     </form>
 </div>
