@@ -19,7 +19,7 @@ $nav = <<<NAV
     <p class="invisible"></p>
     <h1 class="text-white fw-normal py-3 fs-3 mb-0">Küchenseite</h1>
     <form method="post">
-        <button type="submit" name="logout" style="background-color: #6A6A6A" class="shadow-none mx-1 px-1 my-3">
+        <button type="submit" name="logout" id="logoutBt" style="background-color: #6A6A6A" class="shadow-none mx-1 px-1 my-3">
             <span class="material-icons-outlined" style="color: white">logout</span>
         </button>
     </form>

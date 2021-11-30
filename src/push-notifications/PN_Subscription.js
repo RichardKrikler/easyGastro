@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'BJvFyEJTb975woE0mQf6jCA7bJEdbAZ3nuT7Ex_I1KjWrDBKYwrfmH7dcMjseRBRoNfVZrgBb_rzTFLwvTyggHQ'
     let isPushEnabled = false
 
-    const pushButton = document.querySelector('#push-subscription-button')
+    const pushButton = document.getElementById('push-subscription-button')
     if (!pushButton) {
         return
     }
@@ -16,12 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
+    const logoutButton = document.getElementById('logoutBt')
+    if (logoutButton !== undefined) {
+        logoutButton.addEventListener('click', function () {
+            if (isPushEnabled) {
+                push_unsubscribe()
+            }
+        })
+    }
+
     if (!('serviceWorker' in navigator) ||
         !('PushManager' in window) ||
         !('showNotification' in ServiceWorkerRegistration.prototype)) {
         console.warn('Push Notifications incompatible with browser');
-        changePushButtonState('incompatible')
-        return
+        changePushButtonState('incompatible');
+        return;
     }
 
     // Check the current Notification permission.
