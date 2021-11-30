@@ -4,10 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPushEnabled = false
 
     const pushButton = document.getElementById('push-subscription-button')
-    if (!pushButton) {
+    if (pushButton == null) {
         return
     }
-
     pushButton.addEventListener('click', function () {
         if (isPushEnabled) {
             push_unsubscribe()
@@ -17,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     const logoutButton = document.getElementById('logoutBt')
-    if (logoutButton !== undefined) {
+    if (logoutButton !== null) {
         logoutButton.addEventListener('click', function () {
             if (isPushEnabled) {
                 push_unsubscribe()
