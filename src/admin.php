@@ -14,6 +14,18 @@ $row = DB_User::getDataOfUser();
 Pages::checkPage('Admin', $row);
 
 
+$pages = ['User', 'Tischgruppen', 'Tische', 'Getränkegruppen', 'Getränke', 'Mengen', 'Speisegruppen', 'Speisen', 'QR-Codes'];
+$navbarUl = '<ul class="navbar-nav flex-wrap justify-content-center">';
+foreach ($pages as $page) {
+    $navbarUl .= <<<LI
+  <li class="nav-item">
+    <h4 class="fw-light"><a class="nav-link" href="#">$page</a></h4>
+  </li>
+LI;
+}
+$navbarUl .= '</ul>';
+
+
 $nav = <<<NAV
 <div class="header d-flex justify-content-between">
     <p class="invisible"></p>
@@ -24,10 +36,22 @@ $nav = <<<NAV
         </button>
     </form>
 </div>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        {$navbarUl}
+    </div>
+  </div>
+</nav>
+
+<hr class="mt-0">
 NAV;
 
 $body = <<<BODY
-
 BODY;
 
 print(SiteTemplate::render('Admin - EGS', $nav, $body));
