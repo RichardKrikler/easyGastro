@@ -14,12 +14,16 @@ $row = DB_User::getDataOfUser();
 Pages::checkPage('Admin', $row);
 
 
+$currentPage = $_GET['page'] ?? '';
+
+
 $pages = ['User', 'Tischgruppen', 'Tische', 'Getränkegruppen', 'Getränke', 'Mengen', 'Speisegruppen', 'Speisen', 'QR-Codes'];
 $navbarUl = '<ul class="navbar-nav flex-wrap justify-content-center">';
 foreach ($pages as $page) {
+    $boldClass = $currentPage == $page ? 'fw-normal text-decoration-underline' : '';
     $navbarUl .= <<<LI
   <li class="nav-item">
-    <h4 class="fw-light"><a class="nav-link" href="#">$page</a></h4>
+    <h4 class="fw-light"><a class="nav-link text-black {$boldClass}" href="?page=$page">$page</a></h4>
   </li>
 LI;
 }
