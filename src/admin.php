@@ -38,6 +38,11 @@ $header = <<<HEADER
 HEADER;
 
 $body = <<<BODY
+<div class="text-center">
+    <h1 class="mt-5">Herzlich Willkommen auf der Adminseite von easyGastro!</h1>
+    <h2 class="mt-5">Hier können Sie Daten hinzufügen, bearbeiten und löschen.</h2>
+    <img src="resources/EGS_Logo_outlined_black_v1.png" style="width: 400px" class="mt-5">
+</div>
 BODY;
 
 print(SiteTemplate::render('Admin - EGS', $header, $body));

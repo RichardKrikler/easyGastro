@@ -4,7 +4,7 @@ namespace easyGastro\admin;
 
 class AdminNav
 {
-    private static array $pages = ['users.php' => 'Users', 'tablegroups.php' => 'Tischgruppen', 'tables.php' => 'Tische', 'drinkgroups.php' => 'Getränkegruppen', 'drinks.php' => 'Getränke', 'quantities.php' => 'Mengen', 'dishgroups.php' => 'Speisegruppen', 'dishes.php' => 'Speisen', 'qr-codes.php' => 'QR-Codes'];
+    private static array $pages = ['users.php' => 'Benutzer', 'tablegroups.php' => 'Tischgruppen', 'tables.php' => 'Tische', 'drinkgroups.php' => 'Getränkegruppen', 'drinks.php' => 'Getränke', 'quantities.php' => 'Mengen', 'dishgroups.php' => 'Speisegruppen', 'dishes.php' => 'Speisen', 'qr-codes.php' => 'QR-Codes'];
 
     public static function getNavigation(string $currentPage): string
     {
@@ -30,9 +30,9 @@ NAV;
             $boldClass = $currentPage == $filename ? 'fw-normal text-decoration-underline' : '';
             $url = '/admin/' . $filename;
             $pagesUl .= <<<LI
-  <li class="nav-item">
+<li class="nav-item">
     <h4 class="fw-light"><a class="nav-link text-black {$boldClass}" href="$url">$pageTitle</a></h4>
-  </li>
+</li>
 LI;
         }
         return $pagesUl . '</ul>';

@@ -34,10 +34,47 @@ $header = <<<HEADER
 
 {$adminNav}
 
-<hr class="mt-0">
+<hr class="my-0">
 HEADER;
 
 $body = <<<BODY
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col" class="fw-normal fs-5 text-center">ID</th>
+        <th scope="col" class="fw-normal fs-5 text-center">Name</th>
+        <th scope="col" class="fw-normal fs-5 text-center">Passwort</th>
+        <th scope="col" class="fw-normal fs-5 text-center">Typ</th>
+        <th scope="col" class="fw-normal fs-5 text-center"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row" class="fw-normal text-center">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+    </tr>
+    <tr>
+        <th scope="row" class="fw-normal text-center">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+    </tr>
+    <tr>
+        <th scope="row" class="fw-normal text-center">3</th>
+        <td>Larry the Bird</td>
+        <td>@twitter</td>
+        <td class="col-4">
+            <input type="text" id="textInput1" class="form-control d-inline-block text-center">
+        </td>
+        <td style="width: min-content">
+            <span class="icon material-icons-outlined">cloud_upload</span>
+            <span class="icon material-icons-outlined">close</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
 BODY;
 
-print(SiteTemplate::render('Users - Admin - EGS', $header, $body));
+print(SiteTemplate::render('Benutzer - Admin - EGS', $header, $body));
