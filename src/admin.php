@@ -18,7 +18,6 @@ session_start();
 $row = DB_User::getDataOfUser();
 Pages::checkPage('Admin', $row);
 
-//print(basename(__FILE__));
 
 $adminNav = AdminNav::getNavigation('');
 
