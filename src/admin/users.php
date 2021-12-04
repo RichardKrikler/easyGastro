@@ -26,7 +26,7 @@ $header = <<<HEADER
     <p class="invisible"></p>
     <h1 class="fw-normal py-3 fs-3 mb-0"><a href="/admin.php" class="text-white text-decoration-none">Adminseite</a></h1>
     <form method="post" class="d-flex flex-column justify-content-center my-auto">
-        <button type="submit" name="logout" id="logoutBt" class="shadow-none bg-unset">
+        <button type="submit" name="logout" id="logoutBt" class="shadow-none bg-unset d-flex flex-column justify-content-center">
             <span class="icon material-icons-outlined mx-2 px-2 text-white">logout</span>
         </button>
     </form>
