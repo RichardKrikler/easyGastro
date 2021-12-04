@@ -1,6 +1,10 @@
 <?php
 
-namespace easyGastro;
+namespace easyGastro\admin;
+
+use easyGastro\DB_User;
+use easyGastro\Pages;
+use easyGastro\SiteTemplate;
 
 require_once 'SiteTemplate.php';
 require_once 'Pages.php';
@@ -14,16 +18,14 @@ $row = DB_User::getDataOfUser();
 Pages::checkPage('Admin', $row);
 
 
-$currentPage = $_GET['page'] ?? '';
-
-
-$pages = ['User', 'Tischgruppen', 'Tische', 'Getränkegruppen', 'Getränke', 'Mengen', 'Speisegruppen', 'Speisen', 'QR-Codes'];
+$pages = ['users.php' => 'User', 'tablegroups.php' => 'Tischgruppen', 'tables.php' => 'Tische', 'drinkgroups.php' => 'Getränkegruppen', 'drinks.php' => 'Getränke', 'quantities.php' => 'Mengen', 'dishgroups.php' => 'Speisegruppen', 'dishes.php' => 'Speisen', 'qr-codes.php' => 'QR-Codes'];
 $navbarUl = '<ul class="navbar-nav flex-wrap justify-content-center">';
-foreach ($pages as $page) {
-    $boldClass = $currentPage == $page ? 'fw-normal text-decoration-underline' : '';
+foreach ($pages as $url => $pageTitle) {
+    //$boldClass = $currentPage == $page ? 'fw-normal text-decoration-underline' : '';
+    $url = 'admin/' . $url;
     $navbarUl .= <<<LI
   <li class="nav-item">
-    <h4 class="fw-light"><a class="nav-link text-black {$boldClass}" href="?page=$page">$page</a></h4>
+    <h4 class="fw-light"><a class="nav-link text-black" href="$url">$pageTitle</a></h4>
   </li>
 LI;
 }
