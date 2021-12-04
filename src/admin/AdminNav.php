@@ -28,7 +28,7 @@ NAV;
         $pagesUl = '<ul class="navbar-nav flex-wrap justify-content-center">';
         foreach (self::$pages as $filename => $pageTitle) {
             $boldClass = $currentPage == $filename ? 'fw-normal text-decoration-underline' : '';
-            $url = 'admin/' . $filename;
+            $url = '/admin/' . $filename;
             $pagesUl .= <<<LI
   <li class="nav-item">
     <h4 class="fw-light"><a class="nav-link text-black {$boldClass}" href="$url">$pageTitle</a></h4>
