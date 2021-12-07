@@ -46,33 +46,38 @@ foreach (DB_User::getUsers() as $user) {
     }
 
     $tableRows .= <<<TR
-<tr>
-    <th scope="row" class="fw-normal text-center">{$user['pk_user_id']}</th>
-    
-    <td class="col-3">
-        <input type="text" id="nameInput" class="form-control d-inline-block text-center" value="{$user['name']}">
-    </td>
-    
-    <td class="col-3">
-        <input type="password" id="passwortInput" class="form-control d-inline-block text-center" placeholder="‧‧‧">
-    </td>
-    
-    <td class="col-3">
-        <select class="form-select" id="typeSelect" aria-label="Type Selector">
-            <option>Typ</option>
-            $typeOptions
-        </select>
-    </td>
-    
-    <td style="width: min-content">
-        <div class="d-flex justify-content-evenly">
-            <span class="icon cloud-icon material-icons-outlined">cloud_upload
-                <div>*</div>
-            </span>
-            <span class="icon material-icons-outlined">close</span>
-        </div>
-    </td>
-</tr>
+<form method="get">
+    <tr class="admin-user-row">
+        <th scope="row" class="fw-normal text-center">
+            {$user['pk_user_id']}
+            <input type="hidden" value="{$user['pk_user_id']}" name="userId">
+        </th>
+        
+        <td class="col-3">
+            <input type="text" id="nameInput" class="form-control d-inline-block text-center" value="{$user['name']}" start_value="{$user['name']}" name="name">
+        </td>
+        
+        <td class="col-3">
+            <input type="password" id="passwortInput" class="form-control d-inline-block text-center" placeholder="‧‧‧" name="password" start_value="">
+        </td>
+        
+        <td class="col-3">
+            <select class="form-select" id="typeSelect" aria-label="Type Selector" name="typ" start_value="{$user['typ']}">
+                <option>Typ</option>
+                $typeOptions
+            </select>
+        </td>
+        
+        <td style="width: min-content">
+            <div class="d-flex justify-content-evenly">
+                <button onchange="submit()" class="bg-unset shadow-none d-flex justify-content-center flex-column" style="color: unset" disabled>
+                    <span class="icon cloud-icon material-icons-outlined text-gray">cloud_upload<div></div></span>
+                </button>
+                <span class="icon material-icons-outlined">close</span>
+            </div>
+        </td>
+    </tr>
+</form>
 TR;
 }
 

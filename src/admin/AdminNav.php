@@ -10,6 +10,7 @@ class AdminNav
     {
         $pagesUl = self::getPagesUl($currentPage);
         return <<<NAV
+<script src="/admin/admin.js" defer></script>
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

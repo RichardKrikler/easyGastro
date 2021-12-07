@@ -49,10 +49,18 @@ button {
     background-color: unset;
 }
 
+.text-gray {
+    color: gray;
+}
+
 /* Icons */
 .icon {
     font-size: 23pt;
     position: relative;
+}
+
+.icon.storage-difference div::before {
+    content: '*';
 }
 
 .icon.cloud-icon div {
