@@ -74,11 +74,32 @@ foreach (DB_Admin_Users::getUsers() as $user) {
                 <button onchange="submit()" class="bg-unset shadow-none d-flex justify-content-center flex-column" style="color: unset" disabled>
                     <span class="icon cloud-icon material-icons-outlined text-gray">cloud_upload<div></div></span>
                 </button>
-                <span class="icon material-icons-outlined">close</span>
+                <button type="button" class="bg-unset shadow-none d-flex justify-content-center flex-column" style="color: unset" data-bs-toggle="modal" data-bs-target="#deleteUserModal{$user['pk_user_id']}">
+                    <span class="icon material-icons-outlined">close</span>
+                </button>
             </div>
         </td>
     </tr>
 </form>
+
+<!-- Delete User - Modal -->
+<div class="modal fade" id="deleteUserModal{$user['pk_user_id']}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+            <div class="modal-header d-flex justify-content-center border-bottom-0">
+                <h3 class="modal-title">Benutzer {$user['name']} löschen</h3>
+            </div>
+            <div class="modal-footer d-flex justify-content-between border-top-0">
+                <form method="get" action="deleteUser.php" class="d-none">
+                    <input type="hidden" value="{$user['pk_user_id']}" name="userId">
+                    <button type="submit" class="btn bg-red text-white fs-5">Löschen</button>
+                </form>
+                <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">Zurück</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 TR;
 }
 

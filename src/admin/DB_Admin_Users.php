@@ -72,4 +72,9 @@ class DB_Admin_Users
             exit();
         }
     }
+
+    public static function deleteUser(int $userId)
+    {
+
+    }
 }
