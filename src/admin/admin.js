@@ -6,7 +6,7 @@ adminUserRows.forEach(adminUserRow => {
 
     inputElements.forEach(inputElement => inputElement.addEventListener('input', () => checkDifference(cloudIcon, inputElements.concat(selectElements))))
     selectElements[0].addEventListener('change', () => checkDifference(cloudIcon, inputElements.concat(selectElements)))
-});
+})
 
 function checkDifference(cloudIcon, inputElementAr) {
     const parentButton = cloudIcon.parentElement

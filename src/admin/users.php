@@ -10,6 +10,7 @@ require_once '../SiteTemplate.php';
 require_once '../Pages.php';
 require_once '../db.php';
 require_once '../DB_User.php';
+require_once 'DB_Admin_Users.php';
 require_once 'AdminNav.php';
 
 
@@ -38,7 +39,7 @@ $header = <<<HEADER
 HEADER;
 
 $tableRows = '';
-foreach (DB_User::getUsers() as $user) {
+foreach (DB_Admin_Users::getUsers() as $user) {
     $typeOptions = '';
     foreach (['Kellner', 'Küchenmitarbeiter', 'Admin'] as $type) {
         $selected = $user['typ'] == $type ? 'selected' : '';
@@ -46,7 +47,7 @@ foreach (DB_User::getUsers() as $user) {
     }
 
     $tableRows .= <<<TR
-<form method="get">
+<form method="post" action="updateUser.php">
     <tr class="admin-user-row">
         <th scope="row" class="fw-normal text-center">
             {$user['pk_user_id']}
@@ -62,7 +63,7 @@ foreach (DB_User::getUsers() as $user) {
         </td>
         
         <td class="col-3">
-            <select class="form-select" id="typeSelect" aria-label="Type Selector" name="typ" start_value="{$user['typ']}">
+            <select class="form-select" id="typeSelect" aria-label="Type Selector" name="type" start_value="{$user['typ']}">
                 <option>Typ</option>
                 $typeOptions
             </select>
