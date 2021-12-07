@@ -34,47 +34,70 @@ $header = <<<HEADER
 
 {$adminNav}
 
-<hr class="my-0">
+<hr class="mt-0">
 HEADER;
 
+$tableRows = '';
+foreach (DB_User::getUsers() as $user) {
+    $typeOptions = '';
+    foreach (['Kellner', 'Küchenmitarbeiter', 'Admin'] as $type) {
+        $selected = $user['typ'] == $type ? 'selected' : '';
+        $typeOptions .= "<option value='$type' $selected>$type</option>";
+    }
+
+    $tableRows .= <<<TR
+<tr>
+    <th scope="row" class="fw-normal text-center">{$user['pk_user_id']}</th>
+    
+    <td class="col-3">
+        <input type="text" id="nameInput" class="form-control d-inline-block text-center" value="{$user['name']}">
+    </td>
+    
+    <td class="col-3">
+        <input type="password" id="passwortInput" class="form-control d-inline-block text-center" placeholder="‧‧‧">
+    </td>
+    
+    <td class="col-3">
+        <select class="form-select" id="typeSelect" aria-label="Type Selector">
+            <option>Typ</option>
+            $typeOptions
+        </select>
+    </td>
+    
+    <td style="width: min-content">
+        <div class="d-flex justify-content-evenly">
+            <span class="icon cloud-icon material-icons-outlined">cloud_upload
+                <div>*</div>
+            </span>
+            <span class="icon material-icons-outlined">close</span>
+        </div>
+    </td>
+</tr>
+TR;
+}
+
 $body = <<<BODY
-<table class="table">
+<div class="col col-10 mx-auto">
+
+<div class="d-flex justify-content-center">
+    <button class="btn btn-secondary mt-3 mb-5">Benutzer hinzufügen</button>
+</div>
+
+<table class="table mx-2">
     <thead>
-    <tr>
-        <th scope="col" class="fw-normal fs-5 text-center">ID</th>
-        <th scope="col" class="fw-normal fs-5 text-center">Name</th>
-        <th scope="col" class="fw-normal fs-5 text-center">Passwort</th>
-        <th scope="col" class="fw-normal fs-5 text-center">Typ</th>
-        <th scope="col" class="fw-normal fs-5 text-center"></th>
-    </tr>
+        <tr>
+            <th scope="col" class="fw-normal fs-5 text-center">ID</th>
+            <th scope="col" class="fw-normal fs-5 text-center">Name</th>
+            <th scope="col" class="fw-normal fs-5 text-center">Passwort</th>
+            <th scope="col" class="fw-normal fs-5 text-center">Typ</th>
+            <th scope="col"></th>
+        </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row" class="fw-normal text-center">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row" class="fw-normal text-center">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-    <tr>
-        <th scope="row" class="fw-normal text-center">3</th>
-        <td>Larry the Bird</td>
-        <td>@twitter</td>
-        <td class="col-4">
-            <input type="text" id="textInput1" class="form-control d-inline-block text-center">
-        </td>
-        <td style="width: min-content">
-            <span class="icon material-icons-outlined">cloud_upload</span>
-            <span class="icon material-icons-outlined">close</span>
-        </td>
-    </tr>
+        $tableRows
     </tbody>
 </table>
+</div>
 BODY;
 
 print(SiteTemplate::render('Benutzer - Admin - EGS', $header, $body));

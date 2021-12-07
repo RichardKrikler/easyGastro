@@ -44,4 +44,21 @@ class DB_User
             exit();
         }
     }
+
+    static function getUsers()
+    {
+        $DB = DB::getDB();
+        $userAr = '';
+        try {
+            $stmt = $DB->prepare("SELECT pk_user_id, name, typ FROM User");
+            if ($stmt->execute()) {
+                $userAr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $userAr;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
 }
