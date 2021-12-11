@@ -4,6 +4,9 @@ self.addEventListener('push', function (event) {
     }
 
     const sendNotification = body => {
+        const channel = new BroadcastChannel('sw-messages');
+        channel.postMessage({title: body});
+
         return self.registration.showNotification('EGS', {
             body,
             icon: '/resources/EGS_Logo_outlined_black_v1.png',

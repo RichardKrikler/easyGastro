@@ -1,3 +1,8 @@
+const channel = new BroadcastChannel('sw-messages');
+channel.addEventListener('message', event => {
+    console.log('Received', event.data)
+})
+
 document.addEventListener('DOMContentLoaded', () => {
     const applicationServerKey =
         'BJvFyEJTb975woE0mQf6jCA7bJEdbAZ3nuT7Ex_I1KjWrDBKYwrfmH7dcMjseRBRoNfVZrgBb_rzTFLwvTyggHQ'

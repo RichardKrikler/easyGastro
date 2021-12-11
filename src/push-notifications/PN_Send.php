@@ -53,9 +53,9 @@ class PN_Send
             $endpoint = $report->getRequest()->getUri()->__toString();
 
             if ($report->isSuccess()) {
-                echo "[v] Message sent successfully for subscription {$endpoint}.";
+                echo "[v] Message sent successfully for subscription $endpoint.";
             } else {
-                echo "[x] Message failed to sent for subscription {$endpoint}: {$report->getReason()}";
+                echo "[x] Message failed to sent for subscription $endpoint: {$report->getReason()}";
             }
         }
     }
