@@ -7,14 +7,14 @@ class Pages
     public static function changePage($input)
     {
         switch ($input) {
-            case "Admin":
-                header("Location: /admin.php");
+            case 'Admin':
+                header('Location: /admin.php');
                 break;
-            case "Kellner":
-                header("Location: /kellner.php");
+            case 'Kellner':
+                header('Location: /kellner.php');
                 break;
-            case "Küchenmitarbeiter":
-                header("Location: /kueche.php");
+            case 'Küchenmitarbeiter':
+                header('Location: /kueche.php');
                 break;
             default:
                 break;

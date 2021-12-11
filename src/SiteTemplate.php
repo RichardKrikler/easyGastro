@@ -11,6 +11,7 @@ class SiteTemplate
             $usernameFooter = $_SESSION['user']['name'];
         }
 
+        /** @var TYPE_NAME $usernameFooter */
         return <<<TEMPLATE
 <!DOCTYPE html>
 <html lang="de">
@@ -33,9 +34,9 @@ class SiteTemplate
     <script src="/push-notifications/PN_Subscription.js" defer></script>
 </head>
 <body class="d-flex flex-column vh-100">
-{$header}
+$header
 <main class="flex-grow-1">
-{$content}
+$content
 </main>
     <!-- Footer -->
     <div class="bg-white d-flex justify-content-between w-100 fixed-bottom">
