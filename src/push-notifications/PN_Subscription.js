@@ -27,9 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!('serviceWorker' in navigator) ||
         !('PushManager' in window) ||
         !('showNotification' in ServiceWorkerRegistration.prototype)) {
-        console.warn('Push Notifications incompatible with browser');
-        changePushButtonState('incompatible');
-        return;
+        console.warn('Push Notifications incompatible with browser')
+        changePushButtonState('incompatible')
+        return
     }
 
     // Check the current Notification permission.
