@@ -17,8 +17,8 @@ class DB_Table
         $DB = DB::getDB();
         $tableIDs = array();
         try {
-            $stmt = $DB->prepare('SELECT DISTINCT pk_tischnr_id FROM tisch
-                                        INNER JOIN tischgruppe t on tisch.fk_pk_tischgrp_id = t.pk_tischgrp_id
+            $stmt = $DB->prepare('SELECT DISTINCT pk_tischnr_id FROM Tisch
+                                        INNER JOIN Tischgruppe t on Tisch.fk_pk_tischgrp_id = t.pk_tischgrp_id
                                         WHERE t.bezeichnung = :tischgrp');
             $stmt->bindParam(':tischgrp', $tableGroup);
             if ($stmt->execute()) {
@@ -37,9 +37,9 @@ class DB_Table
         $DB = DB::getDB();
         $tableGroup = '';
         try {
-            $stmt = $DB->prepare('SELECT bezeichnung FROM tischgruppe
-                                        INNER JOIN kellner k on tischgruppe.pk_tischgrp_id = k.fk_pk_tischgrp_id
-                                        INNER JOIN user u on k.pk_fk_pk_user_id = u.pk_user_id
+            $stmt = $DB->prepare('SELECT bezeichnung FROM Tischgruppe
+                                        INNER JOIN Kellner k on Tischgruppe.pk_tischgrp_id = k.fk_pk_tischgrp_id
+                                        INNER JOIN User u on k.pk_fk_pk_user_id = u.pk_user_id
                                         WHERE u.name = :name');
             $stmt->bindParam(':name', $username);
             if ($stmt->execute()) {
@@ -60,8 +60,8 @@ class DB_Table
         try {
             $stmt = $DB->prepare('SELECT anzahl, bezeichnung, CAST(preis * anzahl AS DECIMAL(8,2)) AS GSPreis
                                         FROM bestellung_speise
-                                        INNER JOIN bestellung b on bestellung_speise.pk_fk_pk_bestellung_id = b.pk_bestellung_id
-                                        INNER JOIN speise s on bestellung_speise.pk_fk_pk_speise = s.pk_speise_id
+                                        INNER JOIN Bestellung b on bestellung_speise.pk_fk_pk_bestellung_id = b.pk_bestellung_id
+                                        INNER JOIN Speise s on bestellung_speise.pk_fk_pk_speise = s.pk_speise_id
                                         WHERE b.fk_pk_tischnr_id = :tischnr AND b.status != \'Bezahlt\'');
             $stmt->bindParam(':tischnr', $oneTable);
             if ($stmt->execute()) {
@@ -82,10 +82,10 @@ class DB_Table
         try {
             $stmt = $DB->prepare('SELECT anzahl, bezeichnung, m.wert AS menge, CAST(preis * anzahl AS DECIMAL(8,2)) AS GSPreis
                                         FROM bestellung_getraenkmenge
-                                        INNER JOIN bestellung b on bestellung_getraenkmenge.pk_fk_pk_bestellung_id = b.pk_bestellung_id
-                                        INNER JOIN getraenk_menge gm on bestellung_getraenkmenge.pk_fk_pk_getraenkmg_id = gm.pk_getraenkmg_id
-                                        INNER JOIN getraenk g on gm.fk_pk_getraenk_id = g.pk_getraenk_id
-                                        INNER JOIN menge m on gm.fk_pk_menge_id = m.pk_menge_id
+                                        INNER JOIN Bestellung b on bestellung_getraenkmenge.pk_fk_pk_bestellung_id = b.pk_bestellung_id
+                                        INNER JOIN Getraenk_Menge gm on bestellung_getraenkmenge.pk_fk_pk_getraenkmg_id = gm.pk_getraenkmg_id
+                                        INNER JOIN Getraenk g on gm.fk_pk_getraenk_id = g.pk_getraenk_id
+                                        INNER JOIN Menge m on gm.fk_pk_menge_id = m.pk_menge_id
                                         WHERE b.fk_pk_tischnr_id = :tischnr AND b.status != \'Bezahlt\'');
             $stmt->bindParam(':tischnr', $oneTable);
             if ($stmt->execute()) {
