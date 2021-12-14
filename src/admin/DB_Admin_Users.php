@@ -77,7 +77,7 @@ class DB_Admin_Users
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare("DELETE FROM User WHERE pk_user_id = :userId");
+            $stmt = $DB->prepare("DELETE FROM User WHERE pk_user_id = :userId AND pk_user_id != 1");
             $stmt->bindParam(':userId', $userId);
             $stmt->execute();
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
