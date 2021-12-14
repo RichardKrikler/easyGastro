@@ -90,7 +90,7 @@ foreach (DB_Admin_Users::getUsers() as $user) {
                 <h3 class="modal-title">Benutzer {$user['name']} löschen</h3>
             </div>
             <div class="modal-footer d-flex justify-content-between border-top-0">
-                <form method="get" action="deleteUser.php" class="d-none">
+                <form method="post" action="deleteUser.php" class="d-none">
                     <input type="hidden" value="{$user['pk_user_id']}" name="userId">
                     <button type="submit" class="btn bg-red text-white fs-5">Löschen</button>
                 </form>

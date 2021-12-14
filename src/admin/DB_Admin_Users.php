@@ -75,6 +75,16 @@ class DB_Admin_Users
 
     public static function deleteUser(int $userId)
     {
+        $DB = DB::getDB();
+        try {
+            $stmt = $DB->prepare("DELETE FROM User WHERE pk_user_id = :userId");
+            $stmt->bindParam(':userId', $userId);
+            $stmt->execute();
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
 
     }
 }
