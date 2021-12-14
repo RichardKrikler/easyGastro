@@ -45,10 +45,22 @@ button {
     background-color: #59c8ff;
 }
 
+.bg-unset {
+    background-color: unset;
+}
+
+.text-gray {
+    color: gray;
+}
+
 /* Icons */
 .icon {
     font-size: 23pt;
     position: relative;
+}
+
+.icon.storage-difference div::before {
+    content: '*';
 }
 
 .icon.cloud-icon div {
@@ -95,7 +107,7 @@ button {
     right: 0;
 }
 
-    /* Login Element */
+/* Login Element */
 .login {
     background-color: #FFA200;
     border-radius: 16px;
@@ -120,7 +132,7 @@ button {
 }
 
 /* Modal */
-.modal-content  {
+.modal-content {
     border-radius: 16px;
     box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.16) !important;
     transform: translateY(-50px);

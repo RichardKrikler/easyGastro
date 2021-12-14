@@ -5,7 +5,7 @@ namespace easyGastro;
 use PDO;
 use PDOException;
 
-require_once "db.php";
+require_once 'db.php';
 
 class DB_User
 {
@@ -13,7 +13,7 @@ class DB_User
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare("SELECT * FROM User WHERE name = :user");
+            $stmt = $DB->prepare('SELECT * FROM User WHERE name = :user');
             $stmt->bindParam(':user', $_POST['username']);
             $stmt->execute();
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -28,7 +28,7 @@ class DB_User
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare("SELECT pk_user_id, name, passwort, typ FROM User WHERE name = :name AND passwort = :password AND typ = :typ");
+            $stmt = $DB->prepare('SELECT pk_user_id, name, passwort, typ FROM User WHERE name = :name AND passwort = :password AND typ = :typ');
             $stmt->bindParam(':name', $_SESSION['user']['name']);
             $stmt->bindParam(':password', $_SESSION['user']['password']);
             $stmt->bindParam(':typ', $_SESSION['user']['typ']);

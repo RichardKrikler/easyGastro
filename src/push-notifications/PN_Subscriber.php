@@ -27,6 +27,6 @@ switch ($method) {
         PN_DB_Subscription::deleteSubscription($subscription->endpoint);
         break;
     default:
-        echo "Error: method not handled";
+        echo 'Error: method not handled';
         return;
 }
