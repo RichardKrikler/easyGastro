@@ -1,11 +1,16 @@
-let vsd;
+let counter = 0;
+let lastData;
 
 const getData = () => {
     fetch('/waiter/getTableInformation.php')
     .then(response => response.json())
     .then(data => {
-        if(JSON.stringify(data) !== JSON.stringify(vsd)){
-            vsd = JSON.stringify(data);
+        if(JSON.stringify(data) !== JSON.stringify(lastData)){
+            lastData = data;
+            if(counter > 0){
+                location.reload();
+            }
+            counter++;
         }
     })
     .catch((error) => {
@@ -15,7 +20,6 @@ const getData = () => {
 const interval = setInterval(() => {
     getData();
 }, 10000);
-
 
 //Input von Rückgeld in Retourgeld anzeigen
 
@@ -34,3 +38,11 @@ $(document).ready(function (){
         $('input[name="backMoney"]').val((contents-priceOfTable).toFixed(2));
     });
 });
+
+//Anzeige des Inhalts
+const channel = new BroadcastChannel('sw-messages');
+channel.addEventListener('message', event => {
+    if(event.data['title'] === 'Hallo'){
+        document.getElementById('table_2').classList.add('active');
+    }
+})
