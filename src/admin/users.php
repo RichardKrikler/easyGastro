@@ -64,7 +64,7 @@ foreach (DB_Admin_Users::getUsers() as $user) {
         
         <td class="col-3">
             <select class="form-select" id="typeSelect" aria-label="Type Selector" name="type" start_value="{$user['typ']}">
-                <option>Typ</option>
+                <option disabled hidden value="">Typ</option>
                 $typeOptions
             </select>
         </td>
@@ -107,8 +107,39 @@ $body = <<<BODY
 <div class="col col-10 mx-auto">
 
 <div class="d-flex justify-content-center">
-    <button class="btn btn-secondary mt-3 mb-5">Benutzer hinzufügen</button>
+    <button class="btn btn-secondary mt-3 mb-5 bg-gray" data-bs-toggle="modal" data-bs-target="#createUser">Benutzer erstellen</button>
 </div>
+
+<form method="post" action="createUser.php">
+    <div class="modal fade" id="createUser" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0">
+                    <div class="modal-header d-flex justify-content-center border-bottom-0">
+                        <h3 class="modal-title">Benutzer erstellen</h3>
+                    </div>
+                    <div class="modal-body">
+                        <label for="createUserName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="createUserName" name="name" required>
+                        
+                        <label for="createUserPassword" class="form-label mt-3">Passwort</label>
+                        <input type="password" class="form-control" id="createUserPassword" name="password" required>
+                        
+                        <label for="createUserType" class="form-label mt-3">Typ</label>
+                        <select class="form-select" id="createUserType" aria-label="Type Selector" name="type" required>
+                            <option disabled hidden selected value="">Typ</option>
+                            <option value="Kellner">Kellner</option>
+                            <option value="Küchenmitarbeiter">Küchenmitarbeiter</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between border-top-0 mt-3">
+                            <button type="submit" class="btn btn-primary text-white fs-5">Erstellen</button>
+                        <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">Zurück</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</form>
 
 <table class="table mx-2">
     <thead>

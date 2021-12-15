@@ -11,7 +11,6 @@ class SiteTemplate
             $usernameFooter = $_SESSION['user']['name'];
         }
 
-        /** @var TYPE_NAME $usernameFooter */
         return <<<TEMPLATE
 <!DOCTYPE html>
 <html lang="de">
@@ -19,7 +18,7 @@ class SiteTemplate
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{$title}</title>
+    <title>$title</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -38,18 +37,20 @@ $header
 <main class="flex-grow-1">
 $content
 </main>
-    <!-- Footer -->
-    <div class="bg-white d-flex justify-content-between w-100 fixed-bottom">
-        <!-- Username Element -->
-        <div class="username px-3 py-2">
-            <p class="fs-4 mb-0">{$usernameFooter}</p>
-        </div>
 
-        <!-- Copyright Notice Element -->
-        <div class="copyright-notice px-3 py-2">
-            <p class="fs-4 mb-0">© easyGastro</p>
-        </div>
+<!-- Footer -->
+<div class="bg-white d-flex justify-content-between w-100 fixed-bottom">
+    <!-- Username Element -->
+    <div class="username px-3 py-2">
+        <p class="fs-4 mb-0">$usernameFooter</p>
     </div>
+
+    <!-- Copyright Notice Element -->
+    <div class="copyright-notice px-3 py-2">
+        <p class="fs-4 mb-0">© easyGastro</p>
+    </div>
+</div>
+    
 </body>
 </html>
 TEMPLATE;
