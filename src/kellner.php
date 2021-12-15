@@ -144,6 +144,9 @@ $body .= <<<BODY
 <br>
 <button id="push-subscription-button" class="btn btn-primary my-3">Push notifications!</button>
 <script defer>const userId = "{$_SESSION['user']['id']}"</script>
+
+<div id="logger"></div>
+
 BODY;
 
 print(SiteTemplate::render('Kellner - EGS', $nav, $body));
