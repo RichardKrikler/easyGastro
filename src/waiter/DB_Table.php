@@ -53,6 +53,27 @@ class DB_Table
         }
     }
 
+    static function getTableGroupOfTable($tableID)
+    {
+        $DB = DB::getDB();
+        $tableGroup = '';
+        try {
+            $stmt = $DB->prepare('SELECT bezeichnung 
+                                        FROM Tischgruppe
+                                        INNER JOIN tisch t on tischgruppe.pk_tischgrp_id = t.fk_pk_tischgrp_id
+                                        WHERE t.pk_tischnr_id = :tischnr');
+            $stmt->bindParam(':tischnr', $tableID);
+            if ($stmt->execute()) {
+                $tableGroup = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $tableGroup;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
     static function getFoodOfTable($oneTable)
     {
         $DB = DB::getDB();
