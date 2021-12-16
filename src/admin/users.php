@@ -64,7 +64,7 @@ foreach (DB_Admin_Users::getUsers() as $user) {
         
         <td class="col-3">
             <select class="form-select" id="typeSelect" aria-label="Type Selector" name="type" start_value="{$user['typ']}">
-                <option disabled hidden value="">Typ</option>
+                <option disabled hidden value="" selected>Typ</option>
                 $typeOptions
             </select>
         </td>

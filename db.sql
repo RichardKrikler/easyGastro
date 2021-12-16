@@ -4,7 +4,7 @@ USE EGS;
 
 CREATE TABLE User
 (
-    pk_user_id INTEGER NOT NULL PRIMARY KEY,
+    pk_user_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name       VARCHAR(255),
     passwort   VARCHAR(128),
     typ        VARCHAR(255)
@@ -13,7 +13,7 @@ CREATE TABLE User
 CREATE TABLE Kellner
 (
     pk_fk_pk_user_id  INTEGER NOT NULL PRIMARY KEY,
-    fk_pk_tischgrp_id INTEGER NOT NULL
+    fk_pk_tischgrp_id INTEGER
 );
 
 CREATE TABLE Admin

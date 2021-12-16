@@ -20,5 +20,5 @@ if ((isset($row) && $row['typ'] !== 'Admin') || !isset($_POST['name']) || !isset
     return;
 }
 
-//DB_Admin_Users::createUser($_POST['userId']);
+DB_Admin_Users::createUser($_POST['name'], password_hash($_POST['password'], PASSWORD_BCRYPT), $_POST['type']);
 
