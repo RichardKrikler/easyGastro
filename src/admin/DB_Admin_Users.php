@@ -80,6 +80,44 @@ class DB_Admin_Users
     {
         $DB = DB::getDB();
         try {
+            $user = self::getUser($userId);
+
+            if ($user['id'] === 1) {
+                return;
+            }
+
+            switch ($user['typ']) {
+                case 'Kellner':
+                    $stmt = $DB->prepare("DELETE FROM Kellner WHERE pk_fk_pk_user_id = :userId");
+                    break;
+                case 'Küchenmitarbeiter':
+                    $stmt = $DB->prepare("DELETE FROM Kuechenmitarbeiter WHERE pk_fk_pk_user_id = :userId");
+                    break;
+                case 'Admin':
+                    $stmt = $DB->prepare("DELETE FROM Admin WHERE pk_fk_pk_user_id = :userId");
+                    break;
+            }
+
+            $stmt->bindParam(':userId', $userId);
+            $stmt->execute();
+
+
+            switch ($type) {
+                case 'Kellner':
+                    $stmt = $DB->prepare("INSERT INTO Kellner (pk_fk_pk_user_id) VALUE (:userId)");
+                    break;
+                case 'Küchenmitarbeiter':
+                    $stmt = $DB->prepare("INSERT INTO Kuechenmitarbeiter (pk_fk_pk_user_id) VALUE (:userId)");
+                    break;
+                case 'Admin':
+                    $stmt = $DB->prepare("INSERT INTO Admin (pk_fk_pk_user_id) VALUE (:userId)");
+                    break;
+            }
+
+            $stmt->bindParam(':userId', $userId);
+            $stmt->execute();
+
+
             $stmt = $DB->prepare("UPDATE User SET typ = :type WHERE pk_user_id = :userId");
             $stmt->bindParam(':userId', $userId);
             $stmt->bindParam(':type', $type);
@@ -144,10 +182,10 @@ class DB_Admin_Users
                     $stmt = $DB->prepare("INSERT INTO Kellner (pk_fk_pk_user_id) VALUE (:userId)");
                     break;
                 case 'Küchenmitarbeiter':
-                    $stmt = $DB->prepare("DELETE FROM Kuechenmitarbeiter WHERE pk_fk_pk_user_id = :userId");
+                    $stmt = $DB->prepare("INSERT INTO Kuechenmitarbeiter (pk_fk_pk_user_id) VALUE (:userId)");
                     break;
                 case 'Admin':
-                    $stmt = $DB->prepare("DELETE FROM Admin WHERE pk_fk_pk_user_id = :userId");
+                    $stmt = $DB->prepare("INSERT INTO Admin (pk_fk_pk_user_id) VALUE (:userId)");
                     break;
             }
 
