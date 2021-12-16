@@ -3,6 +3,8 @@
 namespace easyGastro;
 
 use easyGastro\kitchen\DB_Order;
+use easyGastro\push_notifications\PN_DB_Subscription;
+use easyGastro\push_notifications\PN_Send;
 use easyGastro\waiter\DB_Table;
 
 require_once 'SiteTemplate.php';
@@ -11,6 +13,8 @@ require_once 'db.php';
 require_once 'DB_User.php';
 require_once 'kitchen/DB_Order.php';
 require_once 'waiter/DB_Table.php';
+require_once 'push-notifications/PN_Send.php';
+require_once 'push-notifications/PN_DB_Subscription.php';
 
 
 session_start();
@@ -176,6 +180,7 @@ BODY;
 
 if(isset($_GET['buttonOrderFinished'])){
     DB_Order::updateStatusOfOrder('Abholbereit', $_GET['buttonOrderFinished']);
+    (new PN_Send())->send((new PN_DB_Subscription())->getSubscriptionsOfTableGroup(1), 'Bestellung '.$_GET['buttonOrderFinished'].': Abholbereit!');
     header("Location: kueche.php");
 }
 
