@@ -53,6 +53,27 @@ class DB_Table
         }
     }
 
+    static function getTableGroupOfTable($tableID)
+    {
+        $DB = DB::getDB();
+        $tableGroup = '';
+        try {
+            $stmt = $DB->prepare('SELECT bezeichnung 
+                                        FROM Tischgruppe
+                                        INNER JOIN tisch t on tischgruppe.pk_tischgrp_id = t.fk_pk_tischgrp_id
+                                        WHERE t.pk_tischnr_id = :tischnr');
+            $stmt->bindParam(':tischnr', $tableID);
+            if ($stmt->execute()) {
+                $tableGroup = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $tableGroup;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
     static function getFoodOfTable($oneTable)
     {
         $DB = DB::getDB();
@@ -98,6 +119,30 @@ class DB_Table
             exit();
         }
     }
+
+    static function getOrders($tableGroup)
+    {
+        $DB = DB::getDB();
+        $tableItems = array();
+        try {
+            $stmt = $DB->prepare('SELECT status
+                                        FROM bestellung
+                                        INNER JOIN tisch t on bestellung.fk_pk_tischnr_id = t.pk_tischnr_id
+                                        INNER JOIN tischgruppe t2 on t.fk_pk_tischgrp_id = t2.pk_tischgrp_id
+                                        WHERE t2.bezeichnung = :tableGroup');
+            $stmt->bindParam(':tableGroup', $tableGroup);
+            if ($stmt->execute()) {
+                $tableItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $tableItems;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+
 
     static function updateStatusOfTable($status, $time, $tischnr)
     {

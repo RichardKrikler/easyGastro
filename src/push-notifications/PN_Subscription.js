@@ -1,8 +1,3 @@
-const channel = new BroadcastChannel('sw-messages');
-channel.addEventListener('message', event => {
-    console.log('Received', event.data)
-})
-
 const logger = document.getElementById('logger')
 const log = (log) => logger.innerHTML += '<span class="d-block">' + log + '</span>'
 log('text')
