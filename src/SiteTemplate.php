@@ -35,21 +35,23 @@ class SiteTemplate
 </head>
 <body class="d-flex flex-column vh-100">
 $header
-<main class="flex-grow-1">
+<main class="flex-grow-1 overflow-scroll">
 $content
 </main>
-    <!-- Footer -->
-    <div class="bg-white d-flex justify-content-between w-100 fixed-bottom">
-        <!-- Username Element -->
-        <div class="username px-3 py-2">
-            <p class="fs-4 mb-0">{$usernameFooter}</p>
-        </div>
 
-        <!-- Copyright Notice Element -->
-        <div class="copyright-notice px-3 py-2">
-            <p class="fs-4 mb-0">© easyGastro</p>
-        </div>
+<!-- Footer -->
+<div class="bg-white d-flex justify-content-between w-100">
+    <!-- Username Element -->
+    <div class="username px-3 py-2">
+        <p class="fs-4 mb-0">{$usernameFooter}</p>
     </div>
+
+    <!-- Copyright Notice Element -->
+    <div class="copyright-notice px-3 py-2">
+        <p class="fs-4 mb-0">© easyGastro</p>
+    </div>
+</div>
+
 </body>
 </html>
 TEMPLATE;
