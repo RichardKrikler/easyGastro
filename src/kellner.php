@@ -61,7 +61,7 @@ $disable onClick="reply_click(this.id)">
 </button>
 
 <div class="modal fade" id="modal{$eachTable['pk_tischnr_id']}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content border-0">
             <div class="modal-header d-flex justify-content-center border-bottom-0">
                 <h3 class="modal-title">Tisch {$eachTable['pk_tischnr_id']}</h3>
