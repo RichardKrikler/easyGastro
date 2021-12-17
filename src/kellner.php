@@ -19,17 +19,17 @@ $row = DB_User::getDataOfUser();
 Pages::checkPage('Kellner', $row);
 
 
-$nav = <<<NAV
+$header = <<<HEADER
 <div class="header d-flex justify-content-between">
     <p class="invisible"></p>
-    <h1 class="text-white fw-normal py-3 fs-3 mb-0">Kellnerseite</h1>
-    <form method="post">
-        <button type="submit" name="logout" id="logoutBt" style="background-color: #6A6A6A" class="shadow-none mx-1 px-1 my-3">
-            <span class="material-icons-outlined" style="color: white">logout</span>
+    <h1 class="fw-normal py-3 fs-3 mb-0"><a href="/kellner.php" class="text-white text-decoration-none">Kellnerseite</a></h1>
+    <form method="post" class="d-flex flex-column justify-content-center my-auto">
+        <button type="submit" name="logout" id="logoutBt" class="shadow-none bg-unset d-flex flex-column justify-content-center">
+            <span class="icon material-icons-outlined mx-2 px-2 text-white">logout</span>
         </button>
     </form>
 </div>
-NAV;
+HEADER;
 
 $tableGroup = DB_Table::getTableGroupOfWaiter($_SESSION['user']['name']);
 $allTables = DB_Table::getTableIDs($tableGroup[0]['bezeichnung']);
@@ -147,4 +147,4 @@ $body .= <<<BODY
 </div>
 BODY;
 
-print(SiteTemplate::render('Kellner - EGS', $nav, $body));
+print(SiteTemplate::render('Kellner - EGS', $header, $body));
