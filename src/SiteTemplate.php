@@ -11,7 +11,6 @@ class SiteTemplate
             $usernameFooter = $_SESSION['user']['name'];
         }
 
-        /** @var TYPE_NAME $usernameFooter */
         return <<<TEMPLATE
 <!DOCTYPE html>
 <html lang="de">

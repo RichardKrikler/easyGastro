@@ -13,9 +13,6 @@ const getData = () => {
                 counter++;
             }
         })
-        .catch((error) => {
-            console.error('Error:', error);
-        })
 };
 
 const interval = setInterval(() => {
@@ -33,5 +30,7 @@ const interval = setInterval(() => {
 //Anzeige des Inhalts
 const channel = new BroadcastChannel('sw-messages');
 channel.addEventListener('message', event => {
-    document.getElementById('table_' + event.data.data).classList.add('active');
+    if (event.data.msg.substring(0, 5) === 'Tisch') {
+        document.getElementById('table_' + event.data.data).classList.add('active');
+    }
 })

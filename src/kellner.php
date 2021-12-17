@@ -19,17 +19,17 @@ $row = DB_User::getDataOfUser();
 Pages::checkPage('Kellner', $row);
 
 
-$nav = <<<NAV
+$header = <<<HEADER
 <div class="header d-flex justify-content-between">
     <p class="invisible"></p>
-    <h1 class="text-white fw-normal py-3 fs-3 mb-0">Kellnerseite</h1>
-    <form method="post">
-        <button type="submit" name="logout" id="logoutBt" style="background-color: #6A6A6A" class="shadow-none mx-1 px-1 my-3">
-            <span class="material-icons-outlined" style="color: white">logout</span>
+    <h1 class="fw-normal py-3 fs-3 mb-0"><a href="/kellner.php" class="text-white text-decoration-none">Kellnerseite</a></h1>
+    <form method="post" class="d-flex flex-column justify-content-center my-auto">
+        <button type="submit" name="logout" id="logoutBt" class="shadow-none bg-unset d-flex flex-column justify-content-center">
+            <span class="icon material-icons-outlined mx-2 px-2 text-white">logout</span>
         </button>
     </form>
 </div>
-NAV;
+HEADER;
 
 $tableGroup = DB_Table::getTableGroupOfWaiter($_SESSION['user']['name']);
 $allTables = DB_Table::getTableIDs($tableGroup[0]['bezeichnung']);
@@ -60,7 +60,7 @@ $disable>
 </button>
 
 <div class="modal fade" id="modal{$eachTable['pk_tischnr_id']}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content border-0">
             <div class="modal-header d-flex justify-content-center border-bottom-0">
                 <h3 class="modal-title">Tisch {$eachTable['pk_tischnr_id']}</h3>
@@ -104,7 +104,7 @@ BODY;
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-between mx-5">
+            <div class="d-flex justify-content-between mx-5 mt-3">
                 <p class="fs-4 fw-bold">Gesamt</p>
                 <p class="fs-4 fw-bold full-price-text" table="{$eachTable['pk_tischnr_id']}">$fullPrice</p>
             </div>
@@ -132,8 +132,6 @@ BODY;
 }
 
 if(isset($_GET['clearTable'])){
-    $timestamp = date('Y-m-d H:i:s');
-    echo $timestamp;
     DB_Table::updateStatusOfTable('Bezahlt', date('Y-m-d H:i:s'), $_GET['clearTable']);
     header("Location: kellner.php");
 }
@@ -148,4 +146,4 @@ $body .= <<<BODY
 </div>
 BODY;
 
-print(SiteTemplate::render('Kellner - EGS', $nav, $body));
+print(SiteTemplate::render('Kellner - EGS', $header, $body));

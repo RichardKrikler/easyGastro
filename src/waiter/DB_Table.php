@@ -58,7 +58,7 @@ class DB_Table
         $DB = DB::getDB();
         $tableGroup = '';
         try {
-            $stmt = $DB->prepare('SELECT pk_tischgrp_id, bezeichnung 
+            $stmt = $DB->prepare('SELECT pk_tischgrp_id, bezeichnung
                                         FROM Tischgruppe
                                         INNER JOIN Tisch t on Tischgruppe.pk_tischgrp_id = t.fk_pk_tischgrp_id
                                         WHERE t.pk_tischnr_id = :tischnr');
@@ -141,7 +141,6 @@ class DB_Table
             exit();
         }
     }
-
 
 
     static function updateStatusOfTable($status, $time, $tischnr)
