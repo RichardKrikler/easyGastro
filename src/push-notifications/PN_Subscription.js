@@ -1,6 +1,6 @@
-const logger = document.getElementById('logger')
-const log = (log) => logger.innerHTML += '<span class="d-block">' + log + '</span>'
-log('text')
+// const logger = document.getElementById('logger')
+// const log = (log) => logger.innerHTML += '<span class="d-block">' + log + '</span>'
+// log('text')
 
 document.addEventListener('DOMContentLoaded', () => {
     const applicationServerKey =
