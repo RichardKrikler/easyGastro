@@ -57,7 +57,7 @@ data-bs-toggle="modal" data-bs-target="#modal{$eachOrderOpen['pk_bestellung_id']
     <p class="fs-5 mb-0 px-4 py-3">Bestellung - Tisch {$eachOrderOpen['fk_pk_tischnr_id']}</p>
 </button>
 
-<div class="modal fade" id="modal{$eachOrderOpen['fk_pk_tischnr_id']}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="modal{$eachOrderOpen['pk_bestellung_id']}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0">
             <div class="modal-header d-flex justify-content-center border-bottom-0">
@@ -129,7 +129,7 @@ data-bs-toggle="modal" data-bs-target="#modal{$eachOrderInProgress['pk_bestellun
     <p class="fs-5 mb-0 px-4 py-3">Bestellung - Tisch {$eachOrderInProgress['fk_pk_tischnr_id']}</p>
 </button>
 
-<div class="modal fade" id="modal{$eachOrderInProgress['fk_pk_tischnr_id']}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="modal{$eachOrderInProgress['pk_bestellung_id']}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0">
             <div class="modal-header d-flex justify-content-center border-bottom-0">
@@ -169,7 +169,7 @@ BODY;
                 <button type="button" class="btn bg-secondary fs-5 text-white" data-bs-dismiss="modal">Zurück</button>
                 <form method="get">
                     <button type="submit" class="btn bg-secondary fs-5 text-white" name="buttonOrderFinished"
-                    value="{$eachOrderInProgress['pk_bestellung_id']}">Bestellung fertig</button>
+                    value="{$eachOrderInProgress['pk_bestellung_id']}.{$eachOrderInProgress['fk_pk_tischnr_id']}">Bestellung fertig</button>
                 </form>
             </div>
         </div>
@@ -179,8 +179,10 @@ BODY;
 }
 
 if(isset($_GET['buttonOrderFinished'])){
-    DB_Order::updateStatusOfOrder('Abholbereit', $_GET['buttonOrderFinished']);
-    (new PN_Send())->send((new PN_DB_Subscription())->getSubscriptionsOfTableGroup(1), 'Bestellung '.$_GET['buttonOrderFinished'].': Abholbereit!');
+    $orderID = strtok($_GET['buttonOrderFinished'],'.');
+    $tableID = strtok( '' );
+    DB_Order::updateStatusOfOrder('Abholbereit', $orderID);
+    (new PN_Send())->send((new PN_DB_Subscription())->getSubscriptionsOfTableGroup(1), '{"msg": "Bestellung - Tisch '.$tableID.': Abholbereit!", "data": "'.$tableID.'"}');
     header("Location: kueche.php");
 }
 
@@ -202,7 +204,7 @@ data-bs-toggle="modal" data-bs-target="#modal{$eachOrderFinished['pk_bestellung_
     <p class="fs-5 mb-0 px-4 py-3">Bestellung - Tisch {$eachOrderFinished['fk_pk_tischnr_id']}</p>
 </button>
 
-<div class="modal fade" id="modal{$eachOrderFinished['fk_pk_tischnr_id']}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="modal{$eachOrderFinished['pk_bestellung_id']}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0">
             <div class="modal-header d-flex justify-content-center border-bottom-0">
