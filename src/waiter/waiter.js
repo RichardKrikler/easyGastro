@@ -13,9 +13,6 @@ const getData = () => {
                 counter++;
             }
         })
-        .catch((error) => {
-            console.error('Error:', error);
-        })
 };
 
 const interval = setInterval(() => {
