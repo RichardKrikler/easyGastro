@@ -16,7 +16,7 @@ require_once 'kitchen/DB_Order.php';
 require_once 'waiter/DB_Table.php';
 require_once 'push-notifications/PN_Send.php';
 require_once 'push-notifications/PN_DB_Subscription.php';
-require_once 'kitchen\OrderButton.php';
+require_once 'kitchen/OrderButton.php';
 
 
 session_start();

@@ -35,7 +35,6 @@ $tableGroup = DB_Table::getTableGroupOfWaiter($_SESSION['user']['name']);
 $allTables = DB_Table::getTableIDs($tableGroup[0]['bezeichnung']);
 
 $body = <<<BODY
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="waiter/waiter.js" defer></script>
 <p class="text-center fw-normal py-3 fs-3">Tischgruppe: {$tableGroup[0]['bezeichnung']}</p>
 <div class="container text-center" id="tableContainer">
@@ -56,7 +55,7 @@ foreach ($allTables as $eachTable)
 <!-- Modal -->
 
 <button class="table-waiter bg-{$statusOfTable} d-inline-block m-2 col-3" id="table_{$eachTable['pk_tischnr_id']}" 
-$disable onClick="reply_click(this.id)">
+$disable>
     <p class="fs-5 mb-0 px-2 py-2">Tisch {$eachTable['pk_tischnr_id']}</p>
 </button>
 
@@ -107,16 +106,16 @@ BODY;
             </div>
             <div class="d-flex justify-content-between mx-5">
                 <p class="fs-4 fw-bold">Gesamt</p>
-                <p class="fs-4 fw-bold" id="price{$eachTable['pk_tischnr_id']}">$fullPrice</p>
+                <p class="fs-4 fw-bold full-price-text" table="{$eachTable['pk_tischnr_id']}">$fullPrice</p>
             </div>
             <div class="d-flex justify-content-between mx-5">
                 <div>
-                    <label for="givenMoney">Rückgeld</label></br>
-                    <input class="money border border-dark fs-4 text-center" type="number" id="givenMoney" name="givenMoney">
+                    <label for="givenMoney">Rückgeld</label><br>
+                    <input class="border border-dark fs-4 text-center given-money-field" type="number" name="givenMoney" table="{$eachTable['pk_tischnr_id']}">
                 </div>
                 <div>
-                    <p id="money">Retourgeld</p></br>
-                    <input class="border border-dark fs-4 text-center" type="text" id="backMoney" name="backMoney" size="3" disabled>
+                    <span>Retourgeld</span><br>
+                    <input class="border border-dark fs-4 text-center back-money-field" type="text" id="backMoney" name="backMoney" size="3" disabled table="{$eachTable['pk_tischnr_id']}">
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-between border-top-0">
