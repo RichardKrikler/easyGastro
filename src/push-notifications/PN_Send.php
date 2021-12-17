@@ -5,6 +5,7 @@ namespace easyGastro\push_notifications;
 require __DIR__ . '/../vendor/autoload.php';
 
 use ErrorException;
+use Exception;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
 
@@ -14,6 +15,7 @@ class PN_Send
 
     /**
      * @throws ErrorException
+     * @throws Exception
      */
     public function __construct()
     {

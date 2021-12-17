@@ -4,11 +4,13 @@ self.addEventListener('push', function (event) {
     }
 
     const sendNotification = body => {
+        const jsonBody = JSON.parse(body)
+
         const channel = new BroadcastChannel('sw-messages');
-        channel.postMessage({title: body});
+        channel.postMessage({...jsonBody});
 
         return self.registration.showNotification('EGS', {
-            body,
+            body: jsonBody.msg,
             icon: '/resources/EGS_Logo_outlined_black_v1.png',
             image: '/resources/EGS_Logo_outlined_black_v1.png',
             badge: '/resources/EGS_Logo_outlined_black_v1.png'
