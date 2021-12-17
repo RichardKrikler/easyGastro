@@ -58,7 +58,7 @@ class DB_Table
         $DB = DB::getDB();
         $tableGroup = '';
         try {
-            $stmt = $DB->prepare('SELECT bezeichnung 
+            $stmt = $DB->prepare('SELECT pk_tischgrp_id, bezeichnung
                                         FROM Tischgruppe
                                         INNER JOIN tisch t on tischgruppe.pk_tischgrp_id = t.fk_pk_tischgrp_id
                                         WHERE t.pk_tischnr_id = :tischnr');
@@ -143,13 +143,12 @@ class DB_Table
     }
 
 
-
     static function updateStatusOfTable($status, $time, $tischnr)
     {
         $DB = DB::getDB();
         try {
             $stmt = $DB->prepare('UPDATE bestellung SET status = ?, timestamp_bis = ? WHERE fk_pk_tischnr_id = ?');
-            $stmt->execute([$status,$time,$tischnr]);
+            $stmt->execute([$status, $time, $tischnr]);
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException  $e) {
             print('Error: ' . $e);
