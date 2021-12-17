@@ -105,17 +105,17 @@ BODY;
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-between mx-5">
+            <div class="d-flex justify-content-between mx-5 mt-3">
                 <p class="fs-4 fw-bold">Gesamt</p>
                 <p class="fs-4 fw-bold" id="price{$eachTable['pk_tischnr_id']}">$fullPrice</p>
             </div>
             <div class="d-flex justify-content-between mx-5">
                 <div>
-                    <label for="givenMoney">Rückgeld</label></br>
+                    <label for="givenMoney">Kunde</label></br>
                     <input class="money border border-dark fs-4 text-center" type="number" id="givenMoney" name="givenMoney">
                 </div>
                 <div>
-                    <p id="money">Retourgeld</p></br>
+                    <p id="money">Kellner</p></br>
                     <input class="border border-dark fs-4 text-center" type="text" id="backMoney" name="backMoney" size="3" disabled>
                 </div>
             </div>
