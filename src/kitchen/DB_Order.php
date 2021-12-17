@@ -17,8 +17,8 @@ class DB_Order
         $DB = DB::getDB();
         $orders = array();
         try {
-            $stmt = $DB->prepare('SELECT bestellung.*
-                                        FROM bestellung');
+            $stmt = $DB->prepare('SELECT *
+                                        FROM Bestellung');
             if ($stmt->execute()) {
                 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -35,8 +35,8 @@ class DB_Order
         $DB = DB::getDB();
         $orders = array();
         try {
-            $stmt = $DB->prepare('SELECT bestellung.*
-                                        FROM bestellung
+            $stmt = $DB->prepare('SELECT *
+                                        FROM Bestellung
                                         WHERE status = :statusOfOrder');
             $stmt->bindParam(':statusOfOrder', $status);
             if ($stmt->execute()) {
@@ -54,7 +54,7 @@ class DB_Order
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare('UPDATE bestellung SET status = ? WHERE pk_bestellung_id = ?');
+            $stmt = $DB->prepare('UPDATE Bestellung SET status = ? WHERE pk_bestellung_id = ?');
             $stmt->execute([$status,$orderID]);
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException  $e) {

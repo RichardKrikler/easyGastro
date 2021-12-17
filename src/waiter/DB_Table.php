@@ -60,7 +60,7 @@ class DB_Table
         try {
             $stmt = $DB->prepare('SELECT pk_tischgrp_id, bezeichnung 
                                         FROM Tischgruppe
-                                        INNER JOIN tisch t on tischgruppe.pk_tischgrp_id = t.fk_pk_tischgrp_id
+                                        INNER JOIN Tisch t on Tischgruppe.pk_tischgrp_id = t.fk_pk_tischgrp_id
                                         WHERE t.pk_tischnr_id = :tischnr');
             $stmt->bindParam(':tischnr', $tableID);
             if ($stmt->execute()) {
@@ -126,9 +126,9 @@ class DB_Table
         $tableItems = array();
         try {
             $stmt = $DB->prepare('SELECT status
-                                        FROM bestellung
-                                        INNER JOIN tisch t on bestellung.fk_pk_tischnr_id = t.pk_tischnr_id
-                                        INNER JOIN tischgruppe t2 on t.fk_pk_tischgrp_id = t2.pk_tischgrp_id
+                                        FROM Bestellung
+                                        INNER JOIN Tisch t on bestellung.fk_pk_tischnr_id = t.pk_tischnr_id
+                                        INNER JOIN Tischgruppe t2 on t.fk_pk_tischgrp_id = t2.pk_tischgrp_id
                                         WHERE t2.bezeichnung = :tableGroup');
             $stmt->bindParam(':tableGroup', $tableGroup);
             if ($stmt->execute()) {
@@ -148,7 +148,7 @@ class DB_Table
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare('UPDATE bestellung SET status = ?, timestamp_bis = ? WHERE fk_pk_tischnr_id = ?');
+            $stmt = $DB->prepare('UPDATE Bestellung SET status = ?, timestamp_bis = ? WHERE fk_pk_tischnr_id = ?');
             $stmt->execute([$status,$time,$tischnr]);
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException  $e) {
