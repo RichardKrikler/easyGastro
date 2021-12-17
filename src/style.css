@@ -146,10 +146,6 @@ table tr {
     vertical-align: middle;
 }
 
-#money{
-    display:inline;
-}
-
-#givenMoney{
+.given-money-field {
     width: 130px;
 }

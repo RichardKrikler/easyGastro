@@ -3,7 +3,10 @@
 namespace easyGastro;
 
 use easyGastro\kitchen\DB_Order;
+use easyGastro\push_notifications\PN_DB_Subscription;
+use easyGastro\push_notifications\PN_Send;
 use easyGastro\waiter\DB_Table;
+use easyGastro\kitchen\OrderButton;
 
 require_once 'SiteTemplate.php';
 require_once 'Pages.php';
@@ -11,6 +14,9 @@ require_once 'db.php';
 require_once 'DB_User.php';
 require_once 'kitchen/DB_Order.php';
 require_once 'waiter/DB_Table.php';
+require_once 'push-notifications/PN_Send.php';
+require_once 'push-notifications/PN_DB_Subscription.php';
+require_once 'kitchen/OrderButton.php';
 
 
 session_start();
@@ -37,15 +43,12 @@ $allOrdersFinished = DB_Order::getOrders("Abholbereit");
 
 $body = <<<BODY
 <script src="kitchen/kitchen.js" defer></script>
-<div class="mx-5 my-5">
-    <h4><li>neue Bestellungen</li></h4>
 BODY;
+
 
 foreach ($allOrdersOpen as $eachOrderOpen) {
 
-    $foodOfOrderOpen = DB_Table::getFoodOfTable($eachOrderOpen['fk_pk_tischnr_id']);
-    $drinksOfOrderOpen = DB_Table::getDrinksOfTable($eachOrderOpen['fk_pk_tischnr_id']);
-    $tableGroupOfOrderOpen = DB_Table::getTableGroupOfTable($eachOrderOpen['fk_pk_tischnr_id']);
+$body .= OrderButton::createOrderButton('Bestellungen in Arbeit',$allOrdersInProgress,'changeToReady','Abholbereit','Bestellung fertig','yellow');
 
     $body .= <<<BODY
 <button class="table-kitchen bg-red d-inline-block m-2" id="order_{$eachOrderOpen['pk_bestellung_id']}" 

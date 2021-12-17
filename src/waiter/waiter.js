@@ -20,22 +20,12 @@ const interval = setInterval(() => {
 }, 10000);
 
 //Input von Rückgeld in Retourgeld anzeigen
+[...document.getElementsByClassName('given-money-field')].forEach(gmf => gmf.addEventListener('keyup', () => {
+    const backMoneyField = [...document.getElementsByClassName('back-money-field')].find(bmf => bmf.getAttribute('table') === gmf.getAttribute('table'))
+    const fullPrice = [...document.getElementsByClassName('full-price-text')].find(fpt => fpt.getAttribute('table') === gmf.getAttribute('table'))
+    backMoneyField.value = (Number(gmf.value - fullPrice.innerHTML)).toFixed(2);
+}))
 
-let clickedTable = 0;
-let priceOfTable = 0;
-
-function reply_click(clicked_id) {
-    document.getElementById('givenMoney').textContent = '';
-    clickedTable = parseFloat(clicked_id.substring(clicked_id.indexOf('_') + 1));
-    priceOfTable = parseFloat(document.getElementById('price' + clickedTable).textContent);
-}
-
-$(document).ready(function () {
-    $(document).on('keyup', 'input[name="givenMoney"]', function () {
-        let contents = $(this).val();
-        $('input[name="backMoney"]').val((contents - priceOfTable).toFixed(2));
-    });
-});
 
 //Anzeige des Inhalts
 const channel = new BroadcastChannel('sw-messages');
