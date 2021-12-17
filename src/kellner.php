@@ -133,8 +133,6 @@ BODY;
 }
 
 if(isset($_GET['clearTable'])){
-    $timestamp = date('Y-m-d H:i:s');
-    echo $timestamp;
     DB_Table::updateStatusOfTable('Bezahlt', date('Y-m-d H:i:s'), $_GET['clearTable']);
     header("Location: kellner.php");
 }

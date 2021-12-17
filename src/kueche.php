@@ -41,7 +41,7 @@ $body = <<<BODY
     <h4><li>neue Bestellungen</li></h4>
 BODY;
 
-foreach ($allOrdersOpen as $eachOrderOpen){
+foreach ($allOrdersOpen as $eachOrderOpen) {
 
     $foodOfOrderOpen = DB_Table::getFoodOfTable($eachOrderOpen['fk_pk_tischnr_id']);
     $drinksOfOrderOpen = DB_Table::getDrinksOfTable($eachOrderOpen['fk_pk_tischnr_id']);
@@ -73,7 +73,7 @@ BODY;
                         <hr style="margin: 5px;">
 BODY;
 
-    foreach ($foodOfOrderOpen as $foodOfOO){
+    foreach ($foodOfOrderOpen as $foodOfOO) {
         $body .= <<<BODY
                         <li>{$foodOfOO['anzahl']} {$foodOfOO['bezeichnung']}</li>
 BODY;
@@ -102,7 +102,7 @@ BODY;
 BODY;
 }
 
-if(isset($_GET['buttonInProgress'])){
+if (isset($_GET['buttonInProgress'])) {
     DB_Order::updateStatusOfOrder('In-Bearbeitung', $_GET['buttonInProgress']);
     header("Location: kueche.php");
 }
@@ -113,7 +113,7 @@ $body .= <<<BODY
     <h4><li>Bestellungen in Arbeit</li></h4>
 BODY;
 
-foreach ($allOrdersInProgress as $eachOrderInProgress){
+foreach ($allOrdersInProgress as $eachOrderInProgress) {
 
     $foodOfOrderInProgress = DB_Table::getFoodOfTable($eachOrderInProgress['fk_pk_tischnr_id']);
     $drinksOfOrderInProgress = DB_Table::getDrinksOfTable($eachOrderInProgress['fk_pk_tischnr_id']);
@@ -145,7 +145,7 @@ BODY;
                         <hr style="margin: 5px;">
 BODY;
 
-    foreach ($foodOfOrderInProgress as $foodOfOIP){
+    foreach ($foodOfOrderInProgress as $foodOfOIP) {
         $body .= <<<BODY
                         <li>{$foodOfOIP['anzahl']} {$foodOfOIP['bezeichnung']}</li>
 BODY;
@@ -174,7 +174,7 @@ BODY;
 BODY;
 }
 
-if(isset($_GET['buttonOrderFinished'])){
+if (isset($_GET['buttonOrderFinished'])) {
     DB_Order::updateStatusOfOrder('Abholbereit', $_GET['buttonOrderFinished']);
     header("Location: kueche.php");
 }
@@ -185,7 +185,7 @@ $body .= <<<BODY
     <h4><li>fertige Bestellungen</li></h4>
 BODY;
 
-foreach ($allOrdersFinished as $eachOrderFinished){
+foreach ($allOrdersFinished as $eachOrderFinished) {
 
     $foodOfOrderFinished = DB_Table::getFoodOfTable($eachOrderFinished['fk_pk_tischnr_id']);
     $drinksOfOrderFinished = DB_Table::getDrinksOfTable($eachOrderFinished['fk_pk_tischnr_id']);
@@ -217,7 +217,7 @@ BODY;
                         <hr style="margin: 5px;">
 BODY;
 
-    foreach ($foodOfOrderFinished as $foodOfOF){
+    foreach ($foodOfOrderFinished as $foodOfOF) {
         $body .= <<<BODY
                         <li>{$foodOfOF['anzahl']} {$foodOfOF['bezeichnung']}</li>
 BODY;
@@ -246,7 +246,7 @@ BODY;
 BODY;
 }
 
-if(isset($_GET['buttonOrderPickedUp'])){
+if (isset($_GET['buttonOrderPickedUp'])) {
     DB_Order::updateStatusOfOrder('Serviert', $_GET['buttonOrderPickedUp']);
     header("Location: kueche.php");
 }

@@ -143,13 +143,12 @@ class DB_Table
     }
 
 
-
     static function updateStatusOfTable($status, $time, $tischnr)
     {
         $DB = DB::getDB();
         try {
             $stmt = $DB->prepare('UPDATE bestellung SET status = ?, timestamp_bis = ? WHERE fk_pk_tischnr_id = ?');
-            $stmt->execute([$status,$time,$tischnr]);
+            $stmt->execute([$status, $time, $tischnr]);
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException  $e) {
             print('Error: ' . $e);

@@ -43,7 +43,7 @@ $(document).ready(function () {
 //Anzeige des Inhalts
 const channel = new BroadcastChannel('sw-messages');
 channel.addEventListener('message', event => {
-    if(event.data.msg.substring(0,5) === 'Tisch') {
+    if (event.data.msg.substring(0, 5) === 'Tisch') {
         document.getElementById('table_' + event.data.data).classList.add('active');
     }
 })
