@@ -11,10 +11,10 @@ require_once __DIR__ . '/../../db.php';
 
 class DB_Admin_Users
 {
-    static function getUsers()
+    static function getUsers(): array
     {
         $DB = DB::getDB();
-        $userAr = '';
+        $userAr = [];
         try {
             $stmt = $DB->prepare("SELECT pk_user_id, name, typ FROM User");
             if ($stmt->execute()) {

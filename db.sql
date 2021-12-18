@@ -28,7 +28,7 @@ CREATE TABLE Kuechenmitarbeiter
 
 CREATE TABLE Tischgruppe
 (
-    pk_tischgrp_id INTEGER NOT NULL PRIMARY KEY,
+    pk_tischgrp_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     bezeichnung    VARCHAR(255)
 );
 

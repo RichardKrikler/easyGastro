@@ -49,7 +49,7 @@ foreach (DB_Admin_Users::getUsers() as $user) {
 
     $tableRows .= <<<TR
 <form method="post" action="users/updateUser.php">
-    <tr class="admin-user-row">
+    <tr class="admin-row">
         <th scope="row" class="fw-normal text-center">
             {$user['pk_user_id']}
             <input type="hidden" value="{$user['pk_user_id']}" name="userId">

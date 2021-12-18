@@ -1,5 +1,5 @@
-const adminUserRows = [...document.getElementsByClassName('admin-user-row')]
-adminUserRows.forEach(adminUserRow => {
+const adminRows = [...document.getElementsByClassName('admin-row')]
+adminRows.forEach(adminUserRow => {
     const cloudIcon = adminUserRow.getElementsByClassName('cloud-icon')[0]
     const inputElements = [...adminUserRow.querySelectorAll('input[type=text]')].concat([...adminUserRow.querySelectorAll('input[type=password]')])
     const selectElements = [...adminUserRow.getElementsByTagName('select')]
