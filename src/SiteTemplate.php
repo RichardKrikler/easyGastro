@@ -30,7 +30,6 @@ class SiteTemplate
           rel="stylesheet">
 
     <link rel="stylesheet" href="/style.css">
-    <script src="/push-notifications/PN_Subscription.js" defer></script>
 </head>
 <body class="d-flex flex-column vh-100">
 $header

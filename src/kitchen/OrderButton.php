@@ -6,15 +6,23 @@ use easyGastro\push_notifications\PN_DB_Subscription;
 use easyGastro\push_notifications\PN_Send;
 use easyGastro\waiter\DB_Table;
 
+require_once __DIR__ . '/../push-notifications/PN_Send.php';
+require_once __DIR__ . '/../push-notifications/PN_DB_Subscription.php';
+require_once __DIR__ . '/../waiter/DB_Table.php';
+
 class OrderButton
 {
-    static function createOrderButton($whichOrders, $orders, $buttonName, $newStatus, $buttonText, $color){
+    /**
+     * @throws \ErrorException
+     */
+    static function createOrderButton($whichOrders, $orders, $buttonName, $newStatus, $buttonText, $color)
+    {
         $body = <<<BODY
         <div class="mx-5 my-5">
             <h4><li>{$whichOrders}</li></h4>
 BODY;
 
-        foreach ($orders as $eachOrder){
+        foreach ($orders as $eachOrder) {
 
             $foodOfOrder = DB_Table::getFoodOfTable($eachOrder['fk_pk_tischnr_id']);
             $drinksOfOrder = DB_Table::getDrinksOfTable($eachOrder['fk_pk_tischnr_id']);
@@ -46,7 +54,7 @@ BODY;
                                     <hr style="margin: 5px;">
 BODY;
 
-            foreach ($foodOfOrder as $food){
+            foreach ($foodOfOrder as $food) {
                 $body .= <<<BODY
                                     <li>{$food['anzahl']} {$food['bezeichnung']}</li>
 BODY;
@@ -75,12 +83,12 @@ BODY;
 BODY;
         }
 
-        if(isset($_GET[$buttonName])){
-            $orderID = strtok($_GET[$buttonName],'.');
-            $tableID = strtok( '' );
+        if (isset($_GET[$buttonName])) {
+            $orderID = strtok($_GET[$buttonName], '.');
+            $tableID = strtok('');
             DB_Order::updateStatusOfOrder($newStatus, $orderID);
-            if($newStatus === 'Abholbereit'){
-                (new PN_Send())->send((new PN_DB_Subscription())->getSubscriptionsOfTableGroup($tableGroupOfOrder[0]['pk_tischgrp_id']), '{"msg": "Bestellung - Tisch '.$tableID.': Abholbereit!", "data": "'.$tableID.'"}');
+            if ($newStatus === 'Abholbereit') {
+                (new PN_Send())->send(PN_DB_Subscription::getSubscriptionsOfTableGroup($tableGroupOfOrder[0]['pk_tischgrp_id']), '{"msg": "Bestellung - Tisch ' . $tableID . ': Abholbereit!", "data": "' . $tableID . '"}');
             }
             header("Location: kueche.php");
         }

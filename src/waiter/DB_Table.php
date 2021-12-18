@@ -127,7 +127,7 @@ class DB_Table
         try {
             $stmt = $DB->prepare('SELECT status
                                         FROM Bestellung
-                                        INNER JOIN Tisch t on bestellung.fk_pk_tischnr_id = t.pk_tischnr_id
+                                        INNER JOIN Tisch t on Bestellung.fk_pk_tischnr_id = t.pk_tischnr_id
                                         INNER JOIN Tischgruppe t2 on t.fk_pk_tischgrp_id = t2.pk_tischgrp_id
                                         WHERE t2.bezeichnung = :tableGroup');
             $stmt->bindParam(':tableGroup', $tableGroup);

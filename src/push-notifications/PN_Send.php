@@ -51,16 +51,21 @@ class PN_Send
             );
         }
 
-        // Check sent results
-        foreach ($this->webPush->flush() as $report) {
-            $endpoint = $report->getRequest()->getUri()->__toString();
-
-            if ($report->isSuccess()) {
-                echo "[v] Message sent successfully for subscription $endpoint.";
-            } else {
-                echo $report->getReason();
-                echo "[x] Message failed to sent for subscription $endpoint: {$report->getReason()}";
-            }
+        foreach ($this->webPush->flush() as $ignored) {
         }
+
+
+        // Check sent results
+//        foreach ($this->webPush->flush() as $report) {
+//            $endpoint = $report->getRequest()->getUri()->__toString();
+
+//            if ($report->isSuccess()) {
+//                echo "[v] Message sent successfully for subscription $endpoint.";
+//            } else {
+//                echo $report->getReason();
+//                echo "[x] Message failed to sent for subscription $endpoint: {$report->getReason()}";
+//            }
+//        }
+
     }
 }

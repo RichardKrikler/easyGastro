@@ -141,6 +141,7 @@ $body .= <<<BODY
 <br>
 
 <div class="text-center">
+    <script src="/push-notifications/PN_Subscription.js" defer></script>
     <button id="push-subscription-button" class="btn btn-primary my-3">Push notifications!</button>
     <script defer>const userId = "{$_SESSION['user']['id']}"</script>
 </div>
