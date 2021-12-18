@@ -1,12 +1,12 @@
 <?php
 
-namespace easyGastro\admin;
+namespace easyGastro\admin\users;
 
 use PDO;
 use PDOException;
 use easyGastro\DB;
 
-require_once __DIR__ . "/../db.php";
+require_once __DIR__ . '/../../db.php';
 
 
 class DB_Admin_Users

@@ -2,6 +2,7 @@
 
 namespace easyGastro\admin;
 
+use easyGastro\admin\users\DB_Admin_Users;
 use easyGastro\DB_User;
 use easyGastro\Pages;
 use easyGastro\SiteTemplate;
@@ -10,7 +11,7 @@ require_once '../SiteTemplate.php';
 require_once '../Pages.php';
 require_once '../db.php';
 require_once '../DB_User.php';
-require_once 'DB_Admin_Users.php';
+require_once 'users/DB_Admin_Users.php';
 require_once 'AdminNav.php';
 
 
@@ -47,7 +48,7 @@ foreach (DB_Admin_Users::getUsers() as $user) {
     }
 
     $tableRows .= <<<TR
-<form method="post" action="updateUser.php">
+<form method="post" action="users/updateUser.php">
     <tr class="admin-user-row">
         <th scope="row" class="fw-normal text-center">
             {$user['pk_user_id']}
@@ -90,7 +91,7 @@ foreach (DB_Admin_Users::getUsers() as $user) {
                 <h3 class="modal-title">Benutzer {$user['name']} löschen</h3>
             </div>
             <div class="modal-footer d-flex justify-content-between border-top-0">
-                <form method="post" action="deleteUser.php" class="d-none">
+                <form method="post" action="users/deleteUser.php" class="d-none">
                     <input type="hidden" value="{$user['pk_user_id']}" name="userId">
                     <button type="submit" class="btn bg-red text-white fs-5">Löschen</button>
                 </form>
@@ -110,7 +111,7 @@ $body = <<<BODY
     <button class="btn btn-secondary mt-3 mb-5 bg-gray" data-bs-toggle="modal" data-bs-target="#createUser">Benutzer erstellen</button>
 </div>
 
-<form method="post" action="createUser.php">
+<form method="post" action="users/createUser.php">
     <div class="modal fade" id="createUser" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border-0">
