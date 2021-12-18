@@ -5,6 +5,7 @@ namespace easyGastro\push_notifications;
 require __DIR__ . '/../vendor/autoload.php';
 
 use ErrorException;
+use Exception;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
 
@@ -14,6 +15,7 @@ class PN_Send
 
     /**
      * @throws ErrorException
+     * @throws Exception
      */
     public function __construct()
     {
@@ -26,6 +28,7 @@ class PN_Send
         );
 
         $this->webPush = new WebPush($auth);
+        $this->webPush->setAutomaticPadding(2048);
     }
 
     /**
@@ -48,15 +51,21 @@ class PN_Send
             );
         }
 
-        // Check sent results
-        foreach ($this->webPush->flush() as $report) {
-            $endpoint = $report->getRequest()->getUri()->__toString();
-
-            if ($report->isSuccess()) {
-                echo "[v] Message sent successfully for subscription $endpoint.";
-            } else {
-                echo "[x] Message failed to sent for subscription $endpoint: {$report->getReason()}";
-            }
+        foreach ($this->webPush->flush() as $ignored) {
         }
+
+
+        // Check sent results
+//        foreach ($this->webPush->flush() as $report) {
+//            $endpoint = $report->getRequest()->getUri()->__toString();
+
+//            if ($report->isSuccess()) {
+//                echo "[v] Message sent successfully for subscription $endpoint.";
+//            } else {
+//                echo $report->getReason();
+//                echo "[x] Message failed to sent for subscription $endpoint: {$report->getReason()}";
+//            }
+//        }
+
     }
 }

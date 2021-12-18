@@ -30,19 +30,18 @@ class SiteTemplate
           rel="stylesheet">
 
     <link rel="stylesheet" href="/style.css">
-    <script src="/push-notifications/PN_Subscription.js" defer></script>
 </head>
 <body class="d-flex flex-column vh-100">
 $header
-<main class="flex-grow-1">
+<main class="flex-grow-1 overflow-scroll">
 $content
 </main>
 
 <!-- Footer -->
-<div class="bg-white d-flex justify-content-between w-100 fixed-bottom">
+<div class="bg-white d-flex justify-content-between w-100">
     <!-- Username Element -->
     <div class="username px-3 py-2">
-        <p class="fs-4 mb-0">$usernameFooter</p>
+        <p class="fs-4 mb-0">{$usernameFooter}</p>
     </div>
 
     <!-- Copyright Notice Element -->
@@ -50,7 +49,7 @@ $content
         <p class="fs-4 mb-0">© easyGastro</p>
     </div>
 </div>
-    
+
 </body>
 </html>
 TEMPLATE;
