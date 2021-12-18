@@ -146,6 +146,7 @@ table tr {
     vertical-align: middle;
 }
 
-.given-money-field {
+.given-money-field,
+.back-money-field {
     width: 130px;
 }

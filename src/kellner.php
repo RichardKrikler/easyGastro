@@ -110,11 +110,11 @@ BODY;
             </div>
             <div class="d-flex justify-content-between mx-5">
                 <div>
-                    <label for="givenMoney">Rückgeld</label><br>
+                    <label for="givenMoney">Kunde</label><br>
                     <input class="border border-dark fs-4 text-center given-money-field" type="number" name="givenMoney" table="{$eachTable['pk_tischnr_id']}">
                 </div>
                 <div>
-                    <span>Retourgeld</span><br>
+                    <label for="backMoney">Kellner</label><br>
                     <input class="border border-dark fs-4 text-center back-money-field" type="text" id="backMoney" name="backMoney" size="3" disabled table="{$eachTable['pk_tischnr_id']}">
                 </div>
             </div>
