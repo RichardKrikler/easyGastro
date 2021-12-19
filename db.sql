@@ -34,7 +34,7 @@ CREATE TABLE Tischgruppe
 
 CREATE TABLE Tisch
 (
-    pk_tischnr_id     INTEGER NOT NULL PRIMARY KEY,
+    pk_tischnr_id     INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     tischcode         VARCHAR(255),
     fk_pk_tischgrp_id INTEGER NOT NULL
 );

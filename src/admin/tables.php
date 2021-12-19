@@ -59,7 +59,7 @@ foreach (DB_Admin_Tables::getTables() as $table) {
         </th>
         
         <td class="col-3">
-            <input type="text" id="nameInput" class="form-control d-inline-block text-center" value="{$table['tischcode']}" start_value="{$table['tischcode']}" name="tablecode">
+            <input type="text" id="nameInput" class="form-control d-inline-block text-center" value="{$table['tischcode']}" start_value="{$table['tischcode']}" name="tableCode">
         </td>
         
         <td class="col-3">
@@ -124,8 +124,8 @@ $body = <<<BODY
                             <h3 class="modal-title">Tisch hinzufügen</h3>
                         </div>
                         <div class="modal-body">
-                            <label for="createTableName" class="form-label">Tischcode</label>
-                            <input type="text" class="form-control" id="createTableName" name="tablecode" required>
+                            <label for="createtableCode" class="form-label">Tischcode</label>
+                            <input type="text" class="form-control" id="createtableCode" name="tableCode" required>
                             
                             <label for="createUserType" class="form-label mt-3">Tischgruppe</label>
                             <select class="form-select" id="createUserType" aria-label="TableGroup Selector" name="tableGroupId" required>
@@ -134,7 +134,7 @@ $body = <<<BODY
                             </select>
                         </div>
                         <div class="modal-footer d-flex justify-content-between border-top-0 mt-3">
-                                <button type="submit" class="btn btn-primary text-white fs-5">Erstellen</button>
+                                <button type="submit" class="btn btn-primary text-white fs-5">Hinzufügen</button>
                             <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">Zurück</button>
                         </div>
                     </div>
