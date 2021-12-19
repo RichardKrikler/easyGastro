@@ -34,7 +34,7 @@ $header = <<<HEADER
     </form>
 </div>
 
-{$adminNav}
+$adminNav
 
 <hr class="mt-0">
 HEADER;

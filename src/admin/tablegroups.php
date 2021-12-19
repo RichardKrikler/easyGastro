@@ -3,7 +3,6 @@
 namespace easyGastro\admin;
 
 use DB_Admin_TableGroups;
-use easyGastro\admin\users\DB_Admin_Users;
 use easyGastro\DB_User;
 use easyGastro\Pages;
 use easyGastro\SiteTemplate;
@@ -35,7 +34,7 @@ $header = <<<HEADER
     </form>
 </div>
 
-{$adminNav}
+$adminNav
 
 <hr class="mt-0">
 HEADER;

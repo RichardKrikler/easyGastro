@@ -17,7 +17,7 @@ class AdminNav
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        {$pagesUl}
+        $pagesUl
     </div>
   </div>
 </nav>
@@ -32,7 +32,7 @@ NAV;
             $url = '/admin/' . $filename;
             $pagesUl .= <<<LI
 <li class="nav-item">
-    <h4 class="fw-light"><a class="nav-link text-black {$boldClass}" href="$url">$pageTitle</a></h4>
+    <h4 class="fw-light"><a class="nav-link text-black $boldClass" href="$url">$pageTitle</a></h4>
 </li>
 LI;
         }
