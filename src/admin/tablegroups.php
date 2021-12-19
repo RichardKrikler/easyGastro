@@ -102,7 +102,7 @@ foreach (DB_Admin_TableGroups::getWaiters() as $waiter) {
     <tr class="admin-row">
         <th scope="row" class="fw-normal text-center">
             {$waiter['pk_user_id']}
-            <input type="hidden" value="{$waiter['pk_user_id']}" name="tableGroupId">
+            <input type="hidden" value="{$waiter['pk_user_id']}" name="userId">
         </th>
         
         <td class="col-3 text-center">
@@ -110,7 +110,7 @@ foreach (DB_Admin_TableGroups::getWaiters() as $waiter) {
         </td>
         
         <td class="col-3">
-            <select class="form-select" id="typeSelect" aria-label="Table Group Selector" name="tableGroup" start_value="{$waiter['fk_pk_tischgrp_id']}">
+            <select class="form-select" id="typeSelect" aria-label="Table Group Selector" name="tableGroupId" start_value="{$waiter['fk_pk_tischgrp_id']}">
                 <option disabled hidden value="" selected>Typ</option>
                 $tableGroupOptions
             </select>
@@ -130,7 +130,7 @@ TR;
 
 
 $body = <<<BODY
-<div class="col col-6 mx-auto">
+<div class="col col-10 mx-auto">
 
     <div class="d-flex justify-content-center">
         <button class="btn btn-secondary mt-3 mb-5 bg-gray" data-bs-toggle="modal" data-bs-target="#createTableGroup">Tischgruppe erstellen</button>
@@ -169,6 +169,8 @@ $body = <<<BODY
         </tbody>
     </table>
 
+    <br>
+    <h4 class="text-center mt-5 mb-4">Tischgruppen-Zuweisung</h4>
     <table class="table mx-2">
         <thead>
             <tr>

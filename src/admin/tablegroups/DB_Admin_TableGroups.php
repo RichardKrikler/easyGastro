@@ -71,12 +71,27 @@ class DB_Admin_TableGroups
         $DB = DB::getDB();
         $userAr = [];
         try {
-            $stmt = $DB->prepare("SELECT pk_user_id, name, fk_pk_tischgrp_id FROM Kellner INNER JOIN User ON pk_fk_pk_user_id = pk_user_id");
+            $stmt = $DB->prepare("SELECT pk_user_id, name, fk_pk_tischgrp_id FROM Kellner INNER JOIN User ON pk_fk_pk_user_id = pk_user_id ORDER BY pk_fk_pk_user_id");
             if ($stmt->execute()) {
                 $userAr = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $userAr;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function updateWaiterTableGroup($userId, $tableGroupId)
+    {
+        $DB = DB::getDB();
+        try {
+            $stmt = $DB->prepare("UPDATE Kellner SET fk_pk_tischgrp_id = :tableGroupId WHERE pk_fk_pk_user_id = :userId");
+            $stmt->bindParam(':userId', $userId);
+            $stmt->bindParam(':tableGroupId', $tableGroupId);
+            $stmt->execute();
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException  $e) {
             print('Error: ' . $e);
             exit();
