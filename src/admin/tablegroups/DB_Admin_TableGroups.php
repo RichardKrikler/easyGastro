@@ -65,4 +65,21 @@ class DB_Admin_TableGroups
             exit();
         }
     }
+
+    static function getWaiters(): array
+    {
+        $DB = DB::getDB();
+        $userAr = [];
+        try {
+            $stmt = $DB->prepare("SELECT pk_user_id, name, fk_pk_tischgrp_id FROM Kellner INNER JOIN User ON pk_fk_pk_user_id = pk_user_id");
+            if ($stmt->execute()) {
+                $userAr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $userAr;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
 }
