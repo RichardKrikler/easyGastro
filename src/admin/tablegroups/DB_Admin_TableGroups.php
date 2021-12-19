@@ -9,14 +9,14 @@ class DB_Admin_TableGroups
     static function getTableGroups(): array
     {
         $DB = DB::getDB();
-        $tischGroupAr = [];
+        $tableGroupAr = [];
         try {
             $stmt = $DB->prepare("SELECT pk_tischgrp_id, bezeichnung FROM Tischgruppe");
             if ($stmt->execute()) {
-                $tischGroupAr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $tableGroupAr = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $tischGroupAr;
+            return $tableGroupAr;
         } catch (PDOException  $e) {
             print('Error: ' . $e);
             exit();
