@@ -5,7 +5,7 @@ adminRows.forEach(adminUserRow => {
     const selectElements = [...adminUserRow.getElementsByTagName('select')]
 
     inputElements.forEach(inputElement => inputElement.addEventListener('input', () => checkDifference(cloudIcon, inputElements.concat(selectElements))))
-    selectElements[0].addEventListener('change', () => checkDifference(cloudIcon, inputElements.concat(selectElements)))
+    selectElements.forEach(selectElement => selectElement.addEventListener('change', () => checkDifference(cloudIcon, inputElements.concat(selectElements))))
 })
 
 function checkDifference(cloudIcon, inputElementAr) {
