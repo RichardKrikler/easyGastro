@@ -13,7 +13,6 @@ require_once __DIR__ . '/../../Pages.php';
 session_start();
 
 $row = DB_User::getDataOfUser();
-Pages::checkPage('Admin', $row);
 
 if ((isset($row) && $row['typ'] !== 'Admin') || !isset($_POST['tableId'])) {
     return;
