@@ -1,6 +1,6 @@
 <?php
 
-header('Location: /admin/tablegroups.php');
+header('Location: /admin/drinkgroups.php');
 
 use easyGastro\DB_User;
 
@@ -13,8 +13,8 @@ session_start();
 
 $row = DB_User::getDataOfUser();
 
-if ((isset($row) && $row['typ'] !== 'Admin') || !isset($_POST['tableGroupId'])) {
+if ((isset($row) && $row['typ'] !== 'Admin') || !isset($_POST['name'])) {
     return;
 }
 
-DB_Admin_TableGroups::deleteTableGroup($_POST['tableGroupId']);
+DB_Admin_TableGroups::createTableGroup($_POST['name']);

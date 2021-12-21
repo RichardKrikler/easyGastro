@@ -3,7 +3,6 @@
 header('Location: /admin/tablegroups.php');
 
 use easyGastro\DB_User;
-use easyGastro\Pages;
 
 require_once 'DB_Admin_TableGroups.php';
 require_once __DIR__ . '/../../DB_User.php';
