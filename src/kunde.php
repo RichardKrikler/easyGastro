@@ -27,14 +27,17 @@ foreach ($drinkGroups as $eachGroup) {
         $drinksFromGroupAsString[] = $eachDrink['bezeichnung'];
     }
     $allDrinks[$eachGroup['bezeichnung']] = $drinksFromGroupAsString;
-    $drinksFromGroup = null;
+    $drinksFromGroupAsString = array();
 }
 
-$drinks = '<ul class="list-group">';
+$drinks = '<ul class="list-group list-group-flush mx-sm-3">';
 foreach ($allDrinks as $eachGroup) {
-    $drinks .= '<li><div class="fs-2">' . array_search($eachGroup, $allDrinks) . '</div><ul class="list-group">';
+    $drinks .= '<li class="list-group-item border-bottom-0"><p class="fw-bold mb-0">'
+        . array_search($eachGroup, $allDrinks) . '</p><ul class="list-group list-group-flush">';
     foreach ($eachGroup as $eachDrink) {
-        $drinks .= "<li>$eachDrink</li>";
+        $drinks .= '<li class="list-group-item d-flex justify-content-between">
+                    <p class="mb-0 d-flex flex-column justify-content-center">' . $eachDrink
+                    . '</p><span class="icon material-icons-outlined">keyboard_arrow_right</span></li>';
     }
     $drinks .= '</ul></li>';
 }
@@ -57,11 +60,11 @@ $body = <<<BODY
     <img src="resources/EGS_Logo_outlined_black_v1.png" alt="Logo" style="width: 80%">
 </div>
 
-<div id="drinks" class="text-center my-4" style="display: none">
+<div id="drinks" style="display: none">
     $drinks
 </div>
 
-<div id="food" class="text-center my-4" style="display: none">
+<div id="food" style="display: none">
     $food
 </div>
 BODY;
