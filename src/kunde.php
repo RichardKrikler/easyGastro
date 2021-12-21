@@ -6,24 +6,64 @@ require_once 'SiteTemplate.php';
 require_once 'Pages.php';
 require_once 'db.php';
 require_once 'DB_User.php';
+require_once 'customer/DB_Customer.php';
 
+use easyGastro\Customer;
 
 session_start();
 
 $nav = <<<NAV
-<div class="header d-flex justify-content-between">
-    <p class="invisible"></p>
-    <h1 class="text-white fw-normal py-3 fs-3 mb-0">Küchenseite</h1>
-    <form method="post">
-        <button type="submit" name="logout" id="logoutBt" style="background-color: #6A6A6A" class="shadow-none mx-1 px-1 my-3">
-            <span class="material-icons-outlined" style="color: white">logout</span>
-        </button>
-    </form>
+<div class="header text-center">
+    <h1 class="text-white fw-normal py-3 fs-3 mb-0">Startseite</h1>
 </div>
 NAV;
 
-$body = <<<BODY
+$drinkGroups = Customer\DB_Customer::getDrinkGroups();
+$allDrinks = [];
 
+foreach ($drinkGroups as $eachGroup) {
+    $drinksFromGroup = Customer\DB_Customer::getDrinks($eachGroup['bezeichnung']);
+    foreach ($drinksFromGroup as $eachDrink) {
+        $drinksFromGroupAsString[] = $eachDrink['bezeichnung'];
+    }
+    $allDrinks[$eachGroup['bezeichnung']] = $drinksFromGroupAsString;
+    $drinksFromGroup = null;
+}
+
+$drinks = '<ul class="list-group">';
+foreach ($allDrinks as $eachGroup) {
+    $drinks .= '<li><div class="fs-2">' . array_search($eachGroup, $allDrinks) . '</div><ul class="list-group">';
+    foreach ($eachGroup as $eachDrink) {
+        $drinks .= "<li>$eachDrink</li>";
+    }
+    $drinks .= '</ul></li>';
+}
+$drinks .= '</ul>';
+
+
+$food = 'FOOOOOOOOOOOOOOOOOOOOOD';
+
+$body = <<<BODY
+<script src="customer/customer.js" defer></script>
+<div class="d-flex">
+    <div id="drinksButton" class="w-50 text-center bg-yellow py-3 fs-5" onclick="switchCategory('drinks')">Getränke</div>
+    <div id="foodButton" class="w-50 text-center bg-orange py-3 fs-5" onclick="switchCategory('food')">Speisen</div>
+</div>
+
+<div id="welcomeMessage" class="text-center my-5 mx-4">
+    <p class="fs-2">Herzlich Willkommen bei uns im Restaurant!</p>
+    <p>Das ist die Seite zur Auswahl Ihrer Bestellung.</p>
+    <p>Einfach Ihre Getränke und Speisen auswählen und die Bestellung abschicken.</p>
+    <img src="resources/EGS_Logo_outlined_black_v1.png" alt="Logo" style="width: 80%">
+</div>
+
+<div id="drinks" class="text-center my-4" style="display: none">
+    $drinks
+</div>
+
+<div id="food" class="text-center my-4" style="display: none">
+    $food
+</div>
 BODY;
 
-print(SiteTemplate::render('Küche - EGS', $nav, $body));
+print(SiteTemplate::render('Kunde - EGS', $nav, $body));
