@@ -51,7 +51,7 @@ CREATE TABLE Bestellung
 
 CREATE TABLE Speise
 (
-    pk_speise_id       INTEGER NOT NULL PRIMARY KEY,
+    pk_speise_id       INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     bezeichnung        VARCHAR(255),
     preis              DOUBLE,
     fk_pk_speisegrp_id INTEGER NOT NULL
@@ -59,20 +59,20 @@ CREATE TABLE Speise
 
 CREATE TABLE Speisegruppe
 (
-    pk_speisegrp_id INTEGER NOT NULL PRIMARY KEY,
+    pk_speisegrp_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     bezeichnung     VARCHAR(255)
 );
 
 CREATE TABLE Getraenk
 (
-    pk_getraenk_id        INTEGER NOT NULL PRIMARY KEY,
+    pk_getraenk_id        INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     bezeichnung           VARCHAR(255),
     fk_pk_getraenkegrp_id INTEGER NOT NULL
 );
 
 CREATE TABLE Getraenkegruppe
 (
-    pk_getraenkegrp_id INTEGER NOT NULL PRIMARY KEY,
+    pk_getraenkegrp_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     bezeichnung        VARCHAR(255)
 );
 
