@@ -23,4 +23,47 @@ class DB_Admin_DrinkGroups
             exit();
         }
     }
+
+    static function createDrinkGroup(string $name)
+    {
+        $DB = DB::getDB();
+        try {
+            $stmt = $DB->prepare("INSERT INTO Getraenkegruppe (bezeichnung) VALUE (:name)");
+            $stmt->bindParam(':name', $name);
+            $stmt->execute();
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function deleteDrinkGroup(int $drinkGroupId)
+    {
+        $DB = DB::getDB();
+        try {
+            $stmt = $DB->prepare("DELETE FROM Getraenkegruppe WHERE pk_getraenkegrp_id = :drinkGroupId");
+            $stmt->bindParam(':drinkGroupId', $drinkGroupId);
+            $stmt->execute();
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function updateDrinkGroup(int $drinkGroupId, string $name)
+    {
+        $DB = DB::getDB();
+        try {
+            $stmt = $DB->prepare("UPDATE Getraenkegruppe SET bezeichnung = :name WHERE pk_getraenkegrp_id = :drinkGroupId");
+            $stmt->bindParam(':drinkGroupId', $drinkGroupId);
+            $stmt->bindParam(':name', $name);
+            $stmt->execute();
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
 }

@@ -95,7 +95,7 @@ $body = <<<BODY
         <button class="btn btn-secondary mt-3 mb-5 bg-gray" data-bs-toggle="modal" data-bs-target="#createDrinkGroup">Getränkegruppe erstellen</button>
     </div>
     
-    <form method="post" action="drinkgroups/createdrinkGroup.php">
+    <form method="post" action="drinkgroups/createDrinkGroup.php">
         <div class="modal fade" id="createDrinkGroup" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0">
