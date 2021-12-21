@@ -13,6 +13,7 @@ if (isset($_SESSION['user'])) {
     Pages::changePage($_SESSION['user']['typ']);
 }
 
+$loginErrorMsg = '';
 if (isset($_POST['submit'])) {
     $stmt = DB_User::getUserForLogin();
     $count = $stmt->rowCount();
@@ -29,18 +30,10 @@ if (isset($_POST['submit'])) {
             $_SESSION['user'] = $user;
             Pages::changePage($row['typ']);
         } else {
-            print(<<<LOGIN_FAILED
-            <div class="bg-white d-flex justify-content-center w-100">
-                <p class="fs-5 text-danger">Anmeldung fehlgeschlagen! Das falsche Passwort wurde verwendet.</p>
-            </div>
-LOGIN_FAILED);
+            $loginErrorMsg = 'Anmeldung fehlgeschlagen! Das falsche Passwort wurde verwendet.';
         }
     } else {
-        print(<<<LOGIN_FAILED
-        <div class="bg-white d-flex justify-content-center w-100">
-            <p class="fs-5 text-danger">Anmeldung fehlgeschlagen! Diesen Benutzernamen gibt es nicht.</p>
-        </div>
-LOGIN_FAILED);
+        $loginErrorMsg = 'Anmeldung fehlgeschlagen! Diesen Benutzernamen gibt es nicht.';
     }
 }
 
@@ -58,17 +51,20 @@ $body = <<<BODY
         <div class="h1 text-center fw-bold">Login</div>
         <div class="mb-3">
             <label for="loginNameInput" class="form-label ms-2 fs-4 fw-normal">Name:</label>
-            <input type="text" class="form-control shadow-sm py-2" id="loginNameInput" name="username">
+            <input type="text" class="form-control shadow-sm py-2" id="loginNameInput" name="username" required>
         </div>
         <div class="mb-3">
             <label for="loginPasswordInput" class="form-label ms-2 fs-4 fw-normal">Passwort:</label>
-            <input type="password" class="form-control shadow-sm" id="loginPasswordInput" name="password">
+            <input type="password" class="form-control shadow-sm" id="loginPasswordInput" name="password" required>
         </div>
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-dark shadow-sm fs-4 mt-4 px-4 py-2 fw-normal bg-black" name="submit">Anmelden
             </button>
         </div>
     </form>
+</div>
+<div class="bg-white d-flex justify-content-center w-100 mt-5">
+    <span class="fs-5 text-danger text-center">$loginErrorMsg</span>
 </div>
 BODY;
 

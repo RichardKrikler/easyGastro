@@ -1,4 +1,5 @@
 <?php
+
 namespace easyGastro;
 
 use PDO;
