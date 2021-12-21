@@ -63,7 +63,7 @@ foreach (DB_Admin_Tables::getTables() as $table) {
         </td>
         
         <td class="col-3">
-            <select class="form-select" id="typeSelect" aria-label="Type Selector" name="tableGroupId" start_value="{$table['fk_pk_tischgrp_id']}">
+            <select class="form-select" id="typeSelect" aria-label="Table-Group Selector" name="tableGroupId" start_value="{$table['fk_pk_tischgrp_id']}">
                 <option disabled hidden value="" selected>Tischgruppe</option>
                 $tableGroupOptions
             </select>

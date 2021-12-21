@@ -103,8 +103,8 @@ $body = <<<BODY
                             <h3 class="modal-title">Tischgruppe erstellen</h3>
                         </div>
                         <div class="modal-body">
-                            <label for="createdrinkGroupName" class="form-label">Bezeichnung</label>
-                            <input type="text" class="form-control" id="createdrinkGroupName" name="name" required>
+                            <label for="createDrinkGroupName" class="form-label">Bezeichnung</label>
+                            <input type="text" class="form-control" id="createDrinkGroupName" name="name" required>
                         </div>
                         <div class="modal-footer d-flex justify-content-between border-top-0 mt-3">
                                 <button type="submit" class="btn btn-primary text-white fs-5">Erstellen</button>
