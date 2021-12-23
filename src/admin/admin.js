@@ -1,7 +1,9 @@
 const adminRows = [...document.getElementsByClassName('admin-row')]
 adminRows.forEach(adminUserRow => {
     const cloudIcon = adminUserRow.getElementsByClassName('cloud-icon')[0]
-    const inputElements = [...adminUserRow.querySelectorAll('input[type=text]')].concat([...adminUserRow.querySelectorAll('input[type=password]')])
+    const inputElements = [...adminUserRow.querySelectorAll('input[type=text]')]
+            .concat([...adminUserRow.querySelectorAll('input[type=password]')]
+            .concat([...adminUserRow.querySelectorAll('input[type=number]')]))
     const selectElements = [...adminUserRow.getElementsByTagName('select')]
 
     inputElements.forEach(inputElement => inputElement.addEventListener('input', () => checkDifference(cloudIcon, inputElements.concat(selectElements))))
