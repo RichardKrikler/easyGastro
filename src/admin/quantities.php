@@ -40,7 +40,7 @@ $header = <<<HEADER
 
 $adminNav
 
-<hr class="mt-0">
+<hr class="my-0">
 HEADER;
 
 $quantityRows = '';
@@ -175,7 +175,7 @@ foreach ($drinks as $drink) {
 }
 
 $body = <<<BODY
-<div class="col col-10 mx-auto">
+<div class="col col-10 mx-auto pt-3">
 
     <div class="d-flex justify-content-center">
         <button class="btn btn-secondary mt-3 mb-5 bg-gray" data-bs-toggle="modal" data-bs-target="#createQuantity">Menge erstellen</button>
