@@ -4,7 +4,6 @@ namespace easyGastro\admin;
 
 use DB_Admin_Dishes;
 use DB_Admin_DishGroups;
-use DB_Admin_Dishs;
 use easyGastro\DB_User;
 use easyGastro\Pages;
 use easyGastro\SiteTemplate;
@@ -142,7 +141,7 @@ $body = <<<BODY
                             </select>
                         </div>
                         <div class="modal-footer d-flex justify-content-between border-top-0 mt-3">
-                                <button type="submit" class="btn btn-primary text-white fs-5">Erstellen</button>
+                            <button type="submit" class="btn btn-primary text-white fs-5">Erstellen</button>
                             <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">Zurück</button>
                         </div>
                     </div>

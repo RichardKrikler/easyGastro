@@ -53,7 +53,7 @@ CREATE TABLE Speise
 (
     pk_speise_id       INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     bezeichnung        VARCHAR(255),
-    preis              DOUBLE,
+    preis              DOUBLE(10, 2),
     fk_pk_speisegrp_id INTEGER
 );
 
@@ -78,14 +78,14 @@ CREATE TABLE Getraenkegruppe
 
 CREATE TABLE Menge
 (
-    pk_menge_id INTEGER NOT NULL PRIMARY KEY,
-    wert        DOUBLE
+    pk_menge_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    wert        FLOAT
 );
 
 CREATE TABLE Getraenk_Menge
 (
-    pk_getraenkmg_id  INTEGER NOT NULL PRIMARY KEY,
-    preis             DOUBLE,
+    pk_getraenkmg_id  INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    preis             DOUBLE(10, 2),
     fk_pk_getraenk_id INTEGER,
     fk_pk_menge_id    INTEGER
 );
@@ -93,7 +93,7 @@ CREATE TABLE Getraenk_Menge
 CREATE TABLE bestellung_getraenkmenge
 (
     pk_fk_pk_bestellung_id INTEGER NOT NULL,
-    pk_fk_pk_getraenkmg_id INTEGER NOT NULL,
+    pk_fk_pk_getraenkmg_id INTEGER,
     anzahl                 INTEGER
 );
 
@@ -126,7 +126,7 @@ ALTER TABLE Kuechenmitarbeiter
     ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_user_id) REFERENCES User (pk_user_id) ON DELETE CASCADE;
 
 ALTER TABLE Tisch
-    ADD CONSTRAINT FOREIGN KEY (fk_pk_tischgrp_id) REFERENCES Tischgruppe (pk_tischgrp_id) ON DELETE  SET NULL;
+    ADD CONSTRAINT FOREIGN KEY (fk_pk_tischgrp_id) REFERENCES Tischgruppe (pk_tischgrp_id) ON DELETE SET NULL;
 
 ALTER TABLE Bestellung
     ADD CONSTRAINT FOREIGN KEY (fk_pk_tischnr_id) REFERENCES Tisch (pk_tischnr_id);
@@ -139,7 +139,7 @@ ALTER TABLE Speise
 
 ALTER TABLE bestellung_getraenkmenge
     ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_bestellung_id) REFERENCES Bestellung (pk_bestellung_id),
-    ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_getraenkmg_id) REFERENCES Getraenk_Menge (pk_getraenkmg_id);
+    ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_getraenkmg_id) REFERENCES Getraenk_Menge (pk_getraenkmg_id) ON DELETE SET NULL;
 
 ALTER TABLE bestellung_speise
     ADD CONSTRAINT FOREIGN KEY (pk_fk_pk_bestellung_id) REFERENCES Bestellung (pk_bestellung_id),
