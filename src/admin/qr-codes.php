@@ -49,7 +49,7 @@ foreach ($tableIds as $tableId) {
 $body = <<<BODY
 <div class="col col-10 mx-auto pt-3 d-flex flex-column justify-content-center h-100">
     
-    <div class="d-flex justify-content-center flex-wrap mx-3">
+    <div class="d-flex justify-content-center flex-wrap mx-4">
         <div class="d-flex justify-content-center">
             <button class="btn btn-secondary mt-3 mb-5 bg-gray" data-bs-toggle="modal" data-bs-target="#generateNewTableCodes">Alle Tischcodes neu erstellen</button>
         </div>
@@ -71,7 +71,7 @@ $body = <<<BODY
         </div>
         
         
-        <div class="d-flex justify-content-center mx-3">
+        <div class="d-flex justify-content-center mx-4">
             <button class="btn btn-secondary mt-3 mb-5 bg-gray" data-bs-toggle="modal" data-bs-target="#generateNewTableCode">Tischcode neu erstellen</button>
         </div>
         
