@@ -17,5 +17,5 @@ if ((isset($row) && $row['typ'] !== 'Admin')) {
 }
 
 foreach (DB_Admin_Tables::getTables() as $table) {
-    DB_Admin_Tables::updateTableCode($table, DB_Admin_Tables::generateTableCode());
+    DB_Admin_Tables::updateTableCode($table['pk_tischnr_id'], DB_Admin_Tables::generateTableCode());
 }

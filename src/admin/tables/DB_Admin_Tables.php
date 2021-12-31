@@ -23,6 +23,24 @@ class DB_Admin_Tables
         }
     }
 
+    static function getTable(int $tableId): array
+    {
+        $DB = DB::getDB();
+        $tableAr = [];
+        try {
+            $stmt = $DB->prepare("SELECT pk_tischnr_id, tischcode, fk_pk_tischgrp_id FROM Tisch WHERE pk_tischnr_id = :tableId");
+            $stmt->bindParam(':tableId', $tableId);
+            if ($stmt->execute()) {
+                $tableAr = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $tableAr;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
     static function createTable(int $tableId, int $tableGroupId)
     {
         $DB = DB::getDB();
