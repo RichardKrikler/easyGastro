@@ -23,11 +23,13 @@ class DB_Admin_Tables
         }
     }
 
-    static function createTable(string $tableCode, int $tableGroupId)
+    static function createTable(int $tableId, int $tableGroupId)
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare("INSERT INTO Tisch (tischcode, fk_pk_tischgrp_id) VALUE (:tableCode, :tableGroupId)");
+            $stmt = $DB->prepare("INSERT INTO Tisch (pk_tischnr_id, tischcode, fk_pk_tischgrp_id) VALUE (:tableId, :tableCode, :tableGroupId)");
+            $stmt->bindParam(':tableId', $tableId);
+            $tableCode = self::generateTableCode();
             $stmt->bindParam(':tableCode', $tableCode);
             $stmt->bindParam(':tableGroupId', $tableGroupId);
             $stmt->execute();
@@ -50,6 +52,14 @@ class DB_Admin_Tables
             print('Error: ' . $e);
             exit();
         }
+    }
+
+    static function generateTableCode(): string
+    {
+        do {
+            $tableCode = strtoupper(substr(bin2hex(random_bytes(5)), 0, 5));
+        } while (in_array($tableCode, array_column(self::getTables(), 'tischcode')));
+        return $tableCode;
     }
 
     static function updateTableCode($tableId, $tableCode)

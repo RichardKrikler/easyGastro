@@ -107,7 +107,7 @@ $body = <<<BODY
                             <input type="text" class="form-control" id="createDishGroupName" name="name" required>
                         </div>
                         <div class="modal-footer d-flex justify-content-between border-top-0 mt-3">
-                                <button type="submit" class="btn btn-primary text-white fs-5">Erstellen</button>
+                            <button type="submit" class="btn btn-primary text-white fs-5">Erstellen</button>
                             <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">Zurück</button>
                         </div>
                     </div>

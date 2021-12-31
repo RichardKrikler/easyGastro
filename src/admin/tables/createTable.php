@@ -12,9 +12,9 @@ session_start();
 
 $row = DB_User::getDataOfUser();
 
-if ((isset($row) && $row['typ'] !== 'Admin') || !isset($_POST['tableCode']) || !isset($_POST['tableGroupId'])) {
+if ((isset($row) && $row['typ'] !== 'Admin') || !isset($_POST['tableId']) || !isset($_POST['tableGroupId'])) {
     return;
 }
 
-DB_Admin_Tables::createTable($_POST['tableCode'], $_POST['tableGroupId']);
+DB_Admin_Tables::createTable($_POST['tableId'], $_POST['tableGroupId']);
 

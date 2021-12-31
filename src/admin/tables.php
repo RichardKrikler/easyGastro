@@ -43,7 +43,8 @@ HEADER;
 
 $tableRows = '';
 $tableGroups = DB_Admin_TableGroups::getTableGroups();
-foreach (DB_Admin_Tables::getTables() as $table) {
+$tables = DB_Admin_Tables::getTables();
+foreach ($tables as $table) {
     $tableGroupOptions = '';
     foreach ($tableGroups as $tableGroup) {
         $selected = $table['fk_pk_tischgrp_id'] == $tableGroup['pk_tischgrp_id'] ? 'selected' : '';
@@ -58,8 +59,8 @@ foreach (DB_Admin_Tables::getTables() as $table) {
             <input type="hidden" value="{$table['pk_tischnr_id']}" name="tableId">
         </th>
         
-        <td class="col-3">
-            <input type="text" id="nameInput" class="form-control d-inline-block text-center" value="{$table['tischcode']}" start_value="{$table['tischcode']}" name="tableCode">
+        <td class="col-3 text-center">
+            {$table['tischcode']}
         </td>
         
         <td class="col-3">
@@ -109,6 +110,8 @@ foreach ($tableGroups as $tableGroup) {
     $tableGroupOptions .= "<option value='{$tableGroup['pk_tischgrp_id']}'>{$tableGroup['bezeichnung']}</option>";
 }
 
+$newTableId = max(array_column($tables, 'pk_tischnr_id')) + 1;
+
 $body = <<<BODY
 <div class="col col-10 mx-auto pt-3">
 
@@ -124,8 +127,8 @@ $body = <<<BODY
                             <h3 class="modal-title">Tisch hinzufügen</h3>
                         </div>
                         <div class="modal-body">
-                            <label for="createtableCode" class="form-label">Tischcode</label>
-                            <input type="text" class="form-control" id="createtableCode" name="tableCode" required>
+                            <label for="createTableId" class="form-label">Tischnummer</label>
+                            <input type="number" class="form-control" id="createTableId" name="tableId" required step="1" placeholder="$newTableId" value="$newTableId">
                             
                             <label for="createUserType" class="form-label mt-3">Tischgruppe</label>
                             <select class="form-select" id="createUserType" aria-label="TableGroup Selector" name="tableGroupId" required>
