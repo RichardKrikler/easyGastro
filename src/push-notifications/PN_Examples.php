@@ -44,6 +44,7 @@ $PN_Send = new PN_Send();
 try {
     $PN_Send->send($subscriptions, '{"msg": "Hallo", "data": "2"}');
 } catch (ErrorException $e) {
+    var_dump($e);
 }
 
 // in one line:

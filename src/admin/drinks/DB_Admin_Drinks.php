@@ -1,39 +1,63 @@
 <?php
 
-namespace easyGastro\admin;
-
-use PDO;
-use PDOException;
 use easyGastro\DB;
 
-require_once __DIR__ . "/../db.php";
+require_once __DIR__ . '/../../db.php';
 
-
-class DB_Admin_Users
+class DB_Admin_Drinks
 {
-    static function getUsers()
+    static function getDrinks()
     {
         $DB = DB::getDB();
-        $userAr = '';
+        $drinkAr = [];
         try {
-            $stmt = $DB->prepare("SELECT pk_user_id, name, typ FROM User");
+            $stmt = $DB->prepare("SELECT pk_getraenk_id, bezeichnung, fk_pk_getraenkegrp_id FROM Getraenk");
             if ($stmt->execute()) {
-                $userAr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $drinkAr = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $userAr;
+            return $drinkAr;
         } catch (PDOException  $e) {
             print('Error: ' . $e);
             exit();
         }
     }
 
-    static function updateUserName(int $userId, string $name)
+    static function createDrink(string $name, int $drinkGroupId)
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare("UPDATE User SET name = :name WHERE pk_user_id = :userId");
-            $stmt->bindParam(':userId', $userId);
+            $stmt = $DB->prepare("INSERT INTO Getraenk (bezeichnung, fk_pk_getraenkegrp_id) VALUE (:name, :drinkGroupId)");
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':drinkGroupId', $drinkGroupId);
+            $stmt->execute();
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function deleteDrink(int $drinkId)
+    {
+        $DB = DB::getDB();
+        try {
+            $stmt = $DB->prepare("DELETE FROM Getraenk WHERE pk_getraenk_id = :drinkId");
+            $stmt->bindParam(':drinkId', $drinkId);
+            $stmt->execute();
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function updateDrinkName(int $drinkId, string $name)
+    {
+        $DB = DB::getDB();
+        try {
+            $stmt = $DB->prepare("UPDATE Getraenk SET bezeichnung = :name WHERE pk_getraenk_id = :drinkId");
+            $stmt->bindParam(':drinkId', $drinkId);
             $stmt->bindParam(':name', $name);
             $stmt->execute();
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -43,13 +67,13 @@ class DB_Admin_Users
         }
     }
 
-    static function updateUserPassword(int $userId, string $password)
+    static function updateDrinkGroupId($drinkId, $drinkGroupId)
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare("UPDATE User SET passwort = :password WHERE pk_user_id = :userId");
-            $stmt->bindParam(':userId', $userId);
-            $stmt->bindParam(':password', $password);
+            $stmt = $DB->prepare("UPDATE Getraenk SET fk_pk_getraenkegrp_id = :drinkGroupId WHERE pk_getraenk_id = :drinkId");
+            $stmt->bindParam(':drinkId', $drinkId);
+            $stmt->bindParam(':drinkGroupId', $drinkGroupId);
             $stmt->execute();
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException  $e) {
@@ -58,33 +82,4 @@ class DB_Admin_Users
         }
     }
 
-    static function updateUserType(int $userId, string $type)
-    {
-        $DB = DB::getDB();
-        try {
-            $stmt = $DB->prepare("UPDATE User SET typ = :type WHERE pk_user_id = :userId");
-            $stmt->bindParam(':userId', $userId);
-            $stmt->bindParam(':type', $type);
-            $stmt->execute();
-            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException  $e) {
-            print('Error: ' . $e);
-            exit();
-        }
-    }
-
-    public static function deleteUser(int $userId)
-    {
-        $DB = DB::getDB();
-        try {
-            $stmt = $DB->prepare("DELETE FROM User WHERE pk_user_id = :userId");
-            $stmt->bindParam(':userId', $userId);
-            $stmt->execute();
-            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException  $e) {
-            print('Error: ' . $e);
-            exit();
-        }
-
-    }
 }

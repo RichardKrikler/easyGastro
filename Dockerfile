@@ -4,3 +4,5 @@ RUN apt-get update
 RUN docker-php-ext-install pdo_mysql
 RUN apt install -y libgmp-dev
 RUN docker-php-ext-install gmp
+RUN apt-get install -y zlib1g-dev libpng-dev
+RUN docker-php-ext-install gd
