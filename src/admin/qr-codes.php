@@ -35,7 +35,7 @@ $body = <<<BODY
     
     <div class="d-flex justify-content-center flex-wrap mx-4">
         <div class="d-flex justify-content-center">
-            <button class="btn btn-secondary mt-3 mb-5 bg-gray" data-bs-toggle="modal" data-bs-target="#generateNewTableCodes">Alle Tischcodes neu erstellen</button>
+            <button class="btn btn-secondary mt-3 mb-5 bg-gray fs-5" data-bs-toggle="modal" data-bs-target="#generateNewTableCodes">Alle Tischcodes neu erstellen</button>
         </div>
     
         <div class="modal fade" id="generateNewTableCodes" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
@@ -56,7 +56,7 @@ $body = <<<BODY
         
         
         <div class="d-flex justify-content-center mx-4">
-            <button class="btn btn-secondary mt-3 mb-5 bg-gray" data-bs-toggle="modal" data-bs-target="#generateNewTableCode">Tischcode neu erstellen</button>
+            <button class="btn btn-secondary mt-3 mb-5 bg-gray fs-5" data-bs-toggle="modal" data-bs-target="#generateNewTableCode">Tischcode neu erstellen</button>
         </div>
         
         <form method="post" action="qr-codes/generateNewTableCode.php">
@@ -85,12 +85,12 @@ $body = <<<BODY
 
     <div class="d-flex justify-content-center flex-wrap mt-4">
         <div class="d-flex justify-content-center mt-3 mb-5 mx-3">
-            <a href="qr-codes/pdf.php" target="_blank"><button class="btn btn-secondary bg-gray">PDF für alle Tischcodes</button></a>
+            <a href="qr-codes/pdf.php" target="_blank"><button class="btn btn-secondary bg-gray fs-5">PDF für alle Tischcodes</button></a>
         </div>
         
         
         <div class="d-flex justify-content-center mx-3">
-            <button class="btn btn-secondary mt-3 mb-5 bg-gray" data-bs-toggle="modal" data-bs-target="#selectPdfTableCodes">PDF für einzelne Tischcodes</button>
+            <button class="btn btn-secondary mt-3 mb-5 bg-gray fs-5" data-bs-toggle="modal" data-bs-target="#selectPdfTableCodes">PDF für einzelne Tischcodes</button>
         </div>
         
         <form method="get" action="qr-codes/pdf.php" target="_blank">
