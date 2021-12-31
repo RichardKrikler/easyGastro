@@ -13,7 +13,7 @@ require_once '../db.php';
 require_once '../DB_User.php';
 require_once 'users/DB_Admin_Users.php';
 require_once 'tables/DB_Admin_Tables.php';
-require_once 'AdminNav.php';
+require_once 'AdminHeader.php';
 
 
 session_start();
@@ -22,23 +22,7 @@ $row = DB_User::getDataOfUser();
 Pages::checkPage('Admin', $row);
 
 
-$adminNav = AdminNav::getNavigation(basename(__FILE__));
-
-$header = <<<HEADER
-<div class="header d-flex justify-content-between">
-    <p class="invisible"></p>
-    <h1 class="fw-normal py-3 fs-3 mb-0"><a href="/admin.php" class="text-white text-decoration-none">Adminseite</a></h1>
-    <form method="post" class="d-flex flex-column justify-content-center my-auto">
-        <button type="submit" name="logout" id="logoutBt" class="shadow-none bg-unset d-flex flex-column justify-content-center">
-            <span class="icon material-icons-outlined mx-2 px-2 text-white">logout</span>
-        </button>
-    </form>
-</div>
-
-$adminNav
-
-<hr class="my-0">
-HEADER;
+$header = AdminHeader::getHeader() . AdminHeader::getNavigation(basename(__FILE__));
 
 $tableIds = array_column(DB_Admin_Tables::getTables(), 'pk_tischnr_id');
 $tableOptions = '';

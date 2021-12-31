@@ -2,7 +2,7 @@
 
 namespace easyGastro\admin;
 
-class AdminNav
+class AdminHeader
 {
     private static array $pages = ['users.php' => 'Benutzer', 'tablegroups.php' => 'Tischgruppen', 'tables.php' => 'Tische', 'drinkgroups.php' => 'Getränkegruppen', 'drinks.php' => 'Getränke', 'quantities.php' => 'Mengen', 'dishgroups.php' => 'Speisegruppen', 'dishes.php' => 'Speisen', 'qr-codes.php' => 'QR-Codes'];
 
@@ -21,6 +21,7 @@ class AdminNav
     </div>
   </div>
 </nav>
+<hr class="my-0">
 NAV;
     }
 
@@ -37,5 +38,22 @@ NAV;
 LI;
         }
         return $pagesUl . '</ul>';
+    }
+
+    public static function getHeader(): string
+    {
+        return <<<HEADER
+<div class="header container-fluid mx-0">
+    <div class="row">
+        <p class="invisible col"></p>
+        <h1 class="fw-normal py-3 fs-3 mb-0 col text-center"><a href="/admin.php" class="text-white text-decoration-none">Adminseite</a></h1>
+        <form method="post" class="d-flex flex-column justify-content-center my-auto col">
+            <button type="submit" name="logout" id="logoutBt" class="shadow-none bg-unset d-flex flex-column justify-content-center">
+                <span class="icon material-icons-outlined mx-2 px-2 text-white text-end">logout</span>
+            </button>
+        </form>
+    </div>
+</div>
+HEADER;
     }
 }
