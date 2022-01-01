@@ -32,7 +32,6 @@ $qrCodePdf->SetTitle('Tischcodes - easyGastro');
 
 $qrCodePdf->SetHeader('Tischcodes||easyGastro');
 
-date_default_timezone_set('CET');
 $date = date('d.m.Y H:i');
 $qrCodePdf->SetFooter("{$date}||{PAGENO}/{nb}");
 
