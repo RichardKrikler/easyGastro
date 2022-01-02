@@ -46,4 +46,40 @@ class DB_Customer
             exit();
         }
     }
+
+    static function getFoodGroups()
+    {
+        $DB = DB::getDB();
+        $foodGroups = array();
+        try {
+            $stmt = $DB->prepare('SELECT bezeichnung FROM speisegruppe;');
+            if ($stmt->execute()) {
+                $foodGroups = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $foodGroups;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function getFood($foodGroup)
+    {
+        $DB = DB::getDB();
+        $food = array();
+        try {
+            $stmt = $DB->prepare("SELECT pk_speise_id, s.bezeichnung FROM speise s
+                                        INNER JOIN speisegruppe sg on s.fk_pk_speisegrp_id = sg.pk_speisegrp_id
+                                        WHERE sg.bezeichnung = '$foodGroup';");
+            if ($stmt->execute()) {
+                $food = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $food;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
 }
