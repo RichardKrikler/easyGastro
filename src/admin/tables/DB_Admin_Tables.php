@@ -80,7 +80,7 @@ class DB_Admin_Tables
         return $tableCode;
     }
 
-    static function updateTableCode($tableId, $tableCode)
+    static function updateTableCode(int $tableId, string $tableCode)
     {
         $DB = DB::getDB();
         try {
@@ -95,7 +95,7 @@ class DB_Admin_Tables
         }
     }
 
-    static function updateTableGroupId($tableId, $tableGroupId)
+    static function updateTableGroupId(int $tableId, int $tableGroupId)
     {
         $DB = DB::getDB();
         try {

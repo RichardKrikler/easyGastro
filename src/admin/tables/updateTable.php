@@ -12,9 +12,9 @@ session_start();
 
 $row = DB_User::getDataOfUser();
 
-if ((isset($row) && $row['typ'] !== 'Admin') || !isset($_POST['tableId']) || !isset($_POST['tableCode']) || !isset($_POST['tableGroupId'])) {
+if ((isset($row) && $row['typ'] !== 'Admin') || !isset($_POST['tableId']) || !isset($_POST['tableGroupId'])) {
+    print(isset($_POST['tableCode']));
     return;
 }
 
-DB_Admin_Tables::updateTableCode($_POST['tableId'], $_POST['tableCode']);
 DB_Admin_Tables::updateTableGroupId($_POST['tableId'], $_POST['tableGroupId']);

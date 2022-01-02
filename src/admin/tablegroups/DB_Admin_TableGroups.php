@@ -83,7 +83,7 @@ class DB_Admin_TableGroups
         }
     }
 
-    static function updateWaiterTableGroup($userId, $tableGroupId)
+    static function updateWaiterTableGroup(int $userId, int $tableGroupId)
     {
         $DB = DB::getDB();
         try {
