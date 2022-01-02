@@ -67,7 +67,7 @@ class DB_Admin_Drinks
         }
     }
 
-    static function updateDrinkGroupId($drinkId, $drinkGroupId)
+    static function updateDrinkGroupId(int $drinkId, int $drinkGroupId)
     {
         $DB = DB::getDB();
         try {
