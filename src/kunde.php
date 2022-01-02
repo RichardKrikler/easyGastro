@@ -39,7 +39,7 @@ foreach ($allDrinks as $eachDrinkGroup) {
     $drinks .= '<li class="list-group-item border-bottom-0"><p class="fw-bold mb-0">'
         . array_search($eachDrinkGroup, $allDrinks) . '</p><ul class="list-group list-group-flush">';
     foreach ($eachDrinkGroup as $eachDrink) {
-        $drinks .= '<li class="list-group-item d-flex justify-content-between">
+        $drinks .= '<li class="list-group-item d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#' . $eachDrink . '">
                     <p class="mb-0 d-flex flex-column justify-content-center">' . $eachDrink
                     . '</p><span class="icon material-icons-outlined">keyboard_arrow_right</span></li>';
     }
@@ -64,13 +64,33 @@ foreach ($allFood as $eachFoodGroup) {
     $food .= '<li class="list-group-item border-bottom-0"><p class="fw-bold mb-0">'
         . array_search($eachFoodGroup, $allFood) . '</p><ul class="list-group list-group-flush">';
     foreach ($eachFoodGroup as $eachFood) {
-        $food .= '<li class="list-group-item d-flex justify-content-between">
+        $food .= '<li class="list-group-item d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#' . $eachFood . '">
                     <p class="mb-0 d-flex flex-column justify-content-center">' . $eachFood
             . '</p><span class="icon material-icons-outlined">keyboard_arrow_right</span></li>';
     }
     $food .= '</ul></li>';
 }
 $food .= '</ul>';
+
+$food .= <<<FOODORDERMODAL
+<div class="modal fade" id="Frittatensuppe" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+            <div class="modal-header d-flex justify-content-center border-bottom-0">
+                <h3 class="modal-title">Titel</h3>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer d-flex justify-content-between border-top-0">
+                <button type="button" class="btn bg-red fs-5" data-bs-dismiss="modal">Zurück</button>
+                <button type="button" class="btn bg-yellow fs-5">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+FOODORDERMODAL;
+
 
 $body = <<<BODY
 <script src="customer/customer.js" defer></script>
