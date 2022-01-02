@@ -13,8 +13,12 @@ use easyGastro\Customer;
 session_start();
 
 $nav = <<<NAV
-<div class="header text-center">
-    <h1 class="text-white fw-normal py-3 fs-3 mb-0">Startseite</h1>
+<div class="header text-center d-flex justify-content-between">
+    <span id="payIcon" class="icon pay-icon material-icons-outlined d-flex flex-column justify-content-center mx-2 px-2 text-white"></span>
+    <h1 id="startHeader" class="text-white fw-normal py-3 fs-3 mb-0">Startseite</h1>
+    <h1 id="drinkHeader" class="text-white fw-normal py-3 fs-6 mb-0" style="display: none">Auswahl - Getränke</h1>
+    <h1 id="foodHeader" class="text-white fw-normal py-3 fs-6 mb-0" style="display: none">Auswahl - Speisen</h1>
+    <span id="orderIcon" class="icon order-icon material-icons-outlined d-flex flex-column justify-content-center mx-2 px-2 text-white"></span>
 </div>
 NAV;
 
