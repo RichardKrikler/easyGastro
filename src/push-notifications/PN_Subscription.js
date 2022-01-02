@@ -1,7 +1,3 @@
-// const logger = document.getElementById('logger')
-// const log = (log) => logger.innerHTML += '<span class="d-block">' + log + '</span>'
-// log('text')
-
 document.addEventListener('DOMContentLoaded', () => {
     const applicationServerKey =
         'BJvFyEJTb975woE0mQf6jCA7bJEdbAZ3nuT7Ex_I1KjWrDBKYwrfmH7dcMjseRBRoNfVZrgBb_rzTFLwvTyggHQ'
@@ -60,11 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'enabled':
                 pushButton.disabled = false
                 pushButton.textContent = 'Benachrichtigungen deaktivieren'
+                pushButton.classList.replace('bg-red', 'bg-green')
                 isPushEnabled = true
                 break
             case 'disabled':
                 pushButton.disabled = false
                 pushButton.textContent = 'Benachrichtigungen aktivieren'
+                pushButton.classList.replace('bg-green', 'bg-red')
                 isPushEnabled = false
                 break
             case 'computing':
@@ -74,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'incompatible':
                 pushButton.disabled = true
                 pushButton.textContent = 'Benachrichtigungen sind nicht mit diesem Browser kompatibel'
+                pushButton.classList.replace('bg-green', 'bg-red')
                 break
             default:
                 console.error('Unhandled push button state', state)
