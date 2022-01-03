@@ -111,7 +111,7 @@ foreach (DB_Admin_DrinkQuantities::getDrinkQuantities() as $drinkQuantity) {
         </td>
 
         <td class="col-3">
-            <input type="text" id="priceInput" class="form-control d-inline-block text-center" value="{$drinkQuantity['preis']}" start_value="{$drink['preis']}" name="price">
+            <input type="text" id="priceInput" class="form-control d-inline-block text-center" value="{$drinkQuantity['preis']}" start_value="{$drinkQuantity['preis']}" name="price">
         </td>
         
         <td style="width: min-content">
