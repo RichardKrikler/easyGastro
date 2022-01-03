@@ -16,8 +16,8 @@ $code = $_GET['code'] ?? "INVALID CODE";
 $qrCode = QrCode::create($code)
     ->setEncoding(new Encoding('UTF-8'))
     ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
-    ->setSize(250)
-    ->setMargin(5)
+    ->setSize(210)
+    ->setMargin(8)
     ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin());
 
 try {
