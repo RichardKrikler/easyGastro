@@ -27,3 +27,12 @@ function switchCategory(category) {
         document.getElementById('foodHeader').style.display = 'inline';
     }
 }
+
+function modifyFoodModal(food) {
+    document.getElementById('foodTitle').textContent = food;
+    for (const foodKey in foodList) {
+        if (food.toString() === foodList[foodKey]['bezeichnung'].toString()) {
+            document.getElementById('foodPrice').textContent = (parseFloat(foodList[foodKey]['preis']) * parseFloat(document.getElementById('foodCount').value)).toFixed(2).toString() + '€';
+        }
+    }
+}

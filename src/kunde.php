@@ -64,7 +64,7 @@ foreach ($allFood as $eachFoodGroup) {
     $food .= '<li class="list-group-item border-bottom-0"><p class="fw-bold mb-0">'
         . array_search($eachFoodGroup, $allFood) . '</p><ul class="list-group list-group-flush">';
     foreach ($eachFoodGroup as $eachFood) {
-        $food .= '<li class="list-group-item d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#foodModal">
+        $food .= '<li class="list-group-item d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#foodModal" onclick="document.getElementById(\'foodCount\').value=1;modifyFoodModal(\'' . $eachFood . '\')">
                     <p class="mb-0 d-flex flex-column justify-content-center">' . $eachFood
             . '</p><span class="icon material-icons-outlined">keyboard_arrow_right</span></li>';
     }
@@ -88,7 +88,7 @@ $drinkModal = <<<DRINKMODAL
                 </div>
                 <div class="w-25">
                     <label for="drinkCount" class="form-label">Anzahl:</label>
-                    <input type="number" id="drinkCount" class="form-control">
+                    <input type="number" id="drinkCount" class="form-control" value="1" min="1">
                 </div>
                 <div>
                     <label for="drinkPrice" class="form-label">Preis:</label>
@@ -109,16 +109,16 @@ $foodModal = <<<FOODMODAL
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0">
             <div class="modal-header d-flex justify-content-center border-bottom-0">
-                <h3 class="modal-title">Essen</h3>
+                <h3 class="modal-title" id="foodTitle"></h3>
             </div>
             <div class="modal-body text-center d-flex justify-content-around">
                 <div class="w-25">
                     <label for="foodCount" class="form-label">Anzahl:</label>
-                    <input type="number" id="foodCount" class="form-control">
+                    <input type="number" id="foodCount" class="form-control" value="1" min="1" onchange="modifyFoodModal(document.getElementById('foodTitle').textContent)">
                 </div>
                 <div>
                     <label for="foodPrice" class="form-label">Preis:</label>
-                    <div id="foodPrice">100€</div>
+                    <div id="foodPrice"></div>
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-between border-top-0">
@@ -218,5 +218,7 @@ $payModal
 $orderModal
 
 BODY;
+
+$body .= '<script> var foodList=' . json_encode(Customer\DB_Customer::getCompleteFoodList()) . '; </script>';
 
 print(SiteTemplate::render('Kunde - EGS', $nav, $body));

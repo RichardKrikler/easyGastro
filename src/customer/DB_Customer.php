@@ -82,4 +82,21 @@ class DB_Customer
             exit();
         }
     }
+
+    static function getCompleteFoodList()
+    {
+        $DB = DB::getDB();
+        $food = array();
+        try {
+            $stmt = $DB->prepare("SELECT * FROM speise s");
+            if ($stmt->execute()) {
+                $food = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $food;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
 }
