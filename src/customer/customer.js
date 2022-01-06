@@ -1,6 +1,8 @@
 'use strict';
 
 let orderCounter = 0;
+let openedInModal;
+let orders = [];
 
 function switchCategory(category) {
     document.getElementById('startHeader').style.display = 'none';
@@ -8,7 +10,7 @@ function switchCategory(category) {
     document.getElementById('payIcon').textContent = 'payments';
     document.getElementById('orderIcon').textContent = 'assignment';
     let orderCounterElement = document.createElement('div');
-    orderCounterElement.appendChild(document.createTextNode(orderCounter.toString()))
+    orderCounterElement.appendChild(document.createTextNode(orderCounter.toString()));
     orderCounterElement.setAttribute('id', 'orderCounter');
     document.getElementById('orderIcon').appendChild(orderCounterElement);
     if (category === 'drinks') {
@@ -32,9 +34,10 @@ function modifyFoodModal(food) {
     document.getElementById('foodTitle').textContent = food;
     for (const foodKey in foodList) {
         if (food.toString() === foodList[foodKey]['bezeichnung'].toString()) {
-            document.getElementById('foodPrice').textContent =
-                (parseFloat(foodList[foodKey]['preis']) * parseFloat(document.getElementById('foodCount').value)).toFixed(2).toString()
-                + '€';
+            let currentFoodCount = document.getElementById('foodCount').value;
+            let currentFoodPrice = parseFloat(foodList[foodKey]['preis']) * parseFloat(currentFoodCount);
+            document.getElementById('foodPrice').textContent = currentFoodPrice.toFixed(2).toString() + '€';
+            openedInModal = [foodList[foodKey]['pk_speise_id'], food, currentFoodCount, currentFoodPrice];
             break;
         }
     }
@@ -84,9 +87,11 @@ function refreshDrinkModalPrice() {
                     for (const amountKey in amountList) {
                         if (amountList[amountKey]['pk_menge_id'].toString() === drinkAmountList[drinkAmountKey]['fk_pk_menge_id'].toString()
                             && amountList[amountKey]['wert'].toString() === selectedDrinkAmount) {
+                            let currentDrinkPrice = parseFloat(drinkAmountList[drinkAmountKey]['preis']) * parseFloat(drinkCount);
                             document.getElementById('drinkPrice').textContent =
-                                (parseFloat(drinkAmountList[drinkAmountKey]['preis']) * parseFloat(drinkCount)).toFixed(2).toString()
+                                currentDrinkPrice.toFixed(2).toString()
                                 + '€';
+                            openedInModal = [drinkAmountList[drinkAmountKey]['pk_getraenkmg_id'], drinkTitle, drinkCount, currentDrinkPrice, selectedDrinkAmount + 'l'];
                             break;
                         }
                     }
@@ -95,4 +100,74 @@ function refreshDrinkModalPrice() {
             break;
         }
     }
+}
+
+function refreshOrderCounter() {
+    document.getElementById('orderCounter').textContent = orderCounter.toString();
+}
+
+function addOrder() {
+    orders.push(openedInModal);
+    orderCounter += parseInt(openedInModal[2]);
+    refreshOrderCounter();
+    refreshOrderModal()
+}
+
+function refreshOrderModal() {
+    let orderModalList = document.getElementById('orderModalList');
+    orderModalList.innerHTML = '';
+    for (const orderKey in orders) {
+        let details = [];
+        for (let i = 3; i < orders[orderKey].length; i++) {
+            details.push(orders[orderKey][i]);
+        }
+        orderModalList.appendChild(createOrderListPoint(orders[orderKey][2] + 'x ' + orders[orderKey][1], details));
+    }
+    // TODO: make style better
+    // TODO: show sum
+}
+
+function createDeleteIcon() {
+    let deleteIcon = document.createElement('span');
+    deleteIcon.appendChild(document.createTextNode('close'));
+    deleteIcon.setAttribute('class', 'icon close-icon material-icons-outlined c-red');
+    // TODO: make delete function
+    return deleteIcon;
+}
+
+function createOrderDetail(detail) {
+    let orderDetail = document.createElement('p');
+    orderDetail.appendChild(document.createTextNode(detail));
+    orderDetail.setAttribute('class', 'mb-0');
+    return orderDetail;
+}
+
+function createOrderDetailContainer(details) {
+    let container = document.createElement('div');
+    container.setAttribute('class', 'd-flex justify-content-between w-50');
+    for (const detailKey in details) {
+        let orderDetail = details[detailKey];
+        if (parseInt(detailKey) === 0) {
+            console.log(detailKey + ' === 0');
+            orderDetail = parseFloat(orderDetail).toFixed(2).toString() + '€'
+        }
+        container.appendChild(createOrderDetail(orderDetail));
+    }
+    container.appendChild(createDeleteIcon());
+    return container;
+}
+
+function createOrderTitle(title) {
+    let orderTitle = document.createElement('p');
+    orderTitle.appendChild(document.createTextNode(title));
+    orderTitle.setAttribute('class', 'mb-0 w-50');
+    return orderTitle;
+}
+
+function createOrderListPoint(title, details) {
+    let listPoint = document.createElement('li');
+    listPoint.setAttribute('class', 'list-group-item d-flex justify-content-between');
+    listPoint.appendChild(createOrderTitle(title));
+    listPoint.appendChild(createOrderDetailContainer(details));
+    return listPoint;
 }

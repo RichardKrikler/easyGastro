@@ -95,7 +95,7 @@ $drinkModal = <<<DRINKMODAL
             </div>
             <div class="modal-footer d-flex justify-content-between border-top-0">
                 <button type="button" class="btn bg-red fs-5" data-bs-dismiss="modal">Zurück</button>
-                <button type="button" class="btn bg-green fs-5">Bestätigen</button>
+                <button type="button" class="btn bg-green fs-5" onclick="addOrder()" data-bs-dismiss="modal">Bestätigen</button>
             </div>
         </div>
     </div>
@@ -121,7 +121,7 @@ $foodModal = <<<FOODMODAL
             </div>
             <div class="modal-footer d-flex justify-content-between border-top-0">
                 <button type="button" class="btn bg-red fs-5" data-bs-dismiss="modal">Zurück</button>
-                <button type="button" class="btn bg-green fs-5">Bestätigen</button>
+                <button type="button" class="btn bg-green fs-5" onclick="addOrder()" data-bs-dismiss="modal">Bestätigen</button>
             </div>
         </div>
     </div>
@@ -155,19 +155,26 @@ $orderModal = <<<ORDERMODAL
                 <h3 class="modal-title">Übersicht - Bestellung</h3>
             </div>
             <div class="modal-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#foodModal">
+                <ul class="list-group list-group-flush" id="orderModalList">
+                    <li class="list-group-item d-flex justify-content-between">
                         <p class="mb-0 w-50">blalala</p>
                         <div class="d-flex justify-content-between w-50">
-                            <p class="mb-0">0,25l</p>
                             <p class="mb-0">2,50€</p>
+                            <p class="mb-0">0,25l</p>
                             <span class="icon close-icon material-icons-outlined c-red">close</span>
                         </div>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#foodModal">
+                    <li class="list-group-item d-flex justify-content-between">
                         <p class="mb-0 w-50">blalala</p>
                         <div class="d-flex justify-content-between w-50">
+                            <p class="mb-0">2,50€</p>
                             <p class="mb-0">0,25l</p>
+                            <span class="icon close-icon material-icons-outlined c-red">close</span>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <p class="mb-0 w-50">blalala</p>
+                        <div class="d-flex justify-content-between w-50">
                             <p class="mb-0">2,50€</p>
                             <span class="icon close-icon material-icons-outlined c-red">close</span>
                         </div>
