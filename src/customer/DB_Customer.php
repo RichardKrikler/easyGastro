@@ -88,12 +88,63 @@ class DB_Customer
         $DB = DB::getDB();
         $food = array();
         try {
-            $stmt = $DB->prepare("SELECT * FROM speise s");
+            $stmt = $DB->prepare("SELECT * FROM speise");
             if ($stmt->execute()) {
                 $food = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $food;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function getCompleteDrinkList()
+    {
+        $DB = DB::getDB();
+        $drinks = array();
+        try {
+            $stmt = $DB->prepare("SELECT * FROM getraenk");
+            if ($stmt->execute()) {
+                $drinks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $drinks;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function getCompleteDrinkAmountList()
+    {
+        $DB = DB::getDB();
+        $drinks = array();
+        try {
+            $stmt = $DB->prepare("SELECT * FROM getraenk_menge");
+            if ($stmt->execute()) {
+                $drinks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $drinks;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function getCompleteAmountList()
+    {
+        $DB = DB::getDB();
+        $drinks = array();
+        try {
+            $stmt = $DB->prepare("SELECT * FROM menge");
+            if ($stmt->execute()) {
+                $drinks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $drinks;
         } catch (PDOException  $e) {
             print('Error: ' . $e);
             exit();

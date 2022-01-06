@@ -39,9 +39,9 @@ foreach ($allDrinks as $eachDrinkGroup) {
     $drinks .= '<li class="list-group-item border-bottom-0"><p class="fw-bold mb-0">'
         . array_search($eachDrinkGroup, $allDrinks) . '</p><ul class="list-group list-group-flush">';
     foreach ($eachDrinkGroup as $eachDrink) {
-        $drinks .= '<li class="list-group-item d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#drinkModal">
+        $drinks .= '<li class="list-group-item d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#drinkModal" onclick="document.getElementById(\'drinkCount\').value=1;modifyDrinkModal(\'' . $eachDrink . '\')">
                     <p class="mb-0 d-flex flex-column justify-content-center">' . $eachDrink
-                    . '</p><span class="icon material-icons-outlined">keyboard_arrow_right</span></li>';
+            . '</p><span class="icon material-icons-outlined">keyboard_arrow_right</span></li>';
     }
     $drinks .= '</ul></li>';
 }
@@ -77,22 +77,20 @@ $drinkModal = <<<DRINKMODAL
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0">
             <div class="modal-header d-flex justify-content-center border-bottom-0">
-                <h3 class="modal-title">Trinken</h3>
+                <h3 class="modal-title" id="drinkTitle">Trinken</h3>
             </div>
             <div class="modal-body text-center d-flex justify-content-around">
                 <div class="w-25">
                     <label for="drinkAmount" class="form-label">Menge:</label>
-                    <select class="form-select" id="" aria-label="Default select example">
-                        <option value="1" selected class="text-center">0,25</option>
-                    </select>
+                    <select class="form-select" id="drinkAmount" aria-label="Default select example" onchange="refreshDrinkModalPrice()"></select>
                 </div>
                 <div class="w-25">
                     <label for="drinkCount" class="form-label">Anzahl:</label>
-                    <input type="number" id="drinkCount" class="form-control" value="1" min="1">
+                    <input type="number" id="drinkCount" class="form-control" value="1" min="1" step="1" onchange="refreshDrinkModalPrice()">
                 </div>
                 <div>
                     <label for="drinkPrice" class="form-label">Preis:</label>
-                    <div id="drinkPrice">100€</div>
+                    <div id="drinkPrice"></div>
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-between border-top-0">
@@ -114,7 +112,7 @@ $foodModal = <<<FOODMODAL
             <div class="modal-body text-center d-flex justify-content-around">
                 <div class="w-25">
                     <label for="foodCount" class="form-label">Anzahl:</label>
-                    <input type="number" id="foodCount" class="form-control" value="1" min="1" onchange="modifyFoodModal(document.getElementById('foodTitle').textContent)">
+                    <input type="number" id="foodCount" class="form-control" value="1" min="1" step="1" onchange="modifyFoodModal(document.getElementById('foodTitle').textContent)">
                 </div>
                 <div>
                     <label for="foodPrice" class="form-label">Preis:</label>
@@ -220,5 +218,8 @@ $orderModal
 BODY;
 
 $body .= '<script> var foodList=' . json_encode(Customer\DB_Customer::getCompleteFoodList()) . '; </script>';
+$body .= '<script> var drinkList=' . json_encode(Customer\DB_Customer::getCompleteDrinkList()) . '; </script>';
+$body .= '<script> var drinkAmountList=' . json_encode(Customer\DB_Customer::getCompleteDrinkAmountList()) . '; </script>';
+$body .= '<script> var amountList=' . json_encode(Customer\DB_Customer::getCompleteAmountList()) . '; </script>';
 
 print(SiteTemplate::render('Kunde - EGS', $nav, $body));
