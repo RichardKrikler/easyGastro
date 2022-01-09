@@ -157,16 +157,17 @@ function deleteOrder(orderKey) {
 function createOrderDetail(detail) {
     let orderDetail = document.createElement('p');
     orderDetail.appendChild(document.createTextNode(detail));
-    orderDetail.setAttribute('class', 'mb-0');
+    orderDetail.setAttribute('class', 'mb-0 px-2');
     return orderDetail;
 }
 
 function createOrderDetailContainer(details, orderKey) {
     let container = document.createElement('div');
-    container.setAttribute('class', 'd-flex justify-content-between w-50');
+    container.setAttribute('class', 'd-flex justify-content-between');
+    details = details.reverse();
     for (const detailKey in details) {
         let orderDetail = details[detailKey];
-        if (parseInt(detailKey) === 0) {
+        if (parseInt(detailKey) === details.length - 1) {
             orderDetail = parseFloat(orderDetail).toFixed(2).toString() + '€'
         }
         container.appendChild(createOrderDetail(orderDetail));
@@ -178,7 +179,7 @@ function createOrderDetailContainer(details, orderKey) {
 function createOrderTitle(title) {
     let orderTitle = document.createElement('p');
     orderTitle.appendChild(document.createTextNode(title));
-    orderTitle.setAttribute('class', 'mb-0 w-50');
+    orderTitle.setAttribute('class', 'mb-0');
     return orderTitle;
 }
 
@@ -200,4 +201,49 @@ function createOrderSum(sum) {
     totalListPoint.appendChild(totalLabel);
     totalListPoint.appendChild(totalValue);
     return totalListPoint;
+}
+
+function setupPayModal() {
+    document.getElementById('callWaiterText').style.display = 'block';
+    document.getElementById('submitOrderText').style.display = 'none';
+    document.getElementById('messageWaiterButton').disabled = false;
+}
+
+function setupDisabledOrderModal() {
+    document.getElementById('emptyOrderText').style.display = 'none';
+    document.getElementById('sendOrderButton').style.display = 'none';
+    let orderModalList = document.getElementById('orderModalList');
+    orderModalList.innerHTML = '';
+    let orderSum = 0.0;
+    for (const orderKey in sentOrders) {
+        let details = [];
+        for (let i = 3; i < sentOrders[orderKey].length; i++) {
+            details.push(sentOrders[orderKey][i]);
+        }
+        orderModalList.appendChild(createFinishedOrderListPoint(sentOrders[orderKey][2] + 'x ' + sentOrders[orderKey][1], details, orderKey));
+        orderSum += parseFloat(sentOrders[orderKey][3]);
+    }
+    orderModalList.appendChild(createOrderSum(orderSum));
+}
+
+function createFinishedOrderListPoint(title, details) {
+    let listPoint = document.createElement('li');
+    listPoint.setAttribute('class', 'list-group-item d-flex justify-content-between');
+    listPoint.appendChild(createOrderTitle(title));
+    listPoint.appendChild(createFinishedOrderDetailContainer(details));
+    return listPoint;
+}
+
+function createFinishedOrderDetailContainer(details) {
+    let container = document.createElement('div');
+    container.setAttribute('class', 'd-flex justify-content-between flex');
+    details = details.reverse();
+    for (const detailKey in details) {
+        let orderDetail = details[detailKey];
+        if (parseInt(detailKey) === details.length - 1) {
+            orderDetail = parseFloat(orderDetail).toFixed(2).toString() + '€'
+        }
+        container.appendChild(createOrderDetail(orderDetail));
+    }
+    return container;
 }

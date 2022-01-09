@@ -25,7 +25,8 @@ CODEFORM;
 
 
 if (isset($_GET['code'])) {
-    if (Customer\DB_Customer::tableCodeExists($_GET['code'])) {
+    $tableCode = $_GET['code'];
+    if (Customer\DB_Customer::tableCodeExists($tableCode)) {
         $payModal = <<<PAYMODAL
             <div class="modal fade" id="payModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -33,12 +34,15 @@ if (isset($_GET['code'])) {
                         <div class="modal-header d-flex justify-content-center border-bottom-0">
                             <h3 class="modal-title">Bezahlen</h3>
                         </div>
-                        <div class="modal-body text-center">
+                        <div class="modal-body text-center" id="callWaiterText" style="display: none">
                             Um bezahlen zu können, müssen Sie einen Kellner rufen.
+                        </div>
+                        <div class="modal-body text-center" id="submitOrderText">
+                            Um bezahlen zu können, müssen Sie die Bestellung abschließen.
                         </div>
                         <div class="modal-footer d-flex justify-content-between border-top-0">
                             <button type="button" class="btn bg-red fs-5" data-bs-dismiss="modal">Zurück</button>
-                            <button type="button" class="btn bg-green fs-5" disabled>Kellner rufen</button>
+                            <button type="button" class="btn bg-green fs-5" id="messageWaiterButton" disabled>Kellner rufen</button>
                         </div>
                     </div>
                 </div>
@@ -56,9 +60,9 @@ if (isset($_GET['code'])) {
                             <ul class="list-group list-group-flush" id="orderModalList"></ul>
                             <div id="emptyOrderText" class="text-center">Ihre Bestellung ist leer!</div>
                         </div>
-                        <div class="modal-footer d-flex justify-content-between border-top-0">
+                        <div class="modal-footer d-flex justify-content-between border-top-0" id="orderModalFooter">
                             <button type="button" class="btn bg-red fs-5" data-bs-dismiss="modal">Zurück</button>
-                            <form method="post" name="orderForm" action="kunde.php?">
+                            <form method="post" name="orderForm" action="kunde.php?code=$tableCode">
                                 <button type="submit" class="btn bg-green fs-5" id="sendOrderButton" name="order" disabled>Abschicken</button>
                             </form>
                         </div>
@@ -219,18 +223,23 @@ if (isset($_GET['code'])) {
             $body .= '<script> var amountList=' . json_encode(Customer\DB_Customer::getCompleteAmountList()) . '; </script>';
         } else {
             $order = json_decode($_POST['order']);
+            Customer\DB_Customer::sendOrder($tableCode, $order);
             $nav = <<<NAV
                 <div class="header text-center d-flex justify-content-between">
-                    <span id="payIcon" class="icon pay-icon material-icons-outlined d-flex flex-column justify-content-center mx-2 px-2 text-white" data-bs-toggle="modal" data-bs-target="#payModal">payments</span>
-                    <h1 id="startHeader" class="text-white fw-normal py-3 fs-3 mb-0">Startseite</h1>
-                    <span id="orderIcon" class="icon order-icon material-icons-outlined d-flex flex-column justify-content-center mx-2 px-2 text-white" data-bs-toggle="modal" data-bs-target="#orderModal">assignment</span>
+                    <span id="payIcon" class="icon pay-icon material-icons-outlined d-flex flex-column justify-content-center mx-2 px-2 text-white" data-bs-toggle="modal" data-bs-target="#payModal" onclick="setupPayModal()">payments</span>
+                    <h1 id="startHeader" class="text-white fw-normal py-3 fs-3 mb-0">Bestellung erfolgreich</h1>
+                    <span id="orderIcon" class="icon order-icon material-icons-outlined d-flex flex-column justify-content-center mx-2 px-2 text-white" data-bs-toggle="modal" data-bs-target="#orderModal" onclick="setupDisabledOrderModal()">assignment</span>
                 </div>
             NAV;
-            $body = '<div>' . var_dump($order) . '</div>';
+            $body = '<script src="customer/customer.js" defer></script>';
+            $body .= '<script> var sentOrders=' . json_encode($order) . '; </script>';
+            $body .= $payModal;
+            $body .= $orderModal;
+            $body .= '<div class="text-center my-5 mx-4"><img src="resources/EGS_Logo_outlined_black_v1.png" alt="Logo" style="width: 80%"></div>';
         }
     } else {
         $nav = <<<NAV
-            <div class="header text-center d-flex justify-content-between">
+            <div class="header text-center">
                 <h1 id="startHeader" class="text-white fw-normal py-3 fs-3 mb-0">Startseite</h1>
             </div>
         NAV;
@@ -238,7 +247,7 @@ if (isset($_GET['code'])) {
     }
 } else {
     $nav = <<<NAV
-        <div class="header text-center d-flex justify-content-between">
+        <div class="header text-center">
             <h1 id="startHeader" class="text-white fw-normal py-3 fs-3 mb-0">Startseite</h1>
         </div>
     NAV;
