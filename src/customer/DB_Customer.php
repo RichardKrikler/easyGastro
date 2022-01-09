@@ -120,14 +120,14 @@ class DB_Customer
     static function getCompleteDrinkAmountList()
     {
         $DB = DB::getDB();
-        $drinks = array();
+        $drinksAmounts = array();
         try {
             $stmt = $DB->prepare("SELECT * FROM getraenk_menge");
             if ($stmt->execute()) {
-                $drinks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $drinksAmounts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $drinks;
+            return $drinksAmounts;
         } catch (PDOException  $e) {
             print('Error: ' . $e);
             exit();
@@ -137,14 +137,35 @@ class DB_Customer
     static function getCompleteAmountList()
     {
         $DB = DB::getDB();
-        $drinks = array();
+        $amounts = array();
         try {
             $stmt = $DB->prepare("SELECT * FROM menge");
             if ($stmt->execute()) {
-                $drinks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $amounts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $drinks;
+            return $amounts;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function tableCodeExists($checkTableCode) {
+        $DB = DB::getDB();
+        $tableCodes = array();
+        try {
+            $stmt = $DB->prepare("SELECT tischcode FROM tisch");
+            if ($stmt->execute()) {
+                $tableCodes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            foreach ($tableCodes as $tableCode) {
+                if ($checkTableCode == $tableCode['tischcode']) {
+                    return true;
+                }
+            }
+            return false;
         } catch (PDOException  $e) {
             print('Error: ' . $e);
             exit();
