@@ -155,39 +155,12 @@ $orderModal = <<<ORDERMODAL
                 <h3 class="modal-title">Übersicht - Bestellung</h3>
             </div>
             <div class="modal-body">
-                <ul class="list-group list-group-flush" id="orderModalList">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <p class="mb-0 w-50">blalala</p>
-                        <div class="d-flex justify-content-between w-50">
-                            <p class="mb-0">2,50€</p>
-                            <p class="mb-0">0,25l</p>
-                            <span class="icon close-icon material-icons-outlined c-red">close</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <p class="mb-0 w-50">blalala</p>
-                        <div class="d-flex justify-content-between w-50">
-                            <p class="mb-0">2,50€</p>
-                            <p class="mb-0">0,25l</p>
-                            <span class="icon close-icon material-icons-outlined c-red">close</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <p class="mb-0 w-50">blalala</p>
-                        <div class="d-flex justify-content-between w-50">
-                            <p class="mb-0">2,50€</p>
-                            <span class="icon close-icon material-icons-outlined c-red">close</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between fw-bold" style="border-top: solid 2px black" data-bs-toggle="modal" data-bs-target="#foodModal">
-                        <p class="mb-0 ">Gesamt</p>
-                        <p class="mb-0">5000€</p>
-                    </li>
-                </ul>
+                <ul class="list-group list-group-flush" id="orderModalList"></ul>
+                <div id="emptyOrderText" class="text-center">Ihre Bestellung ist leer!</div>
             </div>
             <div class="modal-footer d-flex justify-content-between border-top-0">
                 <button type="button" class="btn bg-red fs-5" data-bs-dismiss="modal">Zurück</button>
-                <button type="button" class="btn bg-green fs-5">Abschicken</button>
+                <button type="button" class="btn bg-green fs-5" id="sendOrderButton" disabled>Abschicken</button>
             </div>
         </div>
     </div>

@@ -102,37 +102,55 @@ function refreshDrinkModalPrice() {
     }
 }
 
-function refreshOrderCounter() {
+function refreshOrderCounter(addToCounter) {
+    orderCounter += parseInt(addToCounter);
     document.getElementById('orderCounter').textContent = orderCounter.toString();
+    let sendOrderButton = document.getElementById('sendOrderButton');
+    let emptyOrderText = document.getElementById('emptyOrderText');
+    if (orderCounter === 0) {
+        sendOrderButton.disabled = true;
+        emptyOrderText.style.display = 'block';
+    } else {
+        sendOrderButton.disabled = false;
+        emptyOrderText.style.display = 'none';
+    }
 }
 
 function addOrder() {
     orders.push(openedInModal);
-    orderCounter += parseInt(openedInModal[2]);
-    refreshOrderCounter();
+    refreshOrderCounter(openedInModal[2]);
     refreshOrderModal()
 }
 
 function refreshOrderModal() {
     let orderModalList = document.getElementById('orderModalList');
     orderModalList.innerHTML = '';
-    for (const orderKey in orders) {
-        let details = [];
-        for (let i = 3; i < orders[orderKey].length; i++) {
-            details.push(orders[orderKey][i]);
+    if (orderCounter !== 0) {
+        let orderSum = 0.0;
+        for (const orderKey in orders) {
+            let details = [];
+            for (let i = 3; i < orders[orderKey].length; i++) {
+                details.push(orders[orderKey][i]);
+            }
+            orderModalList.appendChild(createOrderListPoint(orders[orderKey][2] + 'x ' + orders[orderKey][1], details, orderKey));
+            orderSum += parseFloat(orders[orderKey][3]);
         }
-        orderModalList.appendChild(createOrderListPoint(orders[orderKey][2] + 'x ' + orders[orderKey][1], details));
+        orderModalList.appendChild(createOrderSum(orderSum));
     }
-    // TODO: make style better
-    // TODO: show sum
 }
 
-function createDeleteIcon() {
+function createDeleteIcon(orderKey) {
     let deleteIcon = document.createElement('span');
     deleteIcon.appendChild(document.createTextNode('close'));
     deleteIcon.setAttribute('class', 'icon close-icon material-icons-outlined c-red');
-    // TODO: make delete function
+    deleteIcon.setAttribute('onclick', 'deleteOrder(' + orderKey + ')');
     return deleteIcon;
+}
+
+function deleteOrder(orderKey) {
+    refreshOrderCounter(-orders[orderKey][2]);
+    orders.splice(orderKey, 1);
+    refreshOrderModal();
 }
 
 function createOrderDetail(detail) {
@@ -142,18 +160,17 @@ function createOrderDetail(detail) {
     return orderDetail;
 }
 
-function createOrderDetailContainer(details) {
+function createOrderDetailContainer(details, orderKey) {
     let container = document.createElement('div');
     container.setAttribute('class', 'd-flex justify-content-between w-50');
     for (const detailKey in details) {
         let orderDetail = details[detailKey];
         if (parseInt(detailKey) === 0) {
-            console.log(detailKey + ' === 0');
             orderDetail = parseFloat(orderDetail).toFixed(2).toString() + '€'
         }
         container.appendChild(createOrderDetail(orderDetail));
     }
-    container.appendChild(createDeleteIcon());
+    container.appendChild(createDeleteIcon(orderKey));
     return container;
 }
 
@@ -164,10 +181,22 @@ function createOrderTitle(title) {
     return orderTitle;
 }
 
-function createOrderListPoint(title, details) {
+function createOrderListPoint(title, details, orderKey) {
     let listPoint = document.createElement('li');
     listPoint.setAttribute('class', 'list-group-item d-flex justify-content-between');
     listPoint.appendChild(createOrderTitle(title));
-    listPoint.appendChild(createOrderDetailContainer(details));
+    listPoint.appendChild(createOrderDetailContainer(details, orderKey));
     return listPoint;
+}
+
+function createOrderSum(sum) {
+    let totalLabel = createOrderDetail('Gesamt');
+    let totalValue = createOrderDetail(parseFloat(sum).toFixed(2).toString() + '€');
+    let totalListPoint = document.createElement('li');
+    totalListPoint.setAttribute('id', 'orderSum');
+    totalListPoint.setAttribute('class', 'list-group-item d-flex justify-content-between fw-bold');
+    totalListPoint.setAttribute('style', 'border-top: solid 2px black');
+    totalListPoint.appendChild(totalLabel);
+    totalListPoint.appendChild(totalValue);
+    return totalListPoint;
 }
