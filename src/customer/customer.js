@@ -114,6 +114,7 @@ function refreshOrderCounter(addToCounter) {
         sendOrderButton.disabled = false;
         emptyOrderText.style.display = 'none';
     }
+    sendOrderButton.setAttribute('value', JSON.stringify(orders));
 }
 
 function addOrder() {
