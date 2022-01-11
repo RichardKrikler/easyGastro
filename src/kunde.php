@@ -7,8 +7,12 @@ require_once 'Pages.php';
 require_once 'db.php';
 require_once 'DB_User.php';
 require_once 'customer/DB_Customer.php';
+require_once 'push-notifications/PN_Send.php';
+require_once 'push-notifications/PN_DB_Subscription.php';
 
-use easyGastro\Customer;
+use easyGastro\Customer\DB_Customer;
+use easyGastro\push_notifications\PN_DB_Subscription;
+use easyGastro\push_notifications\PN_Send;
 
 session_start();
 
@@ -26,7 +30,9 @@ CODEFORM;
 
 if (isset($_GET['code'])) {
     $tableCode = $_GET['code'];
-    if (Customer\DB_Customer::tableCodeExists($tableCode)) {
+    $tablePK = DB_Customer::getTablePK($tableCode);
+    $tableGroup = DB_Customer::getTableGroup($tablePK);
+    if (DB_Customer::tableCodeExists($tableCode)) {
         $payModal = <<<PAYMODAL
             <div class="modal fade" id="payModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -42,7 +48,9 @@ if (isset($_GET['code'])) {
                         </div>
                         <div class="modal-footer d-flex justify-content-between border-top-0">
                             <button type="button" class="btn bg-red fs-5" data-bs-dismiss="modal">Zurück</button>
-                            <button type="button" class="btn bg-green fs-5" id="messageWaiterButton" disabled>Kellner rufen</button>
+                            <form method="post" name="payForm" action="kunde.php?code=$tableCode">
+                                <button type="submit" class="btn bg-green fs-5" id="messageWaiterButton" name="messageWaiterButton" disabled>Kellner rufen</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -82,11 +90,11 @@ if (isset($_GET['code'])) {
                 </div>
             NAV;
 
-            $drinkGroups = Customer\DB_Customer::getDrinkGroups();
+            $drinkGroups = DB_Customer::getDrinkGroups();
             $allDrinks = [];
 
             foreach ($drinkGroups as $eachDrinkGroup) {
-                $drinksFromGroup = Customer\DB_Customer::getDrinks($eachDrinkGroup['bezeichnung']);
+                $drinksFromGroup = DB_Customer::getDrinks($eachDrinkGroup['bezeichnung']);
                 foreach ($drinksFromGroup as $eachDrink) {
                     $drinksFromGroupAsString[] = $eachDrink['bezeichnung'];
                 }
@@ -107,11 +115,11 @@ if (isset($_GET['code'])) {
             }
             $drinks .= '</ul>';
 
-            $foodGroups = Customer\DB_Customer::getFoodGroups();
+            $foodGroups = DB_Customer::getFoodGroups();
             $allFood = [];
 
             foreach ($foodGroups as $eachFoodGroup) {
-                $foodFromGroup = Customer\DB_Customer::getFood($eachFoodGroup['bezeichnung']);
+                $foodFromGroup = DB_Customer::getFood($eachFoodGroup['bezeichnung']);
                 foreach ($foodFromGroup as $eachFood) {
                     $foodFromGroupAsString[] = $eachFood['bezeichnung'];
                 }
@@ -217,13 +225,13 @@ if (isset($_GET['code'])) {
                 
             BODY;
 
-            $body .= '<script> var foodList=' . json_encode(Customer\DB_Customer::getCompleteFoodList()) . '; </script>';
-            $body .= '<script> var drinkList=' . json_encode(Customer\DB_Customer::getCompleteDrinkList()) . '; </script>';
-            $body .= '<script> var drinkAmountList=' . json_encode(Customer\DB_Customer::getCompleteDrinkAmountList()) . '; </script>';
-            $body .= '<script> var amountList=' . json_encode(Customer\DB_Customer::getCompleteAmountList()) . '; </script>';
+            $body .= '<script> var foodList=' . json_encode(DB_Customer::getCompleteFoodList()) . '; </script>';
+            $body .= '<script> var drinkList=' . json_encode(DB_Customer::getCompleteDrinkList()) . '; </script>';
+            $body .= '<script> var drinkAmountList=' . json_encode(DB_Customer::getCompleteDrinkAmountList()) . '; </script>';
+            $body .= '<script> var amountList=' . json_encode(DB_Customer::getCompleteAmountList()) . '; </script>';
         } else {
             $order = json_decode($_POST['order']);
-            Customer\DB_Customer::sendOrder($tableCode, $order);
+            DB_Customer::sendOrder($tablePK, $order);
             $nav = <<<NAV
                 <div class="header text-center d-flex justify-content-between">
                     <span id="payIcon" class="icon pay-icon material-icons-outlined d-flex flex-column justify-content-center mx-2 px-2 text-white" data-bs-toggle="modal" data-bs-target="#payModal" onclick="setupPayModal()">payments</span>
@@ -236,6 +244,10 @@ if (isset($_GET['code'])) {
             $body .= $payModal;
             $body .= $orderModal;
             $body .= '<div class="text-center my-5 mx-4"><img src="resources/EGS_Logo_outlined_black_v1.png" alt="Logo" style="width: 80%"></div>';
+        }
+
+        if (isset($_POST['messageWaiterButton'])) {
+            (new PN_Send())->send(PN_DB_Subscription::getSubscriptionsOfTableGroup($tableGroup), '{"msg": "Tisch ' . $tablePK . ': Bezahlen!", "data": "' . $tablePK . '"}');
         }
     } else {
         $nav = <<<NAV

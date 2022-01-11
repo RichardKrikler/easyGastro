@@ -173,9 +173,8 @@ class DB_Customer
         }
     }
 
-    static function sendOrder($tableCode, $order)
+    static function sendOrder($tablePK, $order)
     {
-        $tablePK = self::getTablePK($tableCode);
         $DB = DB::getDB();
         $orderPKs = array();
         try {
@@ -228,6 +227,21 @@ class DB_Customer
                 }
             }
             throw new Exception('TABLE NOT EXISTING');
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
+
+    static function getTableGroup($tablePK) {
+        $DB = DB::getDB();
+        try {
+            $stmt = $DB->prepare("SELECT fk_pk_tischgrp_id FROM tisch WHERE pk_tischnr_id = $tablePK");
+            if ($stmt->execute()) {
+                return intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]['fk_pk_tischgrp_id']);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            throw new Exception('CANNOT FIND TABLEGROUP');
         } catch (PDOException  $e) {
             print('Error: ' . $e);
             exit();
