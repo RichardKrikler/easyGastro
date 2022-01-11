@@ -176,13 +176,12 @@ class DB_Customer
     static function sendOrder($tablePK, $order)
     {
         $DB = DB::getDB();
-        $orderPKs = array();
         try {
-            $orderPKsStmt = $DB->prepare("SELECT pk_bestellung_id FROM bestellung");
+            $orderPKsStmt = $DB->prepare("SELECT pk_bestellung_id FROM bestellung ORDER BY pk_bestellung_id DESC LIMIT 1");
+            $newOrderPK = 0;
             if ($orderPKsStmt->execute()) {
-                $orderPKs = $orderPKsStmt->fetchAll(PDO::FETCH_ASSOC);
+                 $newOrderPK = intval($orderPKsStmt->fetchAll(PDO::FETCH_ASSOC)[0]['pk_bestellung_id']) + 1;
             }
-            $newOrderPK = intval($orderPKs[sizeof($orderPKs) - 1]['pk_bestellung_id']) + 1;
             $timestamp = date("Y-m-d H:i:s");
             $status = 'Offen';
             $newOrderStmt = $DB->prepare("INSERT INTO bestellung (pk_bestellung_id, pk_timestamp_von, status, fk_pk_tischnr_id) 
