@@ -134,7 +134,7 @@ BODY;
 }
 
 if (isset($_GET['clearTable'])) {
-    DB_Table::updateStatusOfTable('Bezahlt', date('Y-m-d H:i:s'), $_GET['clearTable']);
+    DB_Table::updateStatusOfTable('Bezahlt', date('Y-m-d H:i:s'), DB_Table::getPkOfOrder($_GET['clearTable'])[0]['pk_bestellung_id']);
     header("Location: kellner.php");
 }
 

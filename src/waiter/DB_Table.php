@@ -142,13 +142,35 @@ class DB_Table
         }
     }
 
+    static function getPkOfOrder($tableID)
+    {
+        $DB = DB::getDB();
+        $orderPK = '';
+        try {
+            $stmt = $DB->prepare('SELECT pk_bestellung_id
+                                        FROM bestellung
+                                        WHERE fk_pk_tischnr_id = :tischnr
+                                        ORDER BY pk_bestellung_id DESC
+                                        LIMIT 1');
+            $stmt->bindParam(':tischnr', $tableID);
+            if ($stmt->execute()) {
+                $orderPK = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $orderPK;
+        } catch (PDOException  $e) {
+            print('Error: ' . $e);
+            exit();
+        }
+    }
 
-    static function updateStatusOfTable($status, $time, $tischnr)
+
+    static function updateStatusOfTable($status, $time, $orderId)
     {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare('UPDATE Bestellung SET status = ?, timestamp_bis = ? WHERE fk_pk_tischnr_id = ?');
-            $stmt->execute([$status,$time,$tischnr]);
+            $stmt = $DB->prepare('UPDATE Bestellung SET status = ?, timestamp_bis = ? WHERE pk_bestellung_id = ?');
+            $stmt->execute([$status,$time,$orderId]);
             $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException  $e) {
             print('Error: ' . $e);
