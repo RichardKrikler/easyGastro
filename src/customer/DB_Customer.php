@@ -17,7 +17,7 @@ class DB_Customer
         $DB = DB::getDB();
         $drinkGroups = array();
         try {
-            $stmt = $DB->prepare('SELECT bezeichnung FROM getraenkegruppe;');
+            $stmt = $DB->prepare('SELECT bezeichnung FROM Getraenkegruppe;');
             if ($stmt->execute()) {
                 $drinkGroups = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -34,8 +34,8 @@ class DB_Customer
         $DB = DB::getDB();
         $drinks = array();
         try {
-            $stmt = $DB->prepare("SELECT pk_getraenk_id, g.bezeichnung FROM getraenk g
-                                        INNER JOIN getraenkegruppe gg on g.fk_pk_getraenkegrp_id = gg.pk_getraenkegrp_id
+            $stmt = $DB->prepare("SELECT pk_getraenk_id, g.bezeichnung FROM Getraenk g
+                                        INNER JOIN Getraenkegruppe gg on g.fk_pk_getraenkegrp_id = gg.pk_getraenkegrp_id
                                         WHERE gg.bezeichnung = '$drinkGroup';");
             if ($stmt->execute()) {
                 $drinks = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -53,7 +53,7 @@ class DB_Customer
         $DB = DB::getDB();
         $foodGroups = array();
         try {
-            $stmt = $DB->prepare('SELECT bezeichnung FROM speisegruppe;');
+            $stmt = $DB->prepare('SELECT bezeichnung FROM Speisegruppe;');
             if ($stmt->execute()) {
                 $foodGroups = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -70,8 +70,8 @@ class DB_Customer
         $DB = DB::getDB();
         $food = array();
         try {
-            $stmt = $DB->prepare("SELECT pk_speise_id, s.bezeichnung FROM speise s
-                                        INNER JOIN speisegruppe sg on s.fk_pk_speisegrp_id = sg.pk_speisegrp_id
+            $stmt = $DB->prepare("SELECT pk_speise_id, s.bezeichnung FROM Speise s
+                                        INNER JOIN Speisegruppe sg on s.fk_pk_speisegrp_id = sg.pk_speisegrp_id
                                         WHERE sg.bezeichnung = '$foodGroup';");
             if ($stmt->execute()) {
                 $food = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -89,7 +89,7 @@ class DB_Customer
         $DB = DB::getDB();
         $food = array();
         try {
-            $stmt = $DB->prepare("SELECT * FROM speise");
+            $stmt = $DB->prepare("SELECT * FROM Speise");
             if ($stmt->execute()) {
                 $food = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -106,7 +106,7 @@ class DB_Customer
         $DB = DB::getDB();
         $drinks = array();
         try {
-            $stmt = $DB->prepare("SELECT * FROM getraenk");
+            $stmt = $DB->prepare("SELECT * FROM Getraenk");
             if ($stmt->execute()) {
                 $drinks = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -123,7 +123,7 @@ class DB_Customer
         $DB = DB::getDB();
         $drinksAmounts = array();
         try {
-            $stmt = $DB->prepare("SELECT * FROM getraenk_menge");
+            $stmt = $DB->prepare("SELECT * FROM Getraenk_Menge");
             if ($stmt->execute()) {
                 $drinksAmounts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -140,7 +140,7 @@ class DB_Customer
         $DB = DB::getDB();
         $amounts = array();
         try {
-            $stmt = $DB->prepare("SELECT * FROM menge");
+            $stmt = $DB->prepare("SELECT * FROM Menge");
             if ($stmt->execute()) {
                 $amounts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -156,7 +156,7 @@ class DB_Customer
         $DB = DB::getDB();
         $tableCodes = array();
         try {
-            $stmt = $DB->prepare("SELECT tischcode FROM tisch");
+            $stmt = $DB->prepare("SELECT tischcode FROM Tisch");
             if ($stmt->execute()) {
                 $tableCodes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -177,14 +177,14 @@ class DB_Customer
     {
         $DB = DB::getDB();
         try {
-            $orderPKsStmt = $DB->prepare("SELECT pk_bestellung_id FROM bestellung ORDER BY pk_bestellung_id DESC LIMIT 1");
+            $orderPKsStmt = $DB->prepare("SELECT pk_bestellung_id FROM Bestellung ORDER BY pk_bestellung_id DESC LIMIT 1");
             $newOrderPK = 0;
             if ($orderPKsStmt->execute()) {
                  $newOrderPK = intval($orderPKsStmt->fetchAll(PDO::FETCH_ASSOC)[0]['pk_bestellung_id']) + 1;
             }
             $timestamp = date("Y-m-d H:i:s");
             $status = 'Offen';
-            $newOrderStmt = $DB->prepare("INSERT INTO bestellung (pk_bestellung_id, pk_timestamp_von, status, fk_pk_tischnr_id) 
+            $newOrderStmt = $DB->prepare("INSERT INTO Bestellung (pk_bestellung_id, pk_timestamp_von, status, fk_pk_tischnr_id) 
                                                 VALUES ($newOrderPK, '$timestamp', '$status', $tablePK);");
             $newOrderStmt->execute();
             foreach ($order as $orderKey) {
@@ -215,7 +215,7 @@ class DB_Customer
         $DB = DB::getDB();
         $tables = array();
         try {
-            $stmt = $DB->prepare("SELECT * FROM tisch");
+            $stmt = $DB->prepare("SELECT * FROM Tisch");
             if ($stmt->execute()) {
                 $tables = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
@@ -235,7 +235,7 @@ class DB_Customer
     static function getTableGroup($tablePK) {
         $DB = DB::getDB();
         try {
-            $stmt = $DB->prepare("SELECT fk_pk_tischgrp_id FROM tisch WHERE pk_tischnr_id = $tablePK");
+            $stmt = $DB->prepare("SELECT fk_pk_tischgrp_id FROM Tisch WHERE pk_tischnr_id = $tablePK");
             if ($stmt->execute()) {
                 return intval($stmt->fetchAll(PDO::FETCH_ASSOC)[0]['fk_pk_tischgrp_id']);
             }

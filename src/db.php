@@ -10,10 +10,10 @@ require __DIR__ . '/vendor/autoload.php';
 class DB
 {
     // name of the service from docker-compose.yml -> "mysql"
-    private static string $SERVER = 'localhost:3306';
-    private static string $DBNAME = 'egs';
+    private static string $SERVER = 'mysql';
+    private static string $DBNAME = 'EGS';
     private static string $USERNAME = 'root';
-    private static string $PASSWORD = '';
+    private static string $PASSWORD = 'egspw';
 
     /**
      * @return PDO

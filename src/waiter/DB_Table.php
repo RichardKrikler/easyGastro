@@ -148,7 +148,7 @@ class DB_Table
         $orderPK = '';
         try {
             $stmt = $DB->prepare('SELECT pk_bestellung_id
-                                        FROM bestellung
+                                        FROM Bestellung
                                         WHERE fk_pk_tischnr_id = :tischnr
                                         ORDER BY pk_bestellung_id DESC
                                         LIMIT 1');
