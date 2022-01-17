@@ -4,10 +4,18 @@ namespace easyGastro;
 
 class SiteTemplate
 {
+    private static bool $displayUsernameFooter = true;
+
+    static function disableFooter()
+    {
+        self::$displayUsernameFooter = false;
+    }
+
+
     static function render(string $title, string $header, string $content): string
     {
         $usernameFooter = '';
-        if (isset($_SESSION['user'])) {
+        if (self::$displayUsernameFooter && isset($_SESSION['user'])) {
             $usernameFooter = $_SESSION['user']['name'];
         }
 

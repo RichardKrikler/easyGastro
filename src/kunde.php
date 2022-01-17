@@ -267,4 +267,5 @@ if (isset($_GET['code'])) {
     $body .= '<script> document.getElementById(\'wrongCode\').style.display = \'none\' </script>';
 }
 
+SiteTemplate::disableFooter();
 print(SiteTemplate::render('Kunde - EGS', $nav, $body));
