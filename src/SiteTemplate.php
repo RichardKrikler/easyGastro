@@ -43,7 +43,7 @@ class SiteTemplate
 </head>
 <body class="d-flex flex-column vh-100">
 $header
-<main class="flex-grow-1 overflow-scroll">
+<main class="flex-grow-1" style="overflow-x: scroll">
 $content
 </main>
 
